@@ -1,0 +1,45 @@
+
+.MainDash{
+    /* padding-top: 1rem; */
+    display: grid;
+    flex-direction: column;
+    justify-content: none;
+    padding-left: 3rem;
+    grid-template-columns: 70rem ;
+    height: 100%;
+    width: 100%;
+    
+    padding-top: 3rem;
+     
+  
+}
+
+span{
+
+    font-size: medium;
+    font-weight: bold;
+    color: black;
+    padding-left: 1rem;
+    text-decoration: none;
+
+}
+
+
+
+@media screen and (max-width: 1200px) {
+    .MainDash{
+        
+        margin-top: 3rem;
+        grid-template-columns: auto  ;
+        overflow-y: scroll;
+    }
+}
+
+@media screen and (max-width: 768px)
+{
+    .MainDash{
+       
+        grid-template-columns: 1fr;
+    }
+}
+
