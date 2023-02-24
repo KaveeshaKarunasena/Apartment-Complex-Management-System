@@ -16,12 +16,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
+import Popup from './Popup';
+import { Button } from '@material-ui/core';
+import EditApartments from './EditApartments';
 
 function ViewApaertment() {
   const [apartment, setApartment] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [getId, setGetId] = useState(0);
 
   const keys = ['apartmentno', 'type', 'status'];
 
@@ -52,6 +57,11 @@ function ViewApaertment() {
     setPage(newPage);
   };
 
+  const handleProps = id => {
+    setGetId(id);
+    setOpenPopup(true);
+  };
+
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -62,21 +72,23 @@ function ViewApaertment() {
   return (
     <div className="Tablecontainer">
       <form>
-        <InputGroup className="my-3" style={{
-              padding: 5,
-              justifyContent: "normal",
-              fontSize: 20,
-              color: "blue",
-              margin: 1,
-              width: "250px",
-              BorderColor: "green",
-              borderWidth: "10px"
-            }}>
+        <InputGroup
+          className="my-3"
+          style={{
+            padding: 5,
+            justifyContent: 'normal',
+            fontSize: 20,
+            color: 'blue',
+            margin: 1,
+            width: '250px',
+            BorderColor: 'green',
+            borderWidth: '10px',
+          }}
+        >
           {/* onChange for search */}
           <Form.Control
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search contacts"
-            
+            placeholder="Search...."
           />
         </InputGroup>
       </form>
@@ -113,20 +125,13 @@ function ViewApaertment() {
                     <TableCell align="center">{data.ownersName}</TableCell>
                     <TableCell align="center">{data.status}</TableCell>
                     <TableCell align="center">
-                      <a
-                        href={`edit/${data._id}`}
-                        class="edit"
-                        title="Edit"
-                        data-toggle="tooltip"
-                      >
-                        <i class="material-icons">
-                          <EditIcon style={{ color: 'orange' }} />
-                        </i>
-                      </a>
+                      <Button onClick={() => handleProps(data._id)}>
+                        Edit
+                      </Button>
                     </TableCell>
                     <TableCell align="center">
                       <a
-                        href="#"
+                        href=""
                         class="delete"
                         title="Delete"
                         data-toggle="tooltip"
@@ -158,6 +163,11 @@ function ViewApaertment() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </TableContainer>
+      <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        getId={getId}
+      ></Popup>
     </div>
   );
 }
