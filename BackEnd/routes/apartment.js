@@ -23,7 +23,7 @@ router.post('/add',(req,res,next) =>{
         if(err)
         res.send(err);
         else
-        res.send({status:200,message:"ApartmentS Added Successfully",cusObj: newApartment})
+        res.send({status:200,message:"Apartments Added Successfully",cusObj: newApartment})
     });
 
 });
