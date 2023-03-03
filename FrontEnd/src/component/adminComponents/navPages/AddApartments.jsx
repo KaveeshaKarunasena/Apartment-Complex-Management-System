@@ -37,7 +37,7 @@ const useStyles = makeStyles()(theme => ({
   },
   submitBtn: {
     marginTop: '15px',
-  },
+  }
 }));
 
 function AddApartments() {
@@ -50,7 +50,7 @@ function AddApartments() {
       const res = await axios.post('/apartment/add', {
         ...formData,
       });
-      enqueueSnackbar('Succesfully Registered', { variant: 'success' });
+      enqueueSnackbar('Succesfully Added', { variant: 'success' });
       navigate('/view');
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });

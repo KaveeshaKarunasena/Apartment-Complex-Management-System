@@ -2,6 +2,7 @@ import React ,{useEffect, useState} from 'react'
 import './searchBar.css'
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
+import axios from 'axios';
 
 
 const SearchBar = ({placeholder}) => {
@@ -12,17 +13,17 @@ const SearchBar = ({placeholder}) => {
 
     useEffect(() =>{
        
-        const fetchDetails =  async() =>{
-            const response = await fetch("/apartment/view")
-            const json = await  response.json()
+        // const fetchDetails =  async() =>{
+        //     const response = await axios.get("/apartment/view")
+        //     const json = await  response.json()
 
-            if(response.ok){
-                setApartment(json)
-            }
+        //     if(response.ok){
+        //         setApartment(json)
+        //     }
 
-        }
+        // }
 
-        fetchDetails();
+        // fetchDetails();
       
     },[]);
 

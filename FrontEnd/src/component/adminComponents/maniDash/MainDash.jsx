@@ -1,58 +1,108 @@
-import React from 'react'
-import './MainDash.css'
-import Navbar from './Navbar'
-import Cards from '../cards/Cards'
+import React from 'react';
+// import './MainDash.css'
+import Navbar from './Navbar';
+import Cards from '../cards/Cards';
 import RightSide from '../rightSide/RightSide';
 import About from '../pages/About';
-import { BrowserRouter, Routes, Route, NavLink, Outlet } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  Outlet,
+} from 'react-router-dom';
 import AddApartments from '../navPages/AddApartments';
 import CalenderComp from '../rightSide/CalenderComp';
+import { makeStyles } from 'tss-react/mui';
+import clsx from 'clsx';
+
+const useStyles = makeStyles()(theme => ({
+  root: {
+    // [theme.breakpoints.up('md')]: {
+    //   width: '30%',
+    // },
+    // [theme.breakpoints.down('md')]: {
+    //   width: '60%',
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   width: '95%',
+    // },
+    margin: '0 auto',
+    height: '100vh',
+    width: 'auto',
+    paddingTop: '30px',
+    paddingLeft: '60px',
+  },
+  content:{
+    paddingTop:'40px'
+  },
+  nav: {
+    '&:hover': {
+      backgroundColor: '#ffffff',
+      boxShadow: '10px 10px 5px lightblue'
+    },
+
+    fontSize: '18px',
+    fontWeight: 'bold',
+    textDecoration: 'none',
+    color: 'black',
+  },
+  p1: {
+    paddingLeft: '20px',
+  },
+  p2: {
+    paddingLeft: '10px',
+  },
+}));
 
 function MainDash() {
+  const { classes } = useStyles();
 
- 
+  const navLinkStyle = ({ isActive }) => {
+    return {
+      frontWeight: isActive ? 'bold' : 'normal',
+      color: isActive ? 'green' : 'black',
+    };
+  };
+
   return (
-    
-    <div>
-         
-        <div className="MainDash">
-        
-            <div>
-                <h1>Dashboard</h1>
-                <div className="NavLink">
-                <NavLink to='/'  style={{"text-decoration" : "none"}}><span>MainDash</span></NavLink>
-                <NavLink to='add' style={{"text-decoration" : "none"}}><span>Add Apartment</span></NavLink>
-                <NavLink to='view' style={{"text-decoration" : "none"}}><span>View Apartment</span></NavLink>
-                <NavLink to='view' style={{"text-decoration" : "none"}}><span></span></NavLink>
-                <NavLink to='maintenance' style={{"text-decoration" : "none"}}><span>Maintenance Cost</span></NavLink>
-                
-                
-                {/* <div><CalenderComp/></div> */}
-                <Outlet/>
-                </div>
-                
-                <div>
-               
-                
+    <div className={classes.root}>
+      <h1>Dashboard</h1>
+      <div className={classes.content}>
+        <NavLink
+          to="/"
+          className={clsx(classes.nav, classes.p2)}
+          style={navLinkStyle}
+        >
+          <span>MainDash</span>
+        </NavLink>
+        <NavLink
+          to="add"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Add Apartment</span>
+        </NavLink>
+        <NavLink
+          to="view"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>View Apartment</span>
+        </NavLink>
+        <NavLink
+          to="maintenance"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Maintenance Cost</span>
+        </NavLink>
 
-                 
-                </div>
-                
-                 
-                
-            </div>
-            
-           
-              
-             
-            
-        </div>
-         
+        {/* <div><CalenderComp/></div> */}
+        <Outlet />
+      </div>
     </div>
-    
-
-   
-  )
+  );
 }
 
-export default MainDash
+export default MainDash;

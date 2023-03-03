@@ -1,5 +1,4 @@
 import React from 'react';
-import './NavPages.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
@@ -17,8 +16,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Popup from './Popup';
-import { Button } from '@material-ui/core';
-import EditApartments from './EditApartments';
+import IconButton from '@mui/material/IconButton';
+import { useSnackbar } from 'notistack';
 
 function ViewApaertment() {
   const [apartment, setApartment] = useState([]);
@@ -27,7 +26,7 @@ function ViewApaertment() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
-
+  const { enqueueSnackbar } = useSnackbar();
   const keys = ['apartmentno', 'type', 'status'];
 
   useEffect(() => {
@@ -47,10 +46,12 @@ function ViewApaertment() {
     await axios
       .delete(`/apartment/delete/${id}`)
       .then(() => {
-        alert('Deleted');
-        window.location.reload();
+        const apartmentCopy = [...apartment];
+        const filteredApartment = apartmentCopy.filter(item => item._id !== id);
+        setApartment(filteredApartment);
+        enqueueSnackbar('Succesfully Deleted', { variant: 'error' });
       })
-      .catch(err => alert(err));
+      .catch(err => enqueueSnackbar(err, { variant: 'error' }));
   };
 
   const handleChangePage = (event, newPage) => {
@@ -70,11 +71,12 @@ function ViewApaertment() {
     rowsPerPage - Math.min(rowsPerPage, apartment.length - page * rowsPerPage);
 
   return (
-    <div className="Tablecontainer">
+    <div>
       <form>
         <InputGroup
           className="my-3"
           style={{
+            paddingTop: 50,
             padding: 5,
             justifyContent: 'normal',
             fontSize: 20,
@@ -125,24 +127,14 @@ function ViewApaertment() {
                     <TableCell align="center">{data.ownersName}</TableCell>
                     <TableCell align="center">{data.status}</TableCell>
                     <TableCell align="center">
-                      <Button onClick={() => handleProps(data._id)}>
-                        Edit
-                      </Button>
+                      <IconButton onClick={() => handleProps(data._id)}>
+                        <EditIcon style={{ color: 'orange' }} />
+                      </IconButton>
                     </TableCell>
                     <TableCell align="center">
-                      <a
-                        href=""
-                        class="delete"
-                        title="Delete"
-                        data-toggle="tooltip"
-                      >
-                        <i
-                          class="material-icons"
-                          onClick={() => deleteDetails(data._id)}
-                        >
-                          <DeleteIcon style={{ color: 'red' }} />
-                        </i>
-                      </a>
+                      <IconButton onClick={() => deleteDetails(data._id)}>
+                        <DeleteIcon style={{ color: 'red' }} />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -166,6 +158,8 @@ function ViewApaertment() {
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
+        apartment ={apartment}
+        setApartment={setApartment}
         getId={getId}
       ></Popup>
     </div>
