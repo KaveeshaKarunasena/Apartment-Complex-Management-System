@@ -27,6 +27,7 @@ const useStyles = makeStyles()(theme => ({
     // [theme.breakpoints.down('sm')]: {
     //   width: '95%',
     // },
+    
     margin: '0 auto',
     height: '100vh',
     width: 'auto',
@@ -74,7 +75,7 @@ function MainDash() {
           className={clsx(classes.nav, classes.p2)}
           style={navLinkStyle}
         >
-          <span>MainDash</span>
+          <span>Home</span>
         </NavLink>
         <NavLink
           to="add"

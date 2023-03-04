@@ -21,6 +21,7 @@ import { setRef } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
 
+
 const useStyles = makeStyles()(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -32,11 +33,11 @@ const useStyles = makeStyles()(theme => ({
     [theme.breakpoints.down('sm')]: {
       width: '95%',
     },
-    // margin: '0 auto',
+    // margin: '0 auto'
+
     height: '100vh',
-    width: 'auto',
+    width: '100%',
     display: 'flex',
-   
     marginTop: '30px',
   },
 }));

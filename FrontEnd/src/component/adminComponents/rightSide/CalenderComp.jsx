@@ -8,7 +8,6 @@ const CalenderComp = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   return (
     <div className="ParentComp">
-      <h3>Calender</h3>
     <Calendar
           value={selectedDay}
           onChange={setSelectedDay}

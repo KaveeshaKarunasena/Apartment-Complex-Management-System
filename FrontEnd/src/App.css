@@ -24,37 +24,4 @@
     font-family: 'Inter', sans-serif;
   }
   
-  .AppGlass {
-    display: grid;
-    height: 100%;
-    width: 97%;
-    background: var(--glass);
-    border-radius: 2rem;
-    gap: 16px;
-    grid-template-columns: 11rem auto auto ;
-    
-   
-  }
-
-
-  .sidebar{
-      position: relative;
-  }
-
-  .sidebar.fixed{
-    position: fixed;
-  }
-
-  @media screen and (max-width: 1200px) {
-    .AppGlass{
-      
-      grid-template-columns: 10% auto ;
-      overflow-y: scroll;
-    } 
-  }
   
-  @media screen and (max-width: 768px) {
-    .AppGlass{
-      grid-template-columns: 1fr;
-    } 
-  }

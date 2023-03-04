@@ -139,7 +139,7 @@ function ViewApaertment() {
                   </TableRow>
                 ))}
             {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
+              <TableRow style={{ height :emptyRows }}>
                 <TableCell colSpan={6} />
               </TableRow>
             )}
