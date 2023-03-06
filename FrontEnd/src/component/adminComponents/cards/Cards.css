@@ -1,18 +1,13 @@
 .Cards {
-    
-    width:100%;
-    display: flex;
-  }
-
-  .root{
-    display: flex;
-  }
-
-  .Card {
-    padding-top: 3rem;
-  }
-  .parentContainer{
-
-    width: 25%;
-  }
-  
+  width: 100%;
+  display: flex;
+}
+.root {
+  display: flex;
+}
+.Card {
+  padding-top: 3rem;
+}
+.parentContainer {
+  width: 23%;
+}

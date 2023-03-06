@@ -4,9 +4,9 @@ import './Cards.css';
 import Card from '../Card/Card';
 import CalenderComp from '../rightSide/CalenderComp';
 
+
 function Cards(props) {
   return (
-    <div className='root'>
     <div className="Cards">
       {cardData.map((card, id) => {
         return (
@@ -36,9 +36,10 @@ function Cards(props) {
           
         );
       })}
+       <CalenderComp></CalenderComp>
     </div>
-      <CalenderComp></CalenderComp>
-    </div>
+
+
   );
 }
 

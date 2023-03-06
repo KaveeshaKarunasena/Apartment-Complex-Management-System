@@ -1,18 +1,8 @@
 import React from 'react';
-// import './MainDash.css'
-import Navbar from './Navbar';
-import Cards from '../cards/Cards';
-import RightSide from '../rightSide/RightSide';
-import About from '../pages/About';
 import {
-  BrowserRouter,
-  Routes,
-  Route,
   NavLink,
   Outlet,
 } from 'react-router-dom';
-import AddApartments from '../navPages/AddApartments';
-import CalenderComp from '../rightSide/CalenderComp';
 import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
 
