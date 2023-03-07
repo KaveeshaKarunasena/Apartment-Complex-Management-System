@@ -1,23 +1,18 @@
-import React, { useState } from "react";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Calendar } from "react-modern-calendar-datepicker";
+import * as React from 'react';
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-import './Calender.css'
-
-const CalenderComp = () => {
-  const [selectedDay, setSelectedDay] = useState(null);
+export default function CalenderComp() {
   return (
-    <div className="ParentComp">
-      <h3>Calender</h3>
-    <Calendar
-          value={selectedDay}
-          onChange={setSelectedDay}
-          calendarClassName="responsive-calendar" // added this
-          shouldHighlightWeekends
-        />
-    </div>
-    
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DateCalendar']}>
+        <DemoItem>
+          <DateCalendar defaultValue={dayjs(new Date())} />
+        </DemoItem>
+      </DemoContainer>
+    </LocalizationProvider>
   );
-};
-
-export default CalenderComp
+}

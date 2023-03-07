@@ -1,18 +1,8 @@
 import React from 'react';
-// import './MainDash.css'
-import Navbar from './Navbar';
-import Cards from '../cards/Cards';
-import RightSide from '../rightSide/RightSide';
-import About from '../pages/About';
 import {
-  BrowserRouter,
-  Routes,
-  Route,
   NavLink,
   Outlet,
 } from 'react-router-dom';
-import AddApartments from '../navPages/AddApartments';
-import CalenderComp from '../rightSide/CalenderComp';
 import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
 
@@ -27,6 +17,7 @@ const useStyles = makeStyles()(theme => ({
     // [theme.breakpoints.down('sm')]: {
     //   width: '95%',
     // },
+    
     margin: '0 auto',
     height: '100vh',
     width: 'auto',
@@ -74,7 +65,7 @@ function MainDash() {
           className={clsx(classes.nav, classes.p2)}
           style={navLinkStyle}
         >
-          <span>MainDash</span>
+          <span>Home</span>
         </NavLink>
         <NavLink
           to="add"
