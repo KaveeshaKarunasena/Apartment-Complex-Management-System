@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import { useState, setHasError } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
