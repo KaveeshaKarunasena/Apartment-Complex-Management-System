@@ -9,6 +9,7 @@ import Maintenance from './component/adminComponents/navPages/Maintenance';
 import ViewApartments from './component/adminComponents/navPages/ViewApartments';
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
+import RepoDash from './component/adminComponents/maniDash/RepoDash'
 
 
 const useStyles = makeStyles()(theme => ({
@@ -41,11 +42,18 @@ function App() {
         <div >
             <Navbar />
               <Routes>
-                <Route path="/" element={<MainDash />}>
-                  <Route path="/" element={<Cards />} />
+                <Route path="/app" element={<MainDash />}>
+                  <Route path="home" element={<Cards />} />
                   <Route path="add" element={<AddApartments />} />
                   <Route path="view" element={<ViewApartments />} />
                   <Route path="maintenance" element={<Maintenance />} />
+                </Route>
+              </Routes>
+              <Routes>
+                <Route path="/repo" element={<RepoDash />}>
+                  <Route path="maintenance" element={<Cards />} />
+                  <Route path="amenity" element={<AddApartments />} />
+                  <Route path="complaint" element={<ViewApartments />} />
                 </Route>
               </Routes>
             </div>

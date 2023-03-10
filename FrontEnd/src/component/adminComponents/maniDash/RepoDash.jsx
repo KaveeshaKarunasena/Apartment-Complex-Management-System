@@ -58,38 +58,29 @@ function MainDash() {
 
   return (
     <div className={classes.root}>
-      <h1>Dashboard</h1>
+      <h1>Reports</h1>
       <div className={classes.content}>
         <NavLink
-          to="home"
+          to="maintenance"
           className={clsx(classes.nav, classes.p2)}
           style={navLinkStyle}
         >
-          <span>Home</span>
+          <span>Maintenance</span>
         </NavLink>
         <NavLink
-          to="add"
+          to="amenity"
           className={clsx(classes.nav, classes.p1)}
           style={navLinkStyle}
         >
-          <span>Add Apartment</span>
+          <span>Amenity</span>
         </NavLink>
         <NavLink
-          to="view"
+          to="complaint"
           className={clsx(classes.nav, classes.p1)}
           style={navLinkStyle}
         >
-          <span>View Apartment</span>
+          <span>Complaint</span>
         </NavLink>
-        <NavLink
-          to="maintenance"
-          className={clsx(classes.nav, classes.p1)}
-          style={navLinkStyle}
-        >
-          <span>Maintenance Cost</span>
-        </NavLink>
-
-        {/* <div><CalenderComp/></div> */}
         <Outlet />
       </div>
     </div>
