@@ -7,13 +7,10 @@ var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://0.0.0.0:27017/apartment");
 
-var apartmentModel = require('./modles/apartment-model');
-var maintenanceModel = require('./modles/maintenance-model')
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var apartmentRouter = require('./routes/apartment');
-var maintenanceRouter = require('./routes/maintenance');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const apartmentRouter = require('./routes/apartment');
+const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
 
 var app = express();

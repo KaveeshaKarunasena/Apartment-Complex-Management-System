@@ -20,6 +20,7 @@ router.route('/add').post((req, res, next) => {
     .then(() => {
       res.json('New Service Provider Added');
     })
+    
     .catch(err => {
       console.log(error);
     });
