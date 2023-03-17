@@ -13,7 +13,8 @@ var maintenanceModel = require('./modles/maintenance-model')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apartmentRouter = require('./routes/apartment');
-var maintenanceRouter = require('./routes/maintenance')
+var maintenanceRouter = require('./routes/maintenance');
+const serviceProviderRouter = require('./routes/serviceProvider');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
+app.use('/service-provider',serviceProviderRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
