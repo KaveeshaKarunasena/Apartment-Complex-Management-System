@@ -45,6 +45,7 @@ const EditApartments = props => {
     type: '',
     ownersName: '',
     status: '',
+    email:''
   });
 
   const onInputChange = e => {
@@ -65,6 +66,7 @@ const EditApartments = props => {
             type: res.data.apartmentModel.type,
             status: res.data.apartmentModel.status,
             ownersName: res.data.apartmentModel.ownersName,
+            email:res.data.apartmentModel.email
           });
         } else console.log('Error ');
       });
@@ -74,7 +76,7 @@ const EditApartments = props => {
   }, []);
 
   const updateApartment = async e => {
-    const { apartmentno, floor, buildingNo, type, status, ownersName } = state;
+    const { apartmentno, floor, buildingNo, type, status, ownersName,email } = state;
     const { id } = props;
     const { setOpenPopup, setApartment, apartment } = props;
     const data = {
@@ -84,6 +86,7 @@ const EditApartments = props => {
       type: type,
       status: status,
       ownersName: ownersName,
+      email:email
     };
     setOpenPopup(false);
     try {
@@ -98,6 +101,7 @@ const EditApartments = props => {
             item.type = data.type;
             item.status = data.status;
             item.ownersName = data.ownersName;
+            item.email = data.email;
           }
         });
 
@@ -113,6 +117,7 @@ const EditApartments = props => {
             type: '',
             status: '',
             ownersName: '',
+            email:''
           });
         }
       });
@@ -136,6 +141,7 @@ const EditApartments = props => {
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),
           status: Yup.string().required('Required'),
+          email: Yup.string().required('Required'),
         })}
       >
         {({ errors }) => {
@@ -216,6 +222,24 @@ const EditApartments = props => {
                   size="small"
                   error={
                     errors.ownersName && errors.ownersName?.length
+                      ? true
+                      : false
+                  }
+                />
+                <FormHelperText style={{ color: 'red' }}>
+                  {errors.ownersName}
+                </FormHelperText>
+                </FormControl>
+                <FormControl className={classes.formControl} variant="outlined">
+                <TextField
+                  value={state.email}
+                  onChange={onInputChange}
+                  name="email"
+                  label="Owners Email"
+                  type="email"
+                  size="small"
+                  error={
+                    errors.email && errors.email?.length
                       ? true
                       : false
                   }

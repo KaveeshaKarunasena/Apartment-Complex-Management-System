@@ -8,7 +8,7 @@ var apartmentSchema = mongoose.Schema({
     type : String,
     status: String,
     ownersName: String,
-    count: Number
+    email: String
 })
 
 var apartmentModel = mongoose.model("Apartment", apartmentSchema);

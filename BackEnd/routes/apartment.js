@@ -14,7 +14,7 @@ router.post('/add',(req,res,next) =>{
         type : req.body.type,
         status: req.body.status,
         ownersName: req.body.ownersName,
-        count: req.body.count
+        email: req.body.email 
 
     });
 

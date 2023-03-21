@@ -103,6 +103,7 @@ function ViewApaertment() {
               <TableCell align="center">Building No&nbsp;</TableCell>
               <TableCell align="center">Type</TableCell>
               <TableCell align="center">Owner Name&nbsp;</TableCell>
+              <TableCell align="center">Email&nbsp;</TableCell>
               <TableCell align="center">Status&nbsp;</TableCell>
             </TableRow>
           </TableHead>
@@ -124,6 +125,7 @@ function ViewApaertment() {
                     <TableCell align="center">{data.buildingNo}</TableCell>
                     <TableCell align="center">{data.type}</TableCell>
                     <TableCell align="center">{data.ownersName}</TableCell>
+                    <TableCell align="center">{data.email}</TableCell>
                     <TableCell align="center">{data.status}</TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleProps(data._id)}>
