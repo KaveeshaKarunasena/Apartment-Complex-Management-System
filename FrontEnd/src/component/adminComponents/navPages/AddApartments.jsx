@@ -51,7 +51,7 @@ function AddApartments() {
         ...formData,
       });
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
-      navigate('/view');
+      navigate('/app/view');
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
@@ -66,7 +66,9 @@ function AddApartments() {
           buildingNo: '',
           type: '',
           ownersName: '',
+          email:'',
           status: '',
+         
         }}
         validationSchema={Yup.object().shape({
           apartmentno: Yup.string()
@@ -79,6 +81,7 @@ function AddApartments() {
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),
           status: Yup.string().required('Required'),
+          email: Yup.string().required('Required')
         })}
         onSubmit={addApartment}
       >
@@ -166,6 +169,24 @@ function AddApartments() {
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.ownersName}
+                </FormHelperText>
+              </FormControl>
+              <FormControl className={classes.formControl} variant="outlined">
+                <TextField
+                  value={values.email}
+                  onChange={handleChange}
+                  name="email"
+                  label="Owners Email"
+                  type="email"
+                  size="small"
+                  error={
+                    errors.email && errors.email?.length
+                      ? true
+                      : false
+                  }
+                />
+                <FormHelperText stylr={{ color: 'red' }}>
+                  {errors.email}
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
