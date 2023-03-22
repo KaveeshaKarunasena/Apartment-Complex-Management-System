@@ -52,7 +52,7 @@ function Maintanence() {
       const res = await axios.post('/maintenance/add', {
         ...formData,
       });
-      enqueueSnackbar('Succesfully Registered', { variant: 'success' });
+      enqueueSnackbar('Succesfully Added', { variant: 'success' });
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
@@ -66,9 +66,9 @@ function Maintanence() {
           date: '',
         }}
         validationSchema={Yup.object().shape({
-          amount: Yup.string().required('Required*'),
+          amount: Yup.number().required('Required*'),
           description: Yup.string().required('Required'),
-          date: Yup.string().required('Required'),
+          date: Yup.date().required('Required'),
         })}
         onSubmit={addApartment}
       >

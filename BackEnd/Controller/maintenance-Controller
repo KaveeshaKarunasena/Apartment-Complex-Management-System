@@ -1,0 +1,31 @@
+const  maintenanceModel = require('../modles/maintenance-model')
+
+const addMaintenance = async(req,res) =>{
+
+    let newMaintenance = new maintenanceModel({
+
+        amount: req.body.amount,
+        description : req.body.description,
+        date : req.body.date
+
+    });
+
+    newMaintenance.save(function(err,newMaintenance){
+
+        if(err)
+        res.send(err);
+        else
+        res.send({status:200,message:"Maintenance Added Successfully",Obj:newMaintenance })
+    });
+
+}
+
+
+const getCost = async (req, res) => {
+    maintenanceModel
+      .find()
+      .then(maintenance => res.json(maintenance))
+      .catch(err => res.status(404).json({ notfound: 'No maintenance found' }));
+  };
+
+module.exports = {addMaintenance,getCost}

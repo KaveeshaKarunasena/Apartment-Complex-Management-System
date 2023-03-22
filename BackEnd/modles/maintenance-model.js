@@ -1,11 +1,20 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var maintenanceSchema = mongoose.Schema({
+const maintenanceSchema = mongoose.Schema({
 
-    amount: Number,
-    description : String,
-    date : Date
+    amount:  {
+        type :String,
+        required :true
+    },
+    description : {
+        type :String,
+        required :true
+    },
+    date : {
+        type :Date,
+        required :true
+    }
 })
 
-var  maintenanceModel = mongoose.model("Maintenance",  maintenanceSchema);
+const  maintenanceModel = mongoose.model("Maintenance",  maintenanceSchema);
  module.exports =  maintenanceModel;

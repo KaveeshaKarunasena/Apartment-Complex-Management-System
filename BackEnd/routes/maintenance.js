@@ -1,28 +1,14 @@
-var express = require('express');
-var router = express.Router();
-const mongoose = require("mongoose");
-const { response } = require('../app');
-const  maintenanceModel = require('../modles/maintenance-model')
-
-router.post('/add',(req,res,next) =>{
-
-    let newMaintenance = new maintenanceModel({
-
-        amount: req.body.amount,
-        description : req.body.description,
-        date : req.body.date
-
-    });
-
-    newMaintenance.save(function(err,newMaintenance){
-
-        if(err)
-        res.send(err);
-        else
-        res.send({status:200,message:"Maintenance Added Successfully",Obj:newMaintenance })
-    });
-
-})
+const express = require('express');
+const { body } = require('express-validator');
+const validator = require('../Utils/validator');
+const { getCost ,addMaintenance} = require('../Controller/maintenance-Controller');
+const router = express.Router();
 
 
+router.post('/add',validator([
+    body('amount').isCurrency(),
+    body('date').isDate()
+  ]),addMaintenance);
+
+router.get('/getCost', getCost);
 module.exports = router;

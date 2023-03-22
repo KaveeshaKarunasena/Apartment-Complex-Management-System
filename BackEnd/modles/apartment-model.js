@@ -1,15 +1,36 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var apartmentSchema = mongoose.Schema({
+const apartmentSchema = mongoose.Schema({
 
-    apartmentno : String,
-    floor : Number,
-    buildingNo : Number,
-    type : String,
-    status: String,
-    ownersName: String,
-    email: String
+    apartmentno : {
+        type :String,
+        required :true
+    },
+    floor :  {
+        type :Number,
+        required :true
+    },
+    buildingNo :  {
+        type :Number,
+        required :true
+    },
+    type :  {
+        type :String,
+        required :true
+    },
+    status:  {
+        type :String,
+        required :true
+    },
+    ownersName:  {
+        type :String,
+        required :true
+    },
+    email:  {
+        type :String,
+        required :true
+    }
 })
 
-var apartmentModel = mongoose.model("Apartment", apartmentSchema);
+const apartmentModel = mongoose.model("Apartment", apartmentSchema);
  module.exports = apartmentModel;

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  alpha,
   Box,
   Button,
   FormControl,
@@ -13,7 +14,6 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
-
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles()(theme => ({
   },
   submitBtn: {
     marginTop: '15px',
-  }
+  },
 }));
 
 function AddApartments() {
@@ -66,22 +66,29 @@ function AddApartments() {
           buildingNo: '',
           type: '',
           ownersName: '',
-          email:'',
+          email: '',
           status: '',
-         
         }}
         validationSchema={Yup.object().shape({
           apartmentno: Yup.string()
-            .max(3, 'must have maximum 3 Numbers')
+            .matches(/^[A-Z][0-9][0-9]/, 'Enter a valid Apartment')
+            .length(3, 'Must have 3 Characters')
             .required('Required*'),
-          floor: Yup.string()
-            .max(2, 'must have maximum 2 Numbers')
+          floor: Yup.number("Must be a Number")
+            .test(
+              'len',
+              'Must have 2 numbers',
+              val => val.toString().length === 2
+            )
             .required('Required'),
-          buildingNo: Yup.string().required('Required'),
+          buildingNo: Yup.string()
+            .matches(/^[A-Z]/, 'Enter a valid Building')
+            .length(1)
+            .required('Required'),
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),
           status: Yup.string().required('Required'),
-          email: Yup.string().required('Required')
+          email: Yup.string().email('Invalid Email').required('Required'),
         })}
         onSubmit={addApartment}
       >
@@ -179,11 +186,7 @@ function AddApartments() {
                   label="Owners Email"
                   type="email"
                   size="small"
-                  error={
-                    errors.email && errors.email?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.email && errors.email?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.email}

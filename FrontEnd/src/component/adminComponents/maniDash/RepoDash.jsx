@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
+import MaintenanceRepo from '../navPages/MaintenanceRepo'
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -47,44 +48,14 @@ const useStyles = makeStyles()(theme => ({
 }));
 
 function MainDash() {
-  const { classes } = useStyles();
+  
+  return(
 
-  const navLinkStyle = ({ isActive }) => {
-    return {
-      frontWeight: isActive ? 'bold' : 'normal',
-      color: isActive ? 'green' : 'black',
-    };
-  };
-
-  return (
-    <div className={classes.root}>
-      <h1>Reports</h1>
-      <div className={classes.content}>
-        <NavLink
-          to="maintenance"
-          className={clsx(classes.nav, classes.p2)}
-          style={navLinkStyle}
-        >
-          <span>Maintenance</span>
-        </NavLink>
-        <NavLink
-          to="amenity"
-          className={clsx(classes.nav, classes.p1)}
-          style={navLinkStyle}
-        >
-          <span>Amenity</span>
-        </NavLink>
-        <NavLink
-          to="complaint"
-          className={clsx(classes.nav, classes.p1)}
-          style={navLinkStyle}
-        >
-          <span>Complaint</span>
-        </NavLink>
-        <Outlet />
-      </div>
+    <div>
+      <MaintenanceRepo></MaintenanceRepo>
     </div>
-  );
+  )
+  
 }
 
 export default MainDash;
