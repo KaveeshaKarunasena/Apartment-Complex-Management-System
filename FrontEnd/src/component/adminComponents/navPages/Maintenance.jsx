@@ -68,7 +68,7 @@ function Maintanence() {
         validationSchema={Yup.object().shape({
           amount: Yup.number().required('Required*'),
           description: Yup.string().required('Required'),
-          date: Yup.date().required('Required'),
+          date: Yup.string().required('Required'),
         })}
         onSubmit={addApartment}
       >
