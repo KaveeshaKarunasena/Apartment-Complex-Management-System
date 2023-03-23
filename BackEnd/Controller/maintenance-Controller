@@ -2,11 +2,13 @@ const  maintenanceModel = require('../modles/maintenance-model')
 
 const addMaintenance = async(req,res) =>{
 
+   
+
     let newMaintenance = new maintenanceModel({
 
         amount: req.body.amount,
         description : req.body.description,
-        date : req.body.date
+        date :req.body.date 
 
     });
 
@@ -28,4 +30,58 @@ const getCost = async (req, res) => {
       .catch(err => res.status(404).json({ notfound: 'No maintenance found' }));
   };
 
-module.exports = {addMaintenance,getCost}
+
+  const totalCostByDate = async(req,res) =>{
+
+    await maintenanceModel.aggregate(
+        [
+            {
+              '$match': {}
+            }, {
+              '$group': {
+                '_id': '$date', 
+                'totalCost': {
+                  '$sum': '$amount'
+                }
+              }
+            }
+          ]
+    ).exec((err,totalCost) =>{
+
+        if(err){
+            res.status(404).json({ err})
+        }
+        if(totalCost){
+            res.status(200).json({ totalCost})
+        }
+    })
+  }
+
+  const totalCost = async(req,res) =>{
+
+    await maintenanceModel.aggregate(
+        [
+            {
+              '$match': {}
+            }, {
+              '$group': {
+                '_id': null, 
+                'total': {
+                  '$sum': '$amount'
+                }
+              }
+            }
+          ]
+    ).exec((err,total) =>{
+
+        if(err){
+            res.status(404).json({ err})
+        }
+        if(total){
+            res.status(200).json({ total})
+        }
+    })
+  }
+
+module.exports = {addMaintenance,getCost, totalCostByDate,totalCost}
+
