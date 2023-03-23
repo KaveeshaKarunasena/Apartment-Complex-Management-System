@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const maintenanceSchema = mongoose.Schema({
 
     amount:  {
-        type :String,
+        type :Number,
         required :true
     },
     description : {
