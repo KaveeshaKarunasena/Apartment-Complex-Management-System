@@ -26,7 +26,7 @@ function PieChart() {
   ], 
 });
 
-const [total, setTotal] = useState(1);
+const [total, setTotal] = useState({data:0});
 
 
   useEffect(()=> {
@@ -55,18 +55,22 @@ const [total, setTotal] = useState(1);
     const {data} = await axios.get('/maintenance/getTotalCost')
         console.log("resss", data.total)
         const data1 = data.total.map(item =>item.total)
-        const total = data1[0]
-        setTotal(
-           total
-        )
-            console.log(total)
+        
+        setTotal({
+           data :data1[0]
+  })
+            // console.log(total)
       
   }
   fetchTotal();
   }, [])
 
+  // const text1 =  total && total.map(item => {return item.data})
+
+  const text2 = total.data;
+  
   const plugins = [{
-    beforeDraw: function(chart) {
+    beforeDraw: function(chart,total) {
      var width = chart.width,
          height = chart.height,
          ctx = chart.ctx;
@@ -74,7 +78,7 @@ const [total, setTotal] = useState(1);
          var fontSize = (height / 160).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
-         var text  = total,
+         var text  = total.data,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
          textY = height / 2;
          ctx.fillText(text, textX, textY);

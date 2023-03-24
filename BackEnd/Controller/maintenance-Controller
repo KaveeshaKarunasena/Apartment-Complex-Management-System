@@ -1,11 +1,8 @@
 const  maintenanceModel = require('../modles/maintenance-model')
 
 const addMaintenance = async(req,res) =>{
-
-   
-
     let newMaintenance = new maintenanceModel({
-
+        apartmentNo: req.body.apartmentNo,
         amount: req.body.amount,
         description : req.body.description,
         date :req.body.date 

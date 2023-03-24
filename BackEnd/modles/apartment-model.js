@@ -11,7 +11,7 @@ const apartmentSchema = mongoose.Schema({
         required :true
     },
     buildingNo :  {
-        type :Number,
+        type :String,
         required :true
     },
     type :  {

@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const maintenanceSchema = mongoose.Schema({
 
+    apartmentNo:  {
+        type :String,
+        required :true
+    },
+  
     amount:  {
         type :Number,
         required :true

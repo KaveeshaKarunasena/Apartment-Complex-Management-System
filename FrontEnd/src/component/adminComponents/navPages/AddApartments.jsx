@@ -70,7 +70,7 @@ function AddApartments() {
           status: '',
         }}
         validationSchema={Yup.object().shape({
-          apartmentno: Yup.string()
+         apartmentno: Yup.string()
             .matches(/^[A-Z][0-9][0-9]/, 'Enter a valid Apartment')
             .length(3, 'Must have 3 Characters')
             .required('Required*'),
@@ -83,7 +83,7 @@ function AddApartments() {
             .required('Required'),
           buildingNo: Yup.string()
             .matches(/^[A-Z]/, 'Enter a valid Building')
-            .length(1)
+            .length(1,'Must have 1 Characters')
             .required('Required'),
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),

@@ -61,11 +61,13 @@ function Maintanence() {
     <Box className={classes.root}>
       <Formik
         initialValues={{
+          apartmentNo:'',
           amount: '',
           description: '',
           date: '',
         }}
         validationSchema={Yup.object().shape({
+          apartmentNo: Yup.string().required('Required'),
           amount: Yup.number().required('Required*'),
           description: Yup.string().required('Required'),
           date: Yup.string().required('Required'),
@@ -76,6 +78,20 @@ function Maintanence() {
           return (
             <>
               <Typography variant="h3">Add Maintenance</Typography>
+              <FormControl className={classes.formControl} variant="outlined">
+                <TextField
+                  value={values.apartmentNo}
+                  onChange={handleChange}
+                  name="apartmentNo"
+                  label="Apartment No"
+                  type="text"
+                  size="small"
+                  error={errors.apartmentNo && errors.apartmentNo?.length ? true : false}
+                />
+                <FormHelperText stylr={{ color: 'red' }}>
+                  {errors.apartmentNo}
+                </FormHelperText>
+              </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
                 <TextField
                   value={values.amount}
