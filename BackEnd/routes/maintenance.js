@@ -5,7 +5,8 @@ const {
   getCost,
   addMaintenance,
   totalCostByDate,
-  totalCost
+  totalCost,
+  totalCostByType
 } = require('../Controller/maintenance-Controller');
 const router = express.Router();
 
@@ -18,4 +19,5 @@ router.post(
 router.get('/getCost', getCost);
 router.get('/getTotalByDate', totalCostByDate);
 router.get('/getTotalCost', totalCost);
+router.get('/getTotalByType', totalCostByType);
 module.exports = router;

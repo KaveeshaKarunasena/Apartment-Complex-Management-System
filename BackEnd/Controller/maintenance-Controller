@@ -80,5 +80,42 @@ const getCost = async (req, res) => {
     })
   }
 
-module.exports = {addMaintenance,getCost, totalCostByDate,totalCost}
+  const totalCostByType = async(req,res) =>{
+
+    await maintenanceModel.aggregate(
+      [
+        {
+          '$lookup': {
+            'from': 'apartments', 
+            'localField': 'apartmentNo', 
+            'foreignField': 'apartmentno', 
+            'as': 'apartment'
+          }
+        }, {
+          '$match': {}
+        }, {
+          '$group': {
+            '_id': {
+              '$arrayElemAt': [
+                '$apartment.type', 0
+              ]
+            }, 
+            'total': {
+              '$sum': '$amount'
+            }
+          }
+        }
+      ]).exec((err,total) =>{
+
+        if(err){
+            res.status(404).json({ err})
+        }
+        if(total){
+            res.status(200).json({ total})
+        }
+    })
+  }
+
+
+module.exports = {addMaintenance,getCost, totalCostByDate,totalCost,totalCostByType}
 
