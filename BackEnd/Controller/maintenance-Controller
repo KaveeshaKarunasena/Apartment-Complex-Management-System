@@ -17,7 +17,7 @@ const addMaintenance = async(req,res) =>{
         res.send({status:200,message:"Maintenance Added Successfully",Obj:newMaintenance })
     });
 
-}
+};
 
 
 const getCost = async (req, res) => {
@@ -52,7 +52,7 @@ const getCost = async (req, res) => {
             res.status(200).json({ totalCost})
         }
     })
-  }
+  };
 
   const totalCost = async(req,res) =>{
 
@@ -78,7 +78,7 @@ const getCost = async (req, res) => {
             res.status(200).json({ total})
         }
     })
-  }
+  };
 
   const totalCostByType = async(req,res) =>{
 
@@ -91,9 +91,8 @@ const getCost = async (req, res) => {
             'foreignField': 'apartmentno', 
             'as': 'apartment'
           }
-        }, {
-          '$match': {}
-        }, {
+        }, 
+         {
           '$group': {
             '_id': {
               '$arrayElemAt': [
@@ -114,8 +113,63 @@ const getCost = async (req, res) => {
             res.status(200).json({ total})
         }
     })
+  };
+
+  const costByDetails = async(req,res) =>{
+
+    await maintenanceModel.aggregate(
+      [
+        {
+          '$lookup': {
+            'from': 'apartments', 
+            'localField': 'apartmentNo', 
+            'foreignField': 'apartmentno', 
+            'as': 'apartments'
+          }
+        }, {
+          '$group': {
+            '_id': {
+              '$arrayElemAt': [
+                '$apartments.apartmentno', 0
+              ]
+            }, 
+            'type': {
+              '$first': {
+                '$arrayElemAt': [
+                  '$apartments.type', 0
+                ]
+              }
+            }, 
+            'name': {
+              '$first': {
+                '$arrayElemAt': [
+                  '$apartments.ownersName', 0
+                ]
+              }
+            }, 
+            'description': {
+              '$first': '$description'
+            }, 
+            'total': {
+              '$sum': '$amount'
+            }, 
+            'date': {
+              '$first': '$date'
+            }
+          }
+        }
+      ]).exec((err,details) =>{
+
+        if(err){
+            res.status(404).json({ err})
+        }
+        if(details){
+            res.status(200).json({ details})
+        }
+    })
   }
 
 
-module.exports = {addMaintenance,getCost, totalCostByDate,totalCost,totalCostByType}
+
+module.exports = {addMaintenance,getCost, totalCostByDate,totalCost,totalCostByType,costByDetails}
 
