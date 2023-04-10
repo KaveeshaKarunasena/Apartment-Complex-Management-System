@@ -12,6 +12,7 @@ function MainDash() {
 
  
   return (
+<<<<<<< Updated upstream
     
     <div>
          
@@ -34,6 +35,39 @@ function MainDash() {
                 <div>
                
                 
+=======
+    <div className={classes.root}>
+      <h1>Admin Dashboard</h1>
+      <div className={classes.content}>
+        <NavLink
+          to="home"
+          className={clsx(classes.nav, classes.p2)}
+          style={navLinkStyle}
+        >
+          <span>Home</span>
+        </NavLink>
+        <NavLink
+          to="add"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Add Apartment</span>
+        </NavLink>
+        <NavLink
+          to="view"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>View Apartment</span>
+        </NavLink>
+        <NavLink
+          to="maintenance"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Maintenance Cost</span>
+        </NavLink>
+>>>>>>> Stashed changes
 
                  
                 </div>
