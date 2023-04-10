@@ -10,6 +10,7 @@ import ViewApartments from './component/adminComponents/navPages/ViewApartments'
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
 import RepoDash from './component/adminComponents/maniDash/RepoDash'
+import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 
 
 const useStyles = makeStyles()(theme => ({
@@ -51,7 +52,7 @@ function App() {
               </Routes>
               <Routes>
                 <Route path="/repo" element={<RepoDash />}>
-                  <Route path="maintenance" element={<Cards />} />
+                  <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
                   <Route path="amenity" element={<AddApartments />} />
                   <Route path="complaint" element={<ViewApartments />} />
                 </Route>

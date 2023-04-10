@@ -40,24 +40,6 @@ const CostTable = () => {
 
   return (
     <div>
-      <form>
-        <InputGroup
-          className="my-3"
-          style={{
-            paddingTop: 50,
-            padding: 5,
-            justifyContent: 'normal',
-            fontSize: 20,
-            color: 'blue',
-            margin: 1,
-            width: '250px',
-            BorderColor: 'green',
-            borderWidth: '10px',
-          }}
-        >
-        </InputGroup>
-      </form>
-
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
