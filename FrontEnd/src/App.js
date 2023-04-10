@@ -1,5 +1,4 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
 import Sidebar from "./component/adminComponents/Sidebar";
 import "./App.css";
 import MainDash from "./component/adminComponents/maniDash/MainDash";
@@ -21,9 +20,7 @@ import EditApartmets from "./component/adminComponents/navPages/EditApartments";
 import { useState } from "react";
 import { setRef } from "@material-ui/core";
 import { SnackbarProvider } from 'notistack';
-=======
-=======
->>>>>>> Stashed changes
+
 import './App.css';
 import MainDash from './component/adminComponents/maniDash/MainDash';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -57,7 +54,7 @@ const useStyles = makeStyles()(theme => ({
     marginTop: '30px',
   },
 }));
->>>>>>> Stashed changes
+
 
 function App() {
   const [fix, setFix] = useState(false);
@@ -73,41 +70,7 @@ function App() {
   window.addEventListener("srcoll", setFixedSidebar);
 
   return (
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    <SnackbarProvider>
-    <BrowserRouter>
-      <div className="App">
-        <div className="AppGlass">
-          <div>
-            <Sidebar className={fix ? "sidebar fixed" : "sidebar"}>
-              <Routes>
-                <Route path="/" element={<MainDash />}>
-                  <Route path="/" element={<Cards />} />
-                  <Route path="add" element={<AddApartments />} />
-                  <Route path="view" element={<ViewApartments />} />
-                  <Route path="edit/:id" element={<EditApartmets />} />
-                  <Route path="maintenance" element={<Maintenance />} />
-                </Route>
 
-                {/* <Route path="/dashboard" element={<Dashboard />} />
-             <Route path="/about" element={<About />} />
-             <Route path="/comment" element={<Comment />} />
-             <Route path="/analytics" element={<Analytics />} />
-             <Route path="/product" element={<Product />} />
-             <Route path="/productList" element={<ProductList />} /> */}
-              </Routes>
-            </Sidebar>
-          </div>
-
-          <Navbar />
-        </div>
-      </div>
-    </BrowserRouter>
-    </SnackbarProvider>
-=======
-=======
->>>>>>> Stashed changes
     <div className="App">
       <SnackbarProvider>
         <BrowserRouter>
@@ -142,7 +105,6 @@ function App() {
         </BrowserRouter>
       </SnackbarProvider>
     </div>
->>>>>>> Stashed changes
   );
 }
 
