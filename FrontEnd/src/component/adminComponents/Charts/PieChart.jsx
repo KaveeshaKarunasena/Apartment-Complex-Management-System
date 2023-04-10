@@ -67,29 +67,29 @@ const [total, setTotal] = useState({data:0});
 
   // const text1 =  total && total.map(item => {return item.data})
 
-  const text2 = total.data;
+  // const text2 = total.data;
   
-  const plugins = [{
-    beforeDraw: function(chart,total) {
-     var width = chart.width,
-         height = chart.height,
-         ctx = chart.ctx;
-         ctx.restore();
-         var fontSize = (height / 160).toFixed(2);
-         ctx.font = fontSize + "em sans-serif";
-         ctx.textBaseline = "top";
-         var text  = total.data,
-         textX = Math.round((width - ctx.measureText(text).width) / 2),
-         textY = height / 2;
-         ctx.fillText(text, textX, textY);
-         ctx.save();
-    } 
-  }]
+  // const plugins = [{
+  //   beforeDraw: function(chart,total) {
+  //    var width = chart.width,
+  //        height = chart.height,
+  //        ctx = chart.ctx;
+  //        ctx.restore();
+  //        var fontSize = (height / 160).toFixed(2);
+  //        ctx.font = fontSize + "em sans-serif";
+  //        ctx.textBaseline = "top";
+  //        var text  = total.data,
+  //        textX = Math.round((width - ctx.measureText(text).width) / 2),
+  //        textY = height / 2;
+  //        ctx.fillText(text, textX, textY);
+  //        ctx.save();
+  //   } 
+  // }]
   return (
-    <div className="App" style={{width:'30%', height:'30%'}}>
+    <div style={{width:'20%', height:'20%'}}>
       <Doughnut data={data}
       type="doughnut" 
-      plugins={plugins} 
+      // plugins={plugins} 
       />
     </div>
   );
