@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import Sidebar from "./component/adminComponents/Sidebar";
 import "./App.css";
 import MainDash from "./component/adminComponents/maniDash/MainDash";
@@ -21,6 +22,8 @@ import { useState } from "react";
 import { setRef } from "@material-ui/core";
 import { SnackbarProvider } from 'notistack';
 =======
+=======
+>>>>>>> Stashed changes
 import './App.css';
 import MainDash from './component/adminComponents/maniDash/MainDash';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -71,6 +74,7 @@ function App() {
 
   return (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <SnackbarProvider>
     <BrowserRouter>
       <div className="App">
@@ -102,6 +106,8 @@ function App() {
     </BrowserRouter>
     </SnackbarProvider>
 =======
+=======
+>>>>>>> Stashed changes
     <div className="App">
       <SnackbarProvider>
         <BrowserRouter>

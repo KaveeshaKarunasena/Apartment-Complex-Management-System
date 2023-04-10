@@ -37,8 +37,11 @@
     "react-responsive-datepicker": "^1.0.6",
     "react-router-dom": "^6.7.0",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "react-scripts": "5.0.0",
 =======
+=======
+>>>>>>> Stashed changes
     "react-scripts": "^5.0.1",
     "recharts": "^2.5.0",
 >>>>>>> Stashed changes
