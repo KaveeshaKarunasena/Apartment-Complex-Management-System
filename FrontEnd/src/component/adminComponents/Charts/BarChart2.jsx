@@ -75,7 +75,7 @@ const BarChart2 = () => {
       style={{
         padding: '0px',
         width: '40%',
-        height: '40%',
+        height: '70%',
       }}
     >
       <Bar data={data} options={options}></Bar>

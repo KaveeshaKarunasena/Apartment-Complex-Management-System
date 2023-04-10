@@ -36,7 +36,7 @@ const useStyles = makeStyles()(theme => ({
     fontSize: '18px',
     fontWeight: 'bold',
     textDecoration: 'none',
-    color: 'black',
+    
   },
   p1: {
     paddingLeft: '20px',
