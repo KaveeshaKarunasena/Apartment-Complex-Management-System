@@ -37,7 +37,7 @@ const useStyles = makeStyles()(theme => ({
     fontSize: '18px',
     fontWeight: 'bold',
     textDecoration: 'none',
-    color: 'black',
+    
   },
   p1: {
     paddingLeft: '20px',
@@ -47,15 +47,56 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
-function MainDash() {
+function RepoDash() {
   
-  return(
+  const { classes } = useStyles();
 
-    <div>
-      <MaintenanceRepo></MaintenanceRepo>
+  const navLinkStyle = ({ isActive }) => {
+    return {
+      frontWeight: isActive ? 'bold' : 'normal',
+      color: isActive ? 'green' : 'black',
+    };
+  };
+
+  return (
+    <div className={classes.root}>
+      <h1>Dashboard</h1>
+      <div className={classes.content}>
+        <NavLink
+          to="maintenanceRepo"
+          className={clsx(classes.nav, classes.p2)}
+          style={navLinkStyle}
+        >
+          <span>Maintenance Report</span>
+        </NavLink>
+        <NavLink
+          to="Home"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Add Apartment</span>
+        </NavLink>
+        <NavLink
+          to="view"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>View Apartment</span>
+        </NavLink>
+        <NavLink
+          to="maintenance"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Maintenance Cost</span>
+        </NavLink>
+
+        {/* <div><CalenderComp/></div> */}
+        <Outlet />
+      </div>
     </div>
-  )
+  );
   
 }
 
-export default MainDash;
+export default RepoDash;

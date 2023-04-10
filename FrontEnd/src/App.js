@@ -8,9 +8,11 @@ import Maintenance from './component/adminComponents/navPages/Maintenance';
 import ViewApartments from './component/adminComponents/navPages/ViewApartments';
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
+
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard'
 import ServiceProvider from './component/managerComponents/serviceProvider';
+import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -49,13 +51,13 @@ function App() {
                 <Route path="maintenance" element={<Maintenance />} />
               </Route>
             </Routes>
-            <Routes>
-              <Route path="/repo" element={<RepoDash />}>
-                <Route path="maintenance" element={<Cards />} />
-                <Route path="amenity" element={<AddApartments />} />
-                <Route path="complaint" element={<ViewApartments />} />
-              </Route>
-            </Routes>
+           <Routes>
+                <Route path="/repo" element={<RepoDash />}>
+                  <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
+                  <Route path="amenity" element={<AddApartments />} />
+                  <Route path="complaint" element={<ViewApartments />} />
+                </Route>
+              </Routes>
             <Routes>
               {/* Manager Dashboard Routes */}
               <Route path="/mDash" element={<ManagerDashboard />}>

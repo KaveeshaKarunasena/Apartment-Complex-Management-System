@@ -26,7 +26,7 @@ function ViewApaertment() {
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const keys = ['apartmentno', 'type', 'status'];
+  const keys = ['apartmentno', 'type', 'status','email'];
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -114,8 +114,9 @@ function ViewApaertment() {
                   return search.toLowerCase() === ''
                     ? data
                     : keys.some(key =>
-                        data[key].toLowerCase().includes(search)
+                        data[key].toLowerCase().includes(search.toLowerCase())
                       );
+                    
                 })
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
