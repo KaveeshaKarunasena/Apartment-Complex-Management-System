@@ -11,10 +11,22 @@ import {
   InputLabel,
   Input,
   TextField,
-  Select
+  Select,
 } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import ServiceCard from './ServiceCard';
 
 import './serviceProvider.css';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const style = {
   position: 'absolute',
@@ -52,9 +64,30 @@ const useStyles = makeStyles()(theme => ({
   },
   submitBtn: {
     marginTop: '15px',
-    backgroundColor: '#488042'
+    backgroundColor: '#488042',
   },
 }));
+
+const DUMMY_DATA = [
+  {
+    companyName: 'Fixit',
+    serviceType: 'Electrician',
+    location: 'Colombo',
+    contactNumber: '0776661234',
+  },
+  {
+    companyName: 'Fixit',
+    serviceType: 'Electrician',
+    location: 'Colombo',
+    contactNumber: '0776661234',
+  },
+  {
+    companyName: 'Fixit',
+    serviceType: 'Electrician',
+    location: 'Colombo',
+    contactNumber: '0776661234',
+  },
+];
 
 const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
@@ -67,20 +100,38 @@ const ServiceProvider = () => {
   const submitFormHandler = () => {
     setShowForm(false);
   };
+
   return (
     <React.Fragment>
       <div className="serviceProviderContainer">
-        <Button
-          variant="contained"
-          onClick={displayFormHandler}
-          style={{
-            backgroundColor: '#488042',
-            marginLeft: '82%',
-            marginTop: '2%',
-          }}
-        >
-          Add Service Provider
-        </Button>
+        <div>
+          <Button
+            variant="contained"
+            onClick={displayFormHandler}
+            style={{
+              backgroundColor: '#488042',
+              marginLeft: '82%',
+              marginTop: '2%',
+            }}
+          >
+            Add Service Provider
+          </Button>
+        </div>
+
+        <div className="serviceProviderList">
+          <Grid container spacing={12}>
+            {DUMMY_DATA.map(serviceProvider => (
+              <Grid item xs={4}>
+                <ServiceCard
+                  cName={serviceProvider.companyName}
+                  sType={serviceProvider.serviceType}
+                  location={serviceProvider.location}
+                  cNumber={serviceProvider.contactNumber}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
 
         <Modal
           open={showForm}
@@ -125,14 +176,14 @@ const ServiceProvider = () => {
               </FormControl>
             </FormGroup>
             <Button
-                // onClick={() => handleSubmit()}
-                type="submit"
-                className={classes.submitBtn}
-                variant="contained"
-                style={{ marginTop: '10%' }}
-              >
-                ADD
-              </Button>
+              // onClick={() => handleSubmit()}
+              type="submit"
+              className={classes.submitBtn}
+              variant="contained"
+              style={{ marginTop: '10%' }}
+            >
+              ADD
+            </Button>
           </Box>
         </Modal>
       </div>
