@@ -29,21 +29,27 @@ const useStyles = makeStyles()(theme => ({
   },
   nav: {
     '&:hover': {
-      backgroundColor: '#ffffff',
-      boxShadow: '10px 10px 5px lightblue'
+      textDecoration: 'underline green',
+      textDecorationSkipInk: 'none',
+      textDecorationThickness: '0.2em',
+      textUnderlineOffset: '0.4em',
+      borderRadius: '50px'
     },
 
     fontSize: '18px',
     fontWeight: 'bold',
     textDecoration: 'none',
     color: 'black',
-  },
-  p1: {
-    paddingLeft: '20px',
-  },
-  p2: {
-    paddingLeft: '10px',
-  },
+    textAlign: 'center',
+    marginRight: '2%',
+    transistion: 'all 0.2s ease-in-out'
+  }
+  // p1: {
+  //   paddingLeft: '20px',
+  // },
+  // p2: {
+  //   paddingLeft: '10px',
+  // },
 }));
 
 function ManagerDashboard() {
