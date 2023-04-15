@@ -4,7 +4,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
+import * as Yup from 'yup';
+import "yup-phone";
 import { makeStyles } from 'tss-react/mui';
+import { Formik } from 'formik';
 import {
   FormGroup,
   FormControl,
@@ -92,6 +95,7 @@ const DUMMY_DATA = [
 const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
   const { classes } = useStyles();
+  const phoneRegExp = /^((\\+[9][4][ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const displayFormHandler = () => {
     setShowForm(true);
@@ -141,49 +145,71 @@ const ServiceProvider = () => {
         >
           <Box sx={style} className={classes.root}>
             <h1>Add Service Provider</h1>
-            <FormGroup>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Company Name</InputLabel>
-                <Input />
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  label="Address"
-                  multiline
-                  maxRows={4}
-                />
-              </FormControl>
-              <FormControl style={{ marginTop: '15%' }} fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Service Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value="Service Type"
-                  label="Service Type"
-                  //   onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Contact Number</InputLabel>
-                <Input />
-              </FormControl>
-            </FormGroup>
-            <Button
-              // onClick={() => handleSubmit()}
-              type="submit"
-              className={classes.submitBtn}
-              variant="contained"
-              style={{ marginTop: '10%' }}
+            <Formik
+              initialValues={{
+                companyName: '',
+                serviceType: '',
+                location: '',
+                contactNumber: '',
+              }}
+              validationSchema={Yup.object().shape({
+                companyName: Yup.string().required('Required*'),
+                serviceType: Yup.string().required('Required*'),
+                location: Yup.string().required('Required'),
+                contactNumber: Yup.string()
+                .phone("US", "Please enter a valid phone number")
+                .required("A phone number is required"),
+              })}
+              // onSubmit={addApartment}
             >
-              ADD
-            </Button>
+              {() => {
+                return (
+                  <>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <InputLabel>Company Name</InputLabel>
+                      <Input />
+                    </FormControl>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <TextField
+                        id="outlined-multiline-flexible"
+                        label="Address"
+                        multiline
+                        maxRows={4}
+                      />
+                    </FormControl>
+                    <FormControl style={{ marginTop: '15%' }} fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Service Type
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value="Service Type"
+                        label="Service Type"
+                        //   onChange={handleChange}
+                      >
+                        <MenuItem value={10}>Ten</MenuItem>
+                        <MenuItem value={20}>Twenty</MenuItem>
+                        <MenuItem value={30}>Thirty</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <InputLabel>Contact Number</InputLabel>
+                      <Input />
+                    </FormControl>
+                    <Button
+                      // onClick={() => handleSubmit()}
+                      type="submit"
+                      className={classes.submitBtn}
+                      variant="contained"
+                      style={{ marginTop: '10%' }}
+                    >
+                      ADD
+                    </Button>
+                  </>
+                );
+              }}
+            </Formik>
           </Box>
         </Modal>
       </div>

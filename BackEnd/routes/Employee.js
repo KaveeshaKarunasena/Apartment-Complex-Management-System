@@ -13,10 +13,7 @@ const {
 
 router.post(
   '/add',
-  validator([
-    body('ContactNumber').exists().isLength(10)
-    
-  ]),
+  
   newEmployee
 );
 

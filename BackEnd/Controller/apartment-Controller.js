@@ -1,6 +1,6 @@
 const apartmentModel = require('../modles/apartment-model');
 
-const newApartment = async (req, res) => {
+const newApartment = (req, res) => {
   let newApartment = new apartmentModel({
     apartmentno: req.body.apartmentno,
     floor: req.body.floor,
