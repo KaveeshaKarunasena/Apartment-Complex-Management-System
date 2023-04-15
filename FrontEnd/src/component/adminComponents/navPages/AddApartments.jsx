@@ -42,7 +42,7 @@ const useStyles = makeStyles()(theme => ({
 
 function AddApartments() {
   const { classes } = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
+  const {enqueueSnackbar} = useSnackbar();
   const navigate = useNavigate();
 
   const addApartment = async formData => {
