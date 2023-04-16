@@ -9,9 +9,11 @@ import Grid from '@mui/material/Grid';
 import DeleteDialog from './DeleteDialog';
 
 import './serviceProvider.css';
+import UpdateService from './UpdateService';
 
 export default function ServiceCard(props) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [updateForm, showUpdateForm] = useState(false);
 
   const enableDialogHandler = () => {
     setShowDeleteDialog(true);
@@ -21,8 +23,30 @@ export default function ServiceCard(props) {
     setShowDeleteDialog(false);
   };
 
+  const displayUpdateForm = () => {
+    showUpdateForm(true);
+  };
+
+  const hideUpdateForm = () => {
+    showUpdateForm(false);
+  };
+
   return (
     <React.Fragment>
+      <UpdateService
+        showForm={updateForm}
+        submitFormHandler={() => {}}
+        setShowForm={() => {}}
+        setIsService={props.setIsService}
+        hideUpdateForm={hideUpdateForm}
+        cName={props.cName}
+        sType={props.sType}
+        location={props.location}
+        cNumber={props.cNumber}
+        id={props.id}
+        spList={props.spList}
+        setServiceProviders={props.setServiceProviders}
+      />
       <DeleteDialog
         showDeleteDialog={showDeleteDialog}
         cancel={disableDialogHandler}
@@ -70,6 +94,7 @@ export default function ServiceCard(props) {
                 style={{
                   backgroundColor: '#FFBD03',
                 }}
+                onClick={displayUpdateForm}
               >
                 Update
               </Button>

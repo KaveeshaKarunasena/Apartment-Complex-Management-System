@@ -74,7 +74,7 @@ const AppointmentHandler = props => {
             <h1 style = {{textAlign:"center", color: "#488042"}}>Appointments</h1>
             <Grid container spacing={4} rowSpacing={2}>
               { DUMMY_DATA.map( app => {
-                  return <Grid item xs={12} id = {app.id}><AppointmentCard customerName = {app.customerName} serviceProvider = {app.serviceProvider}/></Grid>
+                  return <Grid item xs={12} key = {app.id}><AppointmentCard customerName = {app.customerName} serviceProvider = {app.serviceProvider}/></Grid>
               })  
               }
               
