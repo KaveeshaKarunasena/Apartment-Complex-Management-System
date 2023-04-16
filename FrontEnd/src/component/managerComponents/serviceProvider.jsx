@@ -1,12 +1,15 @@
+// Library imports
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
+import * as Yup from 'yup';
 import { makeStyles } from 'tss-react/mui';
+import { Formik } from 'formik';
 import {
-  FormGroup,
+  FormHelperText,
   FormControl,
   InputLabel,
   Input,
@@ -14,19 +17,12 @@ import {
   Select,
 } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
+
+// Custom imports
 import ServiceCard from './ServiceCard';
-
 import './serviceProvider.css';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 const style = {
   position: 'absolute',
@@ -68,30 +64,13 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
-const DUMMY_DATA = [
-  {
-    companyName: 'Fixit',
-    serviceType: 'Electrician',
-    location: 'Colombo',
-    contactNumber: '0776661234',
-  },
-  {
-    companyName: 'Fixit',
-    serviceType: 'Electrician',
-    location: 'Colombo',
-    contactNumber: '0776661234',
-  },
-  {
-    companyName: 'Fixit',
-    serviceType: 'Electrician',
-    location: 'Colombo',
-    contactNumber: '0776661234',
-  },
-];
-
+// Service Provider Main component
 const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
-  const { classes } = useStyles();
+  const {classes} = useStyles();
+  const {enqueueSnackbar} = useSnackbar();
+  const [serviceProviders, setServiceProviders] = useState([]);
+  const [isService, setIsService] = useState(false);
 
   const displayFormHandler = () => {
     setShowForm(true);
@@ -101,6 +80,41 @@ const ServiceProvider = () => {
     setShowForm(false);
   };
 
+  // function used to add a service provider
+  const addServiceProvider = async formData => {
+
+    console.log(formData);
+
+    try {
+      const res = await axios.post('/service-provider/add', {
+        ...formData,
+      });
+      enqueueSnackbar('Service Provider Added', { variant: 'success' });
+      setShowForm(false);
+      setIsService(true);
+    } catch (err) {
+      enqueueSnackbar(err, { variant: 'error' });
+    }
+
+    
+  };
+
+  // useEffect is used to make sure once service provider is added the service provider is displayed instantly on the service provider dashboard
+  useEffect(() => {
+    const fetchServiceProviderDetails = async () => {
+      const response = await fetch('/service-provider/');
+      const json = await response.json();
+
+      if (response.ok) {
+        setServiceProviders(json);
+        setIsService(false);
+      }
+    };
+
+    fetchServiceProviderDetails();
+  }, [isService]);
+
+  //JSX Components start here 
   return (
     <React.Fragment>
       <div className="serviceProviderContainer">
@@ -120,8 +134,8 @@ const ServiceProvider = () => {
 
         <div className="serviceProviderList">
           <Grid container spacing={12}>
-            {DUMMY_DATA.map(serviceProvider => (
-              <Grid item xs={4}>
+            {serviceProviders.map(serviceProvider => (
+              <Grid item xs={4} key = {serviceProvider.id}>
                 <ServiceCard
                   cName={serviceProvider.companyName}
                   sType={serviceProvider.serviceType}
@@ -141,49 +155,97 @@ const ServiceProvider = () => {
         >
           <Box sx={style} className={classes.root}>
             <h1>Add Service Provider</h1>
-            <FormGroup>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Company Name</InputLabel>
-                <Input />
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  label="Address"
-                  multiline
-                  maxRows={4}
-                />
-              </FormControl>
-              <FormControl style={{ marginTop: '15%' }} fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Service Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value="Service Type"
-                  label="Service Type"
-                  //   onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Contact Number</InputLabel>
-                <Input />
-              </FormControl>
-            </FormGroup>
-            <Button
-              // onClick={() => handleSubmit()}
-              type="submit"
-              className={classes.submitBtn}
-              variant="contained"
-              style={{ marginTop: '10%' }}
+            <Formik
+              initialValues={{
+                companyName: '',
+                serviceType: '',
+                location: '',
+                contactNumber: '',
+              }}
+
+              validationSchema={Yup.object().shape({
+                companyName: Yup.string().required('Required*'),
+                serviceType: Yup.string().required('Required*'),
+                location: Yup.string().required('Required*'),
+                contactNumber: Yup.string()
+                  .matches(new RegExp('[+94][0-9]{9}'))
+                  .required('A phone number is required'),
+              })}
+
+              onSubmit={addServiceProvider}
             >
-              ADD
-            </Button>
+              {({ values, errors, handleChange, handleSubmit }) => {
+                return (
+                  <>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <InputLabel>Company Name</InputLabel>
+                      <Input
+                        value={values.companyName}
+                        onChange={handleChange}
+                        name="companyName"
+                        error={errors.companyName && errors.companyName?.length ? true : false}
+                      />
+                      <FormHelperText stylr={{ color: 'red' }}>
+                        {errors.companyName}
+                      </FormHelperText>
+                    </FormControl>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <TextField
+                        value={values.location}
+                        onChange={handleChange}
+                        name="location"
+                        error={errors.location && errors.location?.length ? true : false}
+                        multiline
+                        maxRows={4}
+                        label = "Address"
+                      />
+                      <FormHelperText stylr={{ color: 'red' }}>
+                        {errors.companyName}
+                      </FormHelperText>
+                    </FormControl>
+                    <FormControl style={{ marginTop: '15%' }} fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Service Type
+                      </InputLabel>
+                      <Select
+                        value={values.serviceType}
+                        onChange={handleChange}
+                        name="serviceType"
+                        error={errors.companyName && errors.serviceType?.length ? true : false}
+                      >
+                        <MenuItem value={"Electrician"}>Electrician</MenuItem>
+                        <MenuItem value={"Plumber"}>Plumber</MenuItem>
+                        <MenuItem value={"Clerk"}>Clerk</MenuItem>
+                      </Select>
+                      <FormHelperText stylr={{ color: 'red' }}>
+                        {errors.serviceType}
+                      </FormHelperText>
+                    </FormControl>
+                    <FormControl style={{ marginTop: '10%' }}>
+                      <InputLabel>Contact Number</InputLabel>
+                      <Input
+                        value={values.contactNumber}
+                        onChange={handleChange}
+                        name="contactNumber"
+                        error={errors.contactNumber && errors.contactNumber?.length ? true : false}
+                      />
+                      <FormHelperText stylr={{ color: 'red' }}>
+                        {errors.contactNumber}
+                      </FormHelperText>
+                    </FormControl>
+                    <Button
+                      onClick={() => handleSubmit()}
+                      type="submit"
+                      className={classes.submitBtn}
+                      variant="contained"
+                      style={{ marginTop: '10%' }}
+                    >
+                      ADD
+                    </Button>
+                  </>
+                );
+              }}
+            </Formik>
           </Box>
         </Modal>
       </div>

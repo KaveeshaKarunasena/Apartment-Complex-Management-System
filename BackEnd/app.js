@@ -15,6 +15,7 @@ const appointmentRouter = require ('./routes/appointment')
 
 
 
+
 const app = express();
 
 app.use(bodyParser.json())

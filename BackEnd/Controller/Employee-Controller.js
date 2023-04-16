@@ -3,7 +3,7 @@ const EmployeeModel = require('../modles/Employee-model');
 
 const newEmployee = async (req, res) => {
   let newEmployee = new EmployeeModel({
-    id: req.body.StaffID,
+    StaffID: req.body.StaffID,
     Name: req.body.Name,
     NIC: req.body.NIC,
     DOB: req.body.DOB,
