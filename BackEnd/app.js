@@ -8,11 +8,10 @@ const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://0.0.0.0:27017/apartment");
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
+const appointmentRouter = require ('./routes/appointment')
 
 
 
@@ -29,11 +28,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+  
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
 app.use('/service-provider',serviceProviderRouter);
+app.use('/appointment',appointmentRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

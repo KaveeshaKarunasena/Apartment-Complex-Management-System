@@ -47,34 +47,46 @@ function Maintanence() {
   const { classes } = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   
-  const addApartment = async formData => {
+  const addApartment = async (formData) => {
     try {
       const res = await axios.post('/maintenance/add', {
         ...formData,
       });
+    
+      
+      
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
+    
   };
+ const formInitialValues={
+    apartmentNo:'',
+    amount: '',
+    description: '',
+    date: '',
+  }
+
+  //  const reset = (resetForm)=>{
+
+  //    resetForm({ values: formInitialValues })
+  //  }
   return (
     <Box className={classes.root}>
       <Formik
-        initialValues={{
-          apartmentNo:'',
-          amount: '',
-          description: '',
-          date: '',
-        }}
+        initialValues={
+          formInitialValues
+        }
         validationSchema={Yup.object().shape({
           apartmentNo: Yup.string().required('Required'),
-          amount: Yup.number().required('Required*'),
+          amount: Yup.number().required('Required*'), 
           description: Yup.string().required('Required'),
           date: Yup.string().required('Required'),
         })}
         onSubmit={addApartment}
       >
-        {({ values, errors, handleChange, handleSubmit }) => {
+        {({ values, errors, handleChange, handleSubmit}) => {
           return (
             <>
               <Typography variant="h3">Add Maintenance</Typography>
