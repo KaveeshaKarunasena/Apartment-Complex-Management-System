@@ -83,8 +83,6 @@ const ServiceProvider = () => {
   // function used to add a service provider
   const addServiceProvider = async formData => {
 
-    console.log(formData);
-
     try {
       const res = await axios.post('/service-provider/add', {
         ...formData,
@@ -135,12 +133,16 @@ const ServiceProvider = () => {
         <div className="serviceProviderList">
           <Grid container spacing={12}>
             {serviceProviders.map(serviceProvider => (
-              <Grid item xs={4} key = {serviceProvider.id}>
+              <Grid item xs={4} key = {serviceProvider._id}>
                 <ServiceCard
+                  id = {serviceProvider._id}
                   cName={serviceProvider.companyName}
                   sType={serviceProvider.serviceType}
                   location={serviceProvider.location}
                   cNumber={serviceProvider.contactNumber}
+                  spList = {serviceProviders}
+                  setServiceProviders = {setServiceProviders}
+                  setIsService = {setIsService}
                 />
               </Grid>
             ))}
