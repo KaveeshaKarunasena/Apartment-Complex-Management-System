@@ -15,7 +15,7 @@ const EmployeeSchema = mongoose.Schema({
         required :true
     },
     DOB :  {
-        type :Date,
+        type :String,
         required :true
     },
     Address:  {
@@ -42,7 +42,7 @@ const EmployeeSchema = mongoose.Schema({
         type:Number,
         required:true
     },
-    Overtime:{
+    OverTime:{
         type:Number,
         required:true
     }
