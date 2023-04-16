@@ -60,7 +60,7 @@ function RepoDash() {
 
   return (
     <div className={classes.root}>
-      <h1>Dashboard</h1>
+      <h1>Report Dashboard</h1>
       <div className={classes.content}>
         <NavLink
           to="maintenanceRepo"
