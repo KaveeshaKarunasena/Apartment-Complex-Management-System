@@ -1,7 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import Grid from '@mui/material/Grid';
 import { makeStyles } from 'tss-react/mui';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -30,41 +34,67 @@ const style = {
 };
 
 const useStyles = makeStyles()(theme => ({
-    root: {
-      [theme.breakpoints.up('md')]: {
-        width: '30%',
-      },
-      [theme.breakpoints.down('md')]: {
-        width: '60%',
-      },
-      [theme.breakpoints.down('sm')]: {
-        width: '95%',
-      },
-      margin: '0 auto',
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      marginTop: '30px',
+  root: {
+    [theme.breakpoints.up('md')]: {
+      width: '30%',
     },
-    formControl: {
-      marginTop: '10px',
-      padding: '5px',
+    [theme.breakpoints.down('md')]: {
+      width: '60%',
     },
-    submitBtn: {
-      marginTop: '15px',
-      backgroundColor: '#488042',
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
     },
-    h1: {
-        color: '#488042',
-        textAlign: 'center'
-    }
-  }));
+    margin: '0 auto',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '30px',
+  },
+  formControl: {
+    marginTop: '10px',
+    padding: '5px',
+  },
+  submitBtn: {
+    marginTop: '15px',
+    backgroundColor: '#488042',
+  },
+  h1: {
+    color: '#488042',
+    textAlign: 'center',
+  },
+}));
 
-const AddService = (props) => {
+const AddService = props => {
   // function used to add a service provider
   const { enqueueSnackbar } = useSnackbar();
-  const {showForm} = props;
+  const { showForm } = props;
   const { classes } = useStyles();
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
+
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+
+  const onSelectFile = e => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    setSelectedFile(e.target.files[0]);
+  };
 
   const addServiceProvider = async formData => {
     try {
@@ -85,9 +115,10 @@ const AddService = (props) => {
       onClose={props.submitFormHandler}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      style={{ overflow: 'scroll' }}
     >
       <Box sx={style} className={classes.root}>
-        <h1 className= {classes.h1}>Add Service Provider</h1>
+        <h1 className={classes.h1}>Add Service Provider</h1>
         <Formik
           initialValues={{
             companyName: '',
@@ -140,7 +171,7 @@ const AddService = (props) => {
                     {errors.companyName}
                   </FormHelperText>
                 </FormControl>
-                <FormControl style={{ marginTop: '15%' }} fullWidth>
+                <FormControl style={{ marginTop: '10%' }} fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Service Type
                   </InputLabel>
@@ -177,6 +208,35 @@ const AddService = (props) => {
                   <FormHelperText stylr={{ color: 'red' }}>
                     {errors.contactNumber}
                   </FormHelperText>
+                </FormControl>
+                <FormControl style={{ marginTop: '10%', marginLeft: '-2%' }}>
+                  <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={onSelectFile}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Grid container spacing={1}>
+                      <Grid item xs={2}>
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                          style = {{marginTop: "-10%"}}
+                        >
+                          {selectedFile && (
+                            <img src={preview} style={{ width: '50%' }} />
+                          )}
+                          {!selectedFile && <PhotoCamera />}
+                        </IconButton>
+                      </Grid>
+                      <Grid item xs={4}>
+                        Upload Image
+                      </Grid>
+                    </Grid>
+                  </label>
                 </FormControl>
                 <Button
                   onClick={() => handleSubmit()}

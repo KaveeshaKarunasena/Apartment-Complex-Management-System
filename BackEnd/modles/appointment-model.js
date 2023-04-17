@@ -14,15 +14,11 @@ const appointmentSchema =  mongoose.Schema({
         required:true,
         type:String
     },
-    date:{
+    createdAt:{
         required:true,
         type:Date
     },
-    time:{
-        required:true,
-        type:String
-    }
-},{timestamps:true})
+})
 
 const  Appointment = mongoose.model("Appointment",  appointmentSchema);
 module.exports =  Appointment;

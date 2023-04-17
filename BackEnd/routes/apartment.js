@@ -8,6 +8,7 @@ const {
   viewApartmentById,
   updateApartment,
   deleteApartment,
+  getAllApartment
 } = require('../Controller/apartment-Controller');
 
 router.post(
@@ -27,10 +28,11 @@ router.get('/getById/:id', viewApartmentById);
 
 router.put('/update/:_id',validator([
   body('apartmentno').exists().isLength(3),
-  body('floor').exists().isLength(2),
+  body('floor').isLength({max :2}),
   body('email').isEmail().normalizeEmail(),
 ]), updateApartment);
 
 router.delete('/delete/:_id', deleteApartment);
+router.get('/allApartment', getAllApartment)
 
 module.exports = router;
