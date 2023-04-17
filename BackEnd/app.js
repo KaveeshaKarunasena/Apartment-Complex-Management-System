@@ -5,14 +5,39 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
+const MongoClient = require('mongodb').MongoClient;
 
-mongoose.connect("mongodb://0.0.0.0:27017/apartment");
+
+mongoose.connect("mongodb://0.0.0.0:27017/apartment")
+
+//Connect to your database
+// MongoClient.connect(url, (err, db) => {
+//     if (err) throw err;
+
+//     //Retrieve your chosen database
+//     let dbo = db.db("apartment");
+
+//     //Set your collection
+//     let myCollection = "appointments";
+
+//     /*  Create a mongodb index to remove any document with 'createdAt' 
+//        field every 30 seconds.
+//    */
+//     dbo.collection(myCollection)
+//         .createIndex({ "createdAt": 1 }, { expireAfterSeconds: 30 },
+//             (err, dbResult) => {
+//                 if (err) throw err;
+//                 console.log("Index Created");
+//                 db.close();
+//             });
+
+//   })
+
+
 
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
-
-
 const appointmentRouter = require ('./routes/appointment')
 
 
