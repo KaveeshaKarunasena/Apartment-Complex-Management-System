@@ -6,6 +6,7 @@ const appointmentRouter = express.Router();
 appointmentRouter.post('/addAppointment', createAppointment)
 appointmentRouter.get('/getAllAppointment', viewAppointment)
 appointmentRouter.delete('/cancelAppointment', deleteAppointment)
+module.exports = appointmentRouter;
 
 
-module.exports = appointmentRouter
+

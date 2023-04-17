@@ -1,6 +1,6 @@
 const Appointment = require('../modles/appointment-model')
-
 const addAppointment = async(ownersName,serviceType,contactNo)=>{
+
 
     const newAppointment = new Appointment({
         ownersName,
