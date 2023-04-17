@@ -7,6 +7,7 @@ appointmentRouter.post('/addAppointment', createAppointment)
 appointmentRouter.get('/getAllAppointment', viewAppointment)
 appointmentRouter.delete('/cancelAppointment', deleteAppointment)
 
+module.exports = appointmentRouter
 
 
 
