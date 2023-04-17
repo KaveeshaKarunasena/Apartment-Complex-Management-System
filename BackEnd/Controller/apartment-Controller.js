@@ -89,10 +89,33 @@ const deleteApartment = async (req, res) => {
   });
 };
 
+const getAllApartment =  async(res,req) =>{
+
+  await apartmentModel.aggregate(
+    [
+      {
+        '$group': {
+          '_id': '$apartmentno'
+        }
+      }
+    ]
+   
+).exec((err,_id) =>{
+
+    if(err){
+        res.status(404).json({ err})
+    }
+    if(_id){
+        res.status(200).json({ _id})
+    }
+})
+}
+
 module.exports = {
   newApartment,
   viewApartment,
   viewApartmentById,
   updateApartment,
   deleteApartment,
+  getAllApartment
 };

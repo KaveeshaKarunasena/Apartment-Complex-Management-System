@@ -5,12 +5,12 @@ const createAppointment = async (req, res) => {
 
     try{
 
-        const {ownersName,serviceType,contactNo,date,time} = req.body;
-        const newAppointment = await appointmentService.addAppointment(ownersName,serviceType,contactNo,date,time)
+        const {ownersName,serviceType,contactNo} = req.body;
+        const newAppointment = await appointmentService.addAppointment(ownersName,serviceType,contactNo)
         res.status(200).send(newAppointment);
 
     }catch(err){
-        res.status(400).send({err:err});
+        res.status(400).send({err:"not"});
 
     }
     
