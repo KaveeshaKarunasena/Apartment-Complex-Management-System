@@ -8,6 +8,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { makeStyles } from 'tss-react/mui';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -75,11 +78,7 @@ function AddApartments() {
             .length(3, 'Must have 3 Characters')
             .required('Required*'),
           floor: Yup.number("Must be a Number")
-            .test(
-              'len',
-              'Must have 2 numbers',
-              val => val.toString().length === 2
-            )
+            .max(15)
             .required('Required'),
           buildingNo: Yup.string()
             .matches(/^[A-Z]/, 'Enter a valid Building')
@@ -130,7 +129,7 @@ function AddApartments() {
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
                 <TextField
-                  value={values.buildingNo}
+                  value={values.buildingNo = values.apartmentno.substring(0, 1)}
                   onChange={handleChange}
                   name="buildingNo"
                   label="Building No"
@@ -147,15 +146,18 @@ function AddApartments() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
-                  value={values.type}
-                  onChange={handleChange}
-                  name="type"
-                  label="Type"
-                  type="text"
-                  size="small"
-                  error={errors.type && errors.type?.length ? true : false}
-                />
+              <InputLabel>Type</InputLabel>
+                 <Select
+                    value={values.type}
+                    onChange={handleChange}
+                    name="type"
+                    label="Type"
+                    size="small"
+                    error={errors.type && errors.type?.length ? true : false}
+                  >
+                    <MenuItem value={'Luxury'}>Luxury</MenuItem>
+                    <MenuItem value={'Semi Luxury'}>Semi Luxury</MenuItem>
+                  </Select> 
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.type}
                 </FormHelperText>
@@ -193,7 +195,7 @@ function AddApartments() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
+                {/* <TextField
                   value={values.status}
                   onChange={handleChange}
                   name="status"
@@ -201,7 +203,20 @@ function AddApartments() {
                   type="text"
                   size="small"
                   error={errors.status && errors.status?.length ? true : false}
-                />
+                /> */}
+                 <InputLabel>Status</InputLabel>
+                 <Select
+                    value={values.status}
+                    onChange={handleChange}
+                    name="status"
+                    label="Status"
+                    size="small"
+                    error={errors.status && errors.status?.length ? true : false}
+                  >
+                    <MenuItem value={'Owned'}>Owned</MenuItem>
+                    <MenuItem value={'Free'}>Free</MenuItem>
+                    <MenuItem value={'Pending'}>Pending</MenuItem>
+                  </Select> 
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.status}
                 </FormHelperText>
