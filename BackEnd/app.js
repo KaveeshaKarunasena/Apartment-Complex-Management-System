@@ -39,6 +39,11 @@ const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
 const appointmentRouter = require ('./routes/appointment')
+const customerRouter = require("./routes/customers.js")
+const otpRouter = require("./routes/otp.js")
+
+
+
 
 
 
@@ -60,6 +65,8 @@ app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
 app.use('/service-provider',serviceProviderRouter);
 app.use('/appointment',appointmentRouter);
+app.use("/customer",customerRouter)
+app.use("/sendOTP",otpRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
