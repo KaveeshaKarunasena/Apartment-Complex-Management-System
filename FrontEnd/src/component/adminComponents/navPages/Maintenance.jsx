@@ -16,8 +16,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -46,11 +48,26 @@ const useStyles = makeStyles()(theme => ({
 function Maintanence() {
   const { classes } = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const [apartmentNo, setApartmentNo] = useState([])
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      const data = await axios.get('/apartment/allApartment');
+      
+      console.log(data)
+      
+        setApartmentNo(data);
+      
+      
+    }
+    fetchDetails();
+  }, []);
   
-  const addApartment = async (formData) => {
+  const addMaintenance = async (formData) => {
     try {
       const res = await axios.post('/maintenance/add', {
         ...formData,
+      
       });
     
       
@@ -84,14 +101,14 @@ function Maintanence() {
           description: Yup.string().required('Required'),
           date: Yup.string().required('Required'),
         })}
-        onSubmit={addApartment}
+        onSubmit={addMaintenance}
       >
         {({ values, errors, handleChange, handleSubmit}) => {
           return (
             <>
               <Typography variant="h3">Add Maintenance</Typography>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
+                {/* <TextField
                   value={values.apartmentNo}
                   onChange={handleChange}
                   name="apartmentNo"
@@ -99,7 +116,23 @@ function Maintanence() {
                   type="text"
                   size="small"
                   error={errors.apartmentNo && errors.apartmentNo?.length ? true : false}
-                />
+                /> */}
+                <InputLabel>Type</InputLabel>
+                 <Select
+                    value={values.apartmentNo}
+                    onChange={handleChange}
+                    name="apartmentNo"
+                    label="Apartment No"
+                    size="small"
+                    error={errors.apartmentNo && errors.apartmentNo?.length ? true : false}
+                  >
+                    {apartmentNo 
+                 && apartmentNo.map((model, index) => (
+                     <MenuItem key={index} value={model.apartmentNo}>{model.apartmentNo}</MenuItem>
+                 ))
+                 
+             }
+                  </Select> 
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.apartmentNo}
                 </FormHelperText>
