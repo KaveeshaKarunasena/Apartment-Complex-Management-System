@@ -11,8 +11,6 @@ mongoose.connect("mongodb://0.0.0.0:27017/apartment");
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
-
-
 const appointmentRouter = require ('./routes/appointment')
 
 
