@@ -6,7 +6,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
 const MongoClient = require('mongodb').MongoClient;
+const cors = require ('cors')
 
+
+
+const sessoin = require('express-session');
 
 mongoose.connect("mongodb://0.0.0.0:27017/apartment")
 
@@ -50,7 +54,7 @@ const otpRouter = require("./routes/otp.js")
 
 const app = express();
 
-app.use(bodyParser.json())
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -58,10 +62,29 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-  
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
+
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  method: ["GET","POST"],
+  credential: true
+}));
+
+app.use(sessoin({
+  key: "appartmentNo",
+  secret:"subscrib",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    express: 60 * 60 * 24,
+  },
+}));
+
+
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
 app.use('/service-provider',serviceProviderRouter);

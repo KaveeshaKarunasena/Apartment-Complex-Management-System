@@ -9,6 +9,7 @@ const{
     updateProfileById,
     deleteProfile,
     viewProfiles,
+    resetPassword,
 } = require('../Controller/coustomerController');
 
 
@@ -24,5 +25,7 @@ router.put("/update/:id",updateProfileById);
 router.delete("/delete/:id",deleteProfile);
 
 router.get("/",viewProfiles);
+
+router.put("/recoverypassword",resetPassword);
 
 module.exports= router;
