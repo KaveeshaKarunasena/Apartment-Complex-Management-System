@@ -194,7 +194,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link variant="body2" component="button" to="/add">
+                <Link variant="body2" component="button" href='#'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
