@@ -49,6 +49,7 @@ const login = async (req,res,session) =>{
     }
     else{
         res.status(200).send({status:"Success!"})
+        //req.session.user = 
     }
     
     
@@ -121,23 +122,27 @@ const viewProfiles = async (req,res)=>{
     console.log("Hello")
 };
 
-function createAccessToken(nicNO){
-    return jwt.sign({
-        nicNO: nicNO
-    },process.env.ACCESS_TOKEN_SECRET, {
-        epiresIn: '10m'
-    });
-}
+const resetPassword = async (req,res)  =>{
 
-function createRefreshTaken(nicNO, refreshTakenId){
-    return jwt.sign({
-        nicNO: nicNO,
-        takenId: refreshTakenId
-    },process.env.REFRESH_TOKEN_SECRET, {
-        epiresIn: '30d'
-    });
-}
+    const {apartmentNO,password} = req.body;
 
+    const updatePassword = {
+      
+        password,
+    
+    }
+
+    const update =  Customer.findByIdAndUpdate(userPassword, updatePassword).then((customer) => {
+
+        //status = 200 = updated
+        res.status(200).send({status:"User Password Updated", user:update})
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send({status:"Error with updating data", error:err.message});
+
+    })
+
+}
 module.exports= {
     newSignUp,
     login,
@@ -145,4 +150,5 @@ module.exports= {
     updateProfileById,
     deleteProfile,
     viewProfiles,
+    resetPassword,
 };
