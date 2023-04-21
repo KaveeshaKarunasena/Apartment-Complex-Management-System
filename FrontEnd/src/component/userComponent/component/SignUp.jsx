@@ -101,7 +101,7 @@ export default function SignUp() {
         onSubmit: (values) => {
           if (values.confPassword === values.password) {
             
-            axios({ method: "POST", url: "http://localhost:8000/sendOTP/otp", data: { email: values.email } });
+            axios({ method: "POST", url: "http://localhost:3000/sendOTP/otp", data: { email: values.email } });
             Swal.fire({
               title: "Enter OTP",
               input: "text",
@@ -111,7 +111,7 @@ export default function SignUp() {
               confirmButtonText: "Submit",
               preConfirm: (otp) => {
                 return axios
-                  .post("http://localhost:8000/sendOTP/verifyOTP", { values,otp })
+                  .post("http://localhost:3000/sendOTP/verifyOTP", { values,otp })
                   .then((response) => {
                     return response.data;
                   })
@@ -122,7 +122,7 @@ export default function SignUp() {
             }).then((result) => {
               if (result.value) {
                 Swal.fire("Submitted!", '', "success");
-                axios({ method: "POST", url: "http://localhost:8000/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
+                axios({ method: "POST", url: "http://localhost:3000/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
                   alert("Customer added")
                 }).catch((err)=>{
                   alert(err)
