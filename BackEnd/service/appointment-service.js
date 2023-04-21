@@ -1,25 +1,19 @@
-const Appointment = require('../modles/appointment-model')
-const addAppointment = async(ownersName,serviceType,contactNo)=>{
+const Appointment = require('../modles/appointment-model');
+const addAppointment = async (ownersName, serviceType, contactNo) => {
+  const newAppointment = new Appointment({
+    ownersName,
+    serviceType,
+    contactNo,
+    createdAt: new Date(),
+  });
 
+  await newAppointment.save();
 
-    const newAppointment = new Appointment({
-        ownersName,
-        serviceType,
-        contactNo,
-        createdAt : new Date(),
-    })
+  const appointment = JSON.parse(JSON.stringify(newAppointment));
 
-    
-    
-    await newAppointment.save();
-   
-    
-    const appointment =  JSON.parse(JSON.stringify(newAppointment));
-   
-    return appointment 
-}
+  return appointment;
+};
 
-
-module.exports ={
-    addAppointment
-}
+module.exports = {
+  addAppointment,
+};

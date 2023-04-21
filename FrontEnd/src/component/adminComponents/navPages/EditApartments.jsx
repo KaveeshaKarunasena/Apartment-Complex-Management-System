@@ -59,6 +59,7 @@ const EditApartments = props => {
 
       await axios.get(`/apartment/getById/${id}`).then(res => {
         if (res.data.success) {
+          console.log(res)
           setState({
             apartmentno: res.data.apartmentModel.apartmentno,
             floor: res.data.apartmentModel.floor,
@@ -70,6 +71,7 @@ const EditApartments = props => {
           });
         } else console.log('Error ');
       });
+     
     };
 
     getData();
@@ -92,6 +94,8 @@ const EditApartments = props => {
     try {
       await axios.put(`/apartment/update/${id}`, data).then(res => {
         const apartmentCopy = [...apartment];
+
+        
 
         apartmentCopy.map(item => {
           if (item._id === id) {
@@ -131,17 +135,10 @@ const EditApartments = props => {
     <Box className={classes.root}>
       <Formik
         validationSchema={Yup.object().shape({
-          apartmentno: Yup.string()
-            .max(3, 'must have maximum 3 Numbers')
-            .required('Required*'),
-          floor: Yup.string()
-            .max(2, 'must have maximum 2 Numbers')
-            .required('Required'),
-          buildingNo: Yup.string().required('Required'),
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),
           status: Yup.string().required('Required'),
-          email: Yup.string().required('Required'),
+          email: Yup.string().email('Invalid Email').required('Required'),
         })}
       >
         {({ errors }) => {
@@ -156,6 +153,7 @@ const EditApartments = props => {
                   label="Apartment No"
                   type="text"
                   size="small"
+                  disabled ={true}
                   error={
                     errors.apartmentno && errors.apartmentno?.length
                       ? true
@@ -174,6 +172,7 @@ const EditApartments = props => {
                   label="Floor No"
                   type="text"
                   size="small"
+                  disabled ={true}
                   error={errors.floor && errors.floor?.length ? true : false}
                 />
                 <FormHelperText style={{ color: 'red' }}>
@@ -188,6 +187,7 @@ const EditApartments = props => {
                   label="Building No"
                   type="text"
                   size="small"
+                  disabled ={true}
                   error={
                     errors.buildingNo && errors.buildingNo?.length
                       ? true

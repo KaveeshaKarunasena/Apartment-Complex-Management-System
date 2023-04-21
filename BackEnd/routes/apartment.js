@@ -27,8 +27,6 @@ router.get('/view', viewApartment);
 router.get('/getById/:id', viewApartmentById);
 
 router.put('/update/:_id',validator([
-  body('apartmentno').exists().isLength(3),
-  body('floor').isLength({max :2}),
   body('email').isEmail().normalizeEmail(),
 ]), updateApartment);
 
