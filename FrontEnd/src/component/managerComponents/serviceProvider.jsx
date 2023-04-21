@@ -14,6 +14,7 @@ const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
   
   const [serviceProviders, setServiceProviders] = useState([]);
+  const [serviceImages, setServiceImages] = useState([]);
   const [isService, setIsService] = useState(false);
 
   const displayFormHandler = () => {
@@ -30,10 +31,15 @@ const ServiceProvider = () => {
       const response = await fetch('/service-provider/');
       const json = await response.json();
 
-      if (response.ok) {
+      const response1 = await fetch('/upload/api/get');
+      const json1 = await response1.json();
+
+      if (response.ok && response1.ok) {
         setServiceProviders(json);
+        setServiceImages(json1);
         setIsService(false);
       }
+
     };
 
     fetchServiceProviderDetails();
@@ -59,7 +65,7 @@ const ServiceProvider = () => {
 
         <div className="serviceProviderList">
           <Grid container spacing={12}>
-            {serviceProviders.map(serviceProvider => (
+            {serviceProviders.map( (serviceProvider, index) => (
               <Grid item xs={4} key={serviceProvider._id}>
                 <ServiceCard
                   id={serviceProvider._id}
@@ -70,6 +76,7 @@ const ServiceProvider = () => {
                   spList={serviceProviders}
                   setServiceProviders={setServiceProviders}
                   setIsService={setIsService}
+                  image={ serviceImages[index].photo}
                 />
               </Grid>
             ))}

@@ -24,6 +24,10 @@ const serviceProviderSchema = new schema({
         type: String,
         required: true
     }
+    // },
+    // photo: {
+    //     type: String,
+    // },
 })
 
 // Specifies the table name

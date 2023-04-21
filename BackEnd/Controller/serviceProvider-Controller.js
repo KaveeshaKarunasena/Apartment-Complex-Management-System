@@ -7,12 +7,13 @@ const newServiceProvider = async (req, res) => {
   const serviceType = req.body.serviceType;
   const location = req.body.location;
   const contactNumber = req.body.contactNumber;
+  // const photo = req.file.filename
 
   const newServiceProviderData = new ServiceProvider({
     companyName,
     serviceType,
     location,
-    contactNumber,
+    contactNumber
   });
 
   newServiceProviderData
@@ -22,7 +23,7 @@ const newServiceProvider = async (req, res) => {
     })
     
     .catch(err => {
-      console.log(error);
+      console.log(err);
     });
 };
 

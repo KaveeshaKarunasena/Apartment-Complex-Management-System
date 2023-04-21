@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import 'yup-phone';
 
 const style = {
   position: 'absolute',
@@ -45,10 +46,10 @@ const useStyles = makeStyles()(theme => ({
       width: '95%',
     },
     margin: '0 auto',
-    height: '100vh',
+    height: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '30px',
+    marginTop: '10px',
   },
   formControl: {
     marginTop: '10px',
@@ -71,6 +72,7 @@ const AddService = props => {
   const { classes } = useStyles();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const phoneRegExp = /^(?:\+94|94|0)(?:1|7|2|6|8)(?:\d{8}|\d{9})$/;
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -98,9 +100,20 @@ const AddService = props => {
 
   const addServiceProvider = async formData => {
     try {
-      const res = await axios.post('/service-provider/add', {
-        ...formData,
-      });
+      const res = await axios.post('/service-provider/add', { ...formData });
+
+      const formData1 = new FormData();
+      formData1.append('photo', selectedFile);
+
+      const res1 = await axios
+        .post('/upload/api/save', formData1)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+
       enqueueSnackbar('Service Provider Added', { variant: 'success' });
       props.setShowForm(false);
       props.setIsService(true);
@@ -131,7 +144,9 @@ const AddService = props => {
             serviceType: Yup.string().required('Required*'),
             location: Yup.string().required('Required*'),
             contactNumber: Yup.string()
-              .matches(new RegExp('[+94][0-9]{9}'))
+              .test('is-phone', 'Invalid phone number', value =>
+                phoneRegExp.test(value)
+              )
               .required('A phone number is required'),
           })}
           onSubmit={addServiceProvider}
@@ -224,7 +239,7 @@ const AddService = props => {
                           color="primary"
                           aria-label="upload picture"
                           component="span"
-                          style = {{marginTop: "-10%"}}
+                          style={{ marginTop: '-10%' }}
                         >
                           {selectedFile && (
                             <img src={preview} style={{ width: '50%' }} />
