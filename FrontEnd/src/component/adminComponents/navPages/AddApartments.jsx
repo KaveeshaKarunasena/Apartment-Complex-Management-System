@@ -91,7 +91,7 @@ function AddApartments() {
         })}
         onSubmit={addApartment}
       >
-        {({ values, errors, handleChange, handleSubmit }) => {
+        {({ values, errors, handleChange, handleSubmit,resetForm }) => {
           return (
             <>
               <Typography variant="h3">Add Apartment</Typography>
@@ -195,15 +195,6 @@ function AddApartments() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                {/* <TextField
-                  value={values.status}
-                  onChange={handleChange}
-                  name="status"
-                  label="Status"
-                  type="text"
-                  size="small"
-                  error={errors.status && errors.status?.length ? true : false}
-                /> */}
                  <InputLabel>Status</InputLabel>
                  <Select
                     value={values.status}
@@ -228,6 +219,15 @@ function AddApartments() {
                 variant="contained"
               >
                 ADD
+              </Button>
+              <Button
+                type="button"
+                color="error"
+                variant="contained"
+                className={classes.submitBtn}
+                onClick={() => resetForm()}
+              >
+                Reset
               </Button>
             </>
           );

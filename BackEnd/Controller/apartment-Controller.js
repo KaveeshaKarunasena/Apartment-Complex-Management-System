@@ -89,7 +89,7 @@ const deleteApartment = async (req, res) => {
   });
 };
 
-const getAllApartment =  async(res,req) =>{
+const getAllApartment =  async(req,res) =>{
 
   await apartmentModel.aggregate(
     [
@@ -100,14 +100,16 @@ const getAllApartment =  async(res,req) =>{
       }
     ]
    
-).exec((err,_id) =>{
+).exec((err,data) =>{
 
-    if(err){
-        res.status(404).json({ err})
+  if(data){
+     res.status(200).json(data)
+}
+    else{
+       res.status(404).json({ err: err})
     }
-    if(_id){
-        res.status(200).json({ _id})
-    }
+   
+    
 })
 }
 
