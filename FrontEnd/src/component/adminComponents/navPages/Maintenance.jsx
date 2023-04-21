@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
 } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { Formik } from 'formik';
@@ -48,91 +48,76 @@ const useStyles = makeStyles()(theme => ({
 function Maintanence() {
   const { classes } = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const [apartmentNo, setApartmentNo] = useState([])
+  const [dropDown, setDropDown] = useState([]);
+  const [initialValues, setInitialValues] = useState({
+    apartmentNo: '',
+    amount: '',
+    description: '',
+    date: '',
+  });
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const data = await axios.get('/apartment/allApartment');
-      
-      console.log(data)
-      
-        setApartmentNo(data);
-      
-      
-    }
+      const { data } = await axios.get('/apartment/allApartment');
+      const sortData = data.sort((a, b) => (a._id > b._id ? 1 : -1));
+
+      setDropDown(sortData);
+    };
     fetchDetails();
   }, []);
-  
-  const addMaintenance = async (formData) => {
+
+  const addMaintenance = async formData => {
     try {
       const res = await axios.post('/maintenance/add', {
         ...formData,
-      
       });
-    
-      
-      
+
+      console.log(formData);
+
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
-    
   };
- const formInitialValues={
-    apartmentNo:'',
-    amount: '',
-    description: '',
-    date: '',
-  }
 
-  //  const reset = (resetForm)=>{
-
-  //    resetForm({ values: formInitialValues })
-  //  }
   return (
     <Box className={classes.root}>
       <Formik
-        initialValues={
-          formInitialValues
-        }
+        enableReinitialize
+        initialValues={initialValues}
         validationSchema={Yup.object().shape({
           apartmentNo: Yup.string().required('Required'),
-          amount: Yup.number().required('Required*'), 
+          amount: Yup.number().required('Required*'),
           description: Yup.string().required('Required'),
           date: Yup.string().required('Required'),
         })}
         onSubmit={addMaintenance}
       >
-        {({ values, errors, handleChange, handleSubmit}) => {
+        {({ values, errors, handleChange, handleSubmit, resetForm }) => {
           return (
             <>
               <Typography variant="h3">Add Maintenance</Typography>
               <FormControl className={classes.formControl} variant="outlined">
-                {/* <TextField
+                <InputLabel>Type</InputLabel>
+                <Select
                   value={values.apartmentNo}
                   onChange={handleChange}
                   name="apartmentNo"
                   label="Apartment No"
-                  type="text"
                   size="small"
-                  error={errors.apartmentNo && errors.apartmentNo?.length ? true : false}
-                /> */}
-                <InputLabel>Type</InputLabel>
-                 <Select
-                    value={values.apartmentNo}
-                    onChange={handleChange}
-                    name="apartmentNo"
-                    label="Apartment No"
-                    size="small"
-                    error={errors.apartmentNo && errors.apartmentNo?.length ? true : false}
-                  >
-                    {apartmentNo 
-                 && apartmentNo.map((model, index) => (
-                     <MenuItem key={index} value={model.apartmentNo}>{model.apartmentNo}</MenuItem>
-                 ))
-                 
-             }
-                  </Select> 
+                  error={
+                    errors.apartmentNo && errors.apartmentNo?.length
+                      ? true
+                      : false
+                  }
+                >
+                  {dropDown &&
+                    dropDown.map((data, index) => (
+                      <MenuItem key={index} value={data._id}>
+                        {data._id}
+                      </MenuItem>
+                    ))}
+                </Select>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.apartmentNo}
                 </FormHelperText>
@@ -187,9 +172,17 @@ function Maintanence() {
                 type="submit"
                 className={classes.submitBtn}
                 variant="contained"
-
               >
                 ADD
+              </Button>
+              <Button
+                type="button"
+                color="error"
+                variant="contained"
+                className={classes.submitBtn}
+                onClick={() => resetForm()}
+              >
+                Reset
               </Button>
             </>
           );
