@@ -135,6 +135,7 @@ function AddApartments() {
                   label="Building No"
                   type="text"
                   size="small"
+                  disabled ={true}
                   error={
                     errors.buildingNo && errors.buildingNo?.length
                       ? true
