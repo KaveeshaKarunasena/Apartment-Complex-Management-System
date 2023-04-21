@@ -40,6 +40,8 @@ const ServiceProvider = () => {
         setIsService(false);
       }
 
+      console.log(json1[0].photo);
+
     };
 
     fetchServiceProviderDetails();

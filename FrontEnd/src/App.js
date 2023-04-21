@@ -9,6 +9,11 @@ import ViewApartments from './component/adminComponents/navPages/ViewApartments'
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
 
+import SignUp from './component/userComponent/component/SignUp';
+import SignIn from './component/userComponent/component/SignIn';
+import ProfilePage from './component/userComponent/component/ProfilePage';
+import Home from './component/userComponent/component/Home';
+
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard'
 import ServiceProvider from './component/managerComponents/serviceProvider';
@@ -35,6 +40,7 @@ const useStyles = makeStyles()(theme => ({
 }));
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
   const { classes } = useStyles();
 
   return (
@@ -42,7 +48,23 @@ function App() {
       <SnackbarProvider>
         <BrowserRouter>
           <div>
+
+            <Routes>
+               <Route path="login" element={<SignIn/>} />
+               <Route path="signup" element={<SignUp/>} />
+            </Routes>
             <Navbar />
+
+{/*================================================Customer Routes========================================================*/}
+             
+            <Routes> 
+              <Route path="/home" element={<Home/>}> 
+                <Route path="profile" element={<ProfilePage/>} />
+              </Route>  
+            </Routes>
+
+ {/*=======================================================================================================================*/}
+
             <Routes>
               <Route path="/app" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
@@ -67,6 +89,7 @@ function App() {
                 {/* <Route path="notices" element={<Cards />} /> */}
               </Route>
             </Routes>
+
           </div>
         </BrowserRouter>
       </SnackbarProvider>
