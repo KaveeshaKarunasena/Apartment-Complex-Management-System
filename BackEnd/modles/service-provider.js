@@ -23,6 +23,9 @@ const serviceProviderSchema = new schema({
     contactNumber : {
         type: String,
         required: true
+    },
+    photo: {
+        type: String
     }
 })
 

@@ -66,20 +66,22 @@ const UpdateService = props => {
   const { enqueueSnackbar } = useSnackbar();
   const { showForm } = props;
   const { classes } = useStyles();
-  const [state, setState] = useState({
-    companyName: props.cName,
-    serviceType: props.sType,
-    location: props.location,
-    contactNumber: props.cNumber
-  });
+  const phoneRegExp = /^(?:\+94|94|0)(?:1|7|2|6|8)(?:\d{8}|\d{9})$/;
+  // const [state, setState] = useState({
+  //   companyName: props.cName,
+  //   serviceType: props.sType,
+  //   location: props.location,
+  //   contactNumber: props.cNumber
+  // });
 
-  const onInputChange = e => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+  // const onInputChange = e => {
+  //   console.log(e.target.value)
+  //   setState({ ...state, [e.target.name]: e.target.value });
+  // };
 
-  const updateServiceProvider = async e => {
+  const updateServiceProvider = async formData => {
     const { id, setServiceProviders, spList, setIsService, hideUpdateForm} = props;
-    const { companyName, serviceType, location, contactNumber } = state;
+    const { companyName, serviceType, location, contactNumber } = formData;
     const serviceData = {
         companyName: companyName,
         serviceType: serviceType,
@@ -123,29 +125,29 @@ const UpdateService = props => {
         <h2 className={classes.h2}>Update Service Provider</h2>
         <Formik
           initialValues={{
-            companyName: state.companyName,
-            serviceType: state.serviceType,
-            location: state.location,
-            contactNumber: state.contactNumber,
+            companyName: props.cName,
+            serviceType: props.sType,
+            location: props.location,
+            contactNumber: props.cNumber,
           }}
           validationSchema={Yup.object().shape({
             companyName: Yup.string().required('Required*'),
             serviceType: Yup.string().required('Required*'),
             location: Yup.string().required('Required*'),
             contactNumber: Yup.string()
-              .matches(new RegExp('[+94][0-9]{9}'))
-              .required('A phone number is required'),
+            .test('is-phone', 'Invalid phone number', value => phoneRegExp.test(value))
+            .required('A phone number is required')
           })}
           onSubmit={updateServiceProvider}
         >
-          {({ values, errors, handleSubmit }) => {
+          {({ values, errors, handleChange, handleSubmit }) => {
             return (
               <>
                 <FormControl style={{ marginTop: '10%' }}>
                   <InputLabel>Company Name</InputLabel>
                   <Input
-                    value={state.companyName}
-                    onChange={onInputChange}
+                    value={values.companyName}
+                    onChange={handleChange}
                     name="companyName"
                     error={
                       errors.companyName && errors.companyName?.length
@@ -159,8 +161,8 @@ const UpdateService = props => {
                 </FormControl>
                 <FormControl style={{ marginTop: '10%' }}>
                   <TextField
-                    value={state.location}
-                    onChange={onInputChange}
+                    value={values.location}
+                    onChange={handleChange}
                     name="location"
                     error={
                       errors.location && errors.location?.length ? true : false
@@ -170,7 +172,7 @@ const UpdateService = props => {
                     label="Address"
                   />
                   <FormHelperText stylr={{ color: 'red' }}>
-                    {errors.companyName}
+                    {errors.location}
                   </FormHelperText>
                 </FormControl>
                 <FormControl style={{ marginTop: '15%' }} fullWidth>
@@ -178,11 +180,11 @@ const UpdateService = props => {
                     Service Type
                   </InputLabel>
                   <Select
-                    value={state.serviceType}
-                    onChange={onInputChange}
+                    value={values.serviceType}
+                    onChange={handleChange}
                     name="serviceType"
                     error={
-                      errors.companyName && errors.serviceType?.length
+                      errors.serviceType && errors.serviceType?.length
                         ? true
                         : false
                     }
@@ -198,8 +200,8 @@ const UpdateService = props => {
                 <FormControl style={{ marginTop: '10%' }}>
                   <InputLabel>Contact Number</InputLabel>
                   <Input
-                    value={state.contactNumber}
-                    onChange={onInputChange}
+                    value={values.contactNumber}
+                    onChange={handleChange}
                     name="contactNumber"
                     error={
                       errors.contactNumber && errors.contactNumber?.length

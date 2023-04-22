@@ -34,6 +34,7 @@ const ServiceProvider = () => {
         setServiceProviders(json);
         setIsService(false);
       }
+
     };
 
     fetchServiceProviderDetails();
@@ -59,7 +60,7 @@ const ServiceProvider = () => {
 
         <div className="serviceProviderList">
           <Grid container spacing={12}>
-            {serviceProviders.map(serviceProvider => (
+            {serviceProviders.map((serviceProvider) => (
               <Grid item xs={4} key={serviceProvider._id}>
                 <ServiceCard
                   id={serviceProvider._id}
@@ -70,6 +71,7 @@ const ServiceProvider = () => {
                   spList={serviceProviders}
                   setServiceProviders={setServiceProviders}
                   setIsService={setIsService}
+                  image = {serviceProvider.photo}
                 />
               </Grid>
             ))}
