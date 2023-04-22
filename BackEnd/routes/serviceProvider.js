@@ -6,12 +6,12 @@ const {
   deleteServiceProvider,
   viewSingleProvider
 } = require('../Controller/serviceProvider-Controller');
-// const uploadMiddleware = require('../service/MulterMiddleware');
+const uploadMiddleware = require('../service/MulterMiddleware');
 
 
 // Route for adding a new Service Provider
 // router.post('/add', uploadMiddleware.single("photo"), newServiceProvider);
-router.post('/add',newServiceProvider);
+router.post('/add',uploadMiddleware.single("photo"), newServiceProvider);
 
 // Route for getting all the service providers
 router.get('/', viewServiceProvider);

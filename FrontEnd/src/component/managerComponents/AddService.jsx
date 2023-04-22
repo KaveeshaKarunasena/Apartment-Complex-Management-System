@@ -100,13 +100,17 @@ const AddService = props => {
 
   const addServiceProvider = async formData => {
     try {
-      const res = await axios.post('/service-provider/add', { ...formData });
+     
 
       const formData1 = new FormData();
+      formData1.append("companyName", formData.companyName);
+      formData1.append("location", formData.location);
+      formData1.append("serviceType", formData.serviceType);
+      formData1.append("contactNumber", formData.contactNumber);
       formData1.append('photo', selectedFile);
 
       const res1 = await axios
-        .post('/upload/api/save', formData1)
+        .post('/service-provider/add', formData1)
         .then(res => {
           console.log(res.data);
         })
@@ -114,9 +118,12 @@ const AddService = props => {
           console.log(err.message);
         });
 
+      // const res = await axios.post('/service-provider/add', { ...formData });
+
       enqueueSnackbar('Service Provider Added', { variant: 'success' });
       props.setShowForm(false);
       props.setIsService(true);
+      setSelectedFile(undefined);
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }

@@ -23,11 +23,10 @@ const serviceProviderSchema = new schema({
     contactNumber : {
         type: String,
         required: true
+    },
+    photo: {
+        type: String
     }
-    // },
-    // photo: {
-    //     type: String,
-    // },
 })
 
 // Specifies the table name

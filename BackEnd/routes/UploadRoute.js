@@ -12,6 +12,7 @@ router.get('/api/get', async (req, res) => {
 router.post('/api/save', uploadMiddleware.single("photo"), (req, res) => {
 
   const photo = req.file.filename;
+  console.log(req.body.companyName);
 
   uploadModel
     .create({ photo })
