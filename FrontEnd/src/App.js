@@ -18,6 +18,9 @@ import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard'
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
+import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
+import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
+import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -84,8 +87,12 @@ function App() {
               {/* Manager Dashboard Routes */}
               <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
+                <Route path="Employee_add" element={<AddEmployees/>}></Route>
+                <Route path="Employee_view" element={<ViewEmployee/>}></Route>
+                <Route path="Employee_Update" element={<EditEmployee/>}></Route>
                 <Route path="staff" element={<Cards />} />
                 <Route path="serviceProvider" element={<ServiceProvider />} />
+                
                 {/* <Route path="notices" element={<Cards />} /> */}
               </Route>
             </Routes>

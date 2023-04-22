@@ -11,11 +11,7 @@ const {
   DeleteEmployee,
 } = require('../Controller/Employee-Controller');
 
-router.post(
-  '/add',
-  
-  newEmployee
-);
+router.post('/add', newEmployee);
 
 router.get('/view', viewEmployee);
 
