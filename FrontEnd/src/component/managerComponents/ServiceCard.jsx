@@ -12,6 +12,7 @@ import './serviceProvider.css';
 import UpdateService from './UpdateService';
 
 export default function ServiceCard(props) {
+
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [updateForm, showUpdateForm] = useState(false);
 
@@ -56,10 +57,11 @@ export default function ServiceCard(props) {
         setServiceProviders={props.setServiceProviders}
         setIsService={props.setIsService}
       />
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, margin: '0 auto', padding: '0.1em' }}>
         <CardMedia
-          sx={{ height: 140 }}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          component = "img"
+          sx={{ height: 250, padding: '1em 1em 0 1em', objectFit: 'contain' }}
+          image={`http://localhost:5000/uploads/${props.image}`}
           title={props.cName}
         />
         <CardContent>
