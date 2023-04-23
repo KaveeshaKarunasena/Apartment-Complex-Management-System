@@ -23,36 +23,10 @@ const style = {
   borderRadius: "5px"
 };
 
-const DUMMY_DATA = [
-  {
-    id: '1',
-    customerName: 'George',
-    serviceProvider: 'Fixit',
-  },
-  {
-    id: '2',
-    customerName: 'Pat',
-    serviceProvider: 'goFix',
-  },
-  {
-    id: '3',
-    customerName: 'Naruto',
-    serviceProvider: 'Clerky',
-  },
-  {
-    id: '4',
-    customerName: 'Naruto',
-    serviceProvider: 'Clerky',
-  },
-  {
-    id: '5',
-    customerName: 'Naruto',
-    serviceProvider: 'Clerky',
-  },
-];
 
 const AppointmentHandler = props => {
   // const handleClose = () => setOpen(false);
+
 
   return (
     <div>
@@ -73,7 +47,7 @@ const AppointmentHandler = props => {
           <Box sx={style}>
             <h1 style = {{textAlign:"center", color: "#488042"}}>Appointments</h1>
             <Grid container spacing={4} rowSpacing={2}>
-              { DUMMY_DATA.map( app => {
+              { props.DUMMY_DATA.map( app => {
                   return <Grid item xs={12} key = {app.id}><AppointmentCard customerName = {app.customerName} serviceProvider = {app.serviceProvider}/></Grid>
               })  
               }

@@ -11,15 +11,11 @@ const newServiceProvider = async (req, res) => {
   {
     photo = req.file.filename;
   }
+  else
+  {
+    photo = "default.jpeg"
+  }
 
-  // const photoObject = uploadModel
-  //   .create({ photo })
-  //   .then(data => {
-  //     return data;
-  //   })
-  //   .catch(err => console.log(err)); 
-
-  // console.log(photoObject);
 
   const companyName = req.body.companyName;
   const serviceType = req.body.serviceType;

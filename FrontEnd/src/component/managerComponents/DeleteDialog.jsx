@@ -22,7 +22,7 @@ export default function DeleteDialog(props) {
         console.log(filteredServiceProviders);
         props.setServiceProviders(filteredServiceProviders);
         props.setIsService(true);
-        enqueueSnackbar('Succesfully Deleted', { variant: 'error' });
+        enqueueSnackbar('Succesfully Deleted', { variant: 'success' });
       })
       .catch(err => enqueueSnackbar(err, { variant: 'error' }));
   };

@@ -249,7 +249,7 @@ const AddService = props => {
                           style={{ marginTop: '-10%' }}
                         >
                           {selectedFile && (
-                            <img src={preview} style={{ width: '50%' }} />
+                            <img src={preview} style={{ width: '50%' }} alt = {values.companyName}/>
                           )}
                           {!selectedFile && <PhotoCamera />}
                         </IconButton>
