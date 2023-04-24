@@ -50,6 +50,7 @@ function ProtectedRoutes() {
       <AuthGuard>
         <Routes> 
                 <Route path="/profile" element={<ProfilePage/>} />
+                <Route path="/customerhome" element={<Home />} />
         </Routes>  
       </AuthGuard>
   );
@@ -61,8 +62,8 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="login" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
     </GuestGuard>
@@ -93,6 +94,7 @@ function App() {
               </Route>   */}
                <Route path="app/*" element={<ProtectedRoutes />} />
                <Route path="*" element={<GuestRoutes />} />
+              
             </Routes>
 
  {/*=======================================================================================================================*/}
@@ -102,7 +104,7 @@ function App() {
               {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
-               <Route path="/customerhome" element={<Home />} />
+               
             </Routes>
             <Routes>
               <Route path="/app" element={<MainDash />}>

@@ -104,17 +104,20 @@ export default function SignIn() {
       validationSchema: validationSchema,
       validateOnChange: true,
       onSubmit: async values =>{
-        const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } }).then((res)=>{
-          if(res.status === 200){
-            navigate('/customerhome')
-          }
-        })
-        // await saveToken(res);
-       console.log("success")
-       await saveToken(res.data);
-      //  console.log(res.data)
-       init && (await init());
+        const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
+          
+
+            await saveToken(res);
+            console.log("success")
+            await saveToken(res.data)
+             console.log(res.data)
+            init && (await init());
               
+            navigate('/customerhome')
+              
+          
+       
+        
       }
 
       
