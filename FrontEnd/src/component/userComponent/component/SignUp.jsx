@@ -17,6 +17,7 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
+import {NavLink } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -311,9 +312,9 @@ export default function SignUp() {
           <br></br>
           <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link component="button"  variant="body2" href='#'>
+                <NavLink to='/login'> 
                   Already have an account? Sign in
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
         </Box>

@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 //import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 //import clsx from 'clsx';
+import {NavLink } from "react-router-dom";
 
 
 // eslint-disable-next-line no-unused-vars
@@ -118,7 +119,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <NavLink to='/profile'><MenuItem onClick={handleMenuClose}>Profile</MenuItem></NavLink>
+      
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );

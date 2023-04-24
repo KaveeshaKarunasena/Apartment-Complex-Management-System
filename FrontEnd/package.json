@@ -50,6 +50,7 @@
     "react-responsive-datepicker": "^1.0.6",
     "react-router-dom": "^6.7.0",
     "react-scripts": "^5.0.1",
+    "react-slideshow-image": "^4.2.1",
     "recharts": "^2.5.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",

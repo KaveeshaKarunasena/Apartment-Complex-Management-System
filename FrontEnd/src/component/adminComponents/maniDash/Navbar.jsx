@@ -21,6 +21,34 @@ import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 import AppointmentHandler from './AppointmentHandler';
 
+const DUMMY_DATA = [
+  {
+    id: '1',
+    customerName: 'George',
+    serviceProvider: 'Fixit',
+  },
+  {
+    id: '2',
+    customerName: 'Pat',
+    serviceProvider: 'goFix',
+  },
+  {
+    id: '3',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+  {
+    id: '4',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+  {
+    id: '5',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+];
+
 const useStyles = makeStyles()(theme => ({
   nav: {
     '&:hover': {
@@ -188,7 +216,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <React.Fragment>
-    <AppointmentHandler isModalOpen = {isModalOpen} toggleModal = {showAppointment}/>
+    <AppointmentHandler isModalOpen = {isModalOpen} toggleModal = {showAppointment} DUMMY_DATA = {DUMMY_DATA}/>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: '#2E3B55' }}>
         <Toolbar>
@@ -266,7 +294,7 @@ export default function PrimarySearchAppBar() {
               color="inherit"
               onClick={showAppointment}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={DUMMY_DATA.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
