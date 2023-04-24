@@ -49,9 +49,7 @@ const customerRouter = require("./routes/customers.js");
 const otpRouter = require("./routes/otp.js");
 
 const EmployeeRouter=require('./routes/Employee');
-const appointmentRouter = require('./routes/appointment')
-const customerRouter = require("./routes/customers.js")
-const otpRouter = require("./routes/otp.js")
+
 
 
 
