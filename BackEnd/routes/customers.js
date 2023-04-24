@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
+const authGuard  = require('../Utils/authGuard')
 
 const{
     newSignUp,
@@ -18,7 +19,7 @@ router.post("/add",newSignUp);
 
 router.post("/login",login);
 
-router.get("/get/:id",viewProfileById);
+router.get("/get",authGuard,viewProfileById);
 
 router.put("/update/:id",updateProfileById);
 

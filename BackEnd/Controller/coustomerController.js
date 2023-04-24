@@ -2,6 +2,7 @@ const bcrypt = require ("bcrypt");
 const jwt = require ("jsonwebtoken");
 
 const Customer = require( "../modles/Customer");
+const UserService = require('../service/customer-service')
 
 
 const newSignUp = async (req,res)=>{
@@ -11,8 +12,18 @@ const newSignUp = async (req,res)=>{
     const nicNo = req.body.nicNo;
     const phoneNo = Number(req.body.phoneNo);
     const email = req.body.email;
-    const password = await bcrypt.hash(req.body.password,10);
+    const password = req.body.password;
     //const image = Buffer(req.body.image);
+
+    const existingUser = await UserService.findUserByApartmentNo(apartmentNo);
+
+    if (existingUser) {
+        return res.status(400).send({
+          err: "User already Exits",
+        });
+      }
+    
+    const hash =  await bcrypt.hash(password , 10);
 
     const newCustomer = new Customer({
 
@@ -21,7 +32,7 @@ const newSignUp = async (req,res)=>{
         nicNo,
         phoneNo,
         email,
-        password
+        password:hash
         //image
 
     })
@@ -35,34 +46,39 @@ const newSignUp = async (req,res)=>{
 };
 
 const login = async (req,res,session) =>{
-    const apartmentNumber = req.body.apartmentNO;
-    const hashPassword = await bcrypt.hash(req.body.password,10);
+    try {
+        const { apartmentNo, password } = req.body;
     
-    const user = Customer.findOne({
-        apartmentNo: apartmentNumber,
-        password: hashPassword})
-        .select('password')
-        .exec();
-
-    if(!user){
-        throw new Error('Wrong username or password');
-    }
-    else{
-        res.status(200).send({status:"Success!"})
-        //req.session.user = 
-    }
+        const LoggedUser =  await UserService.login(apartmentNo , password);
     
+        res.status(200).send(LoggedUser);
+    
+      } catch (err) {
+            res.status(400).send({ err: err.message})
+    
+      }
     
 };
 
 const viewProfileById = async (req,res) => {
-    let userID = req.params.id;
-    const user = Customer.findById(userID).then((customer) => {
-        res.json(customer)
-        //res.status(200).send({status:"User fetched", user:user})
-    }).catch((err) => {
-        res.status(500).send({status:"Error with get user", error:err.message });
-    })
+    const curntUser  = req.user;
+    //console.log(currntUser);
+    try{
+        
+        if(!curntUser){
+            return res.status(400).send({ err: 'User Not Logged In'});
+        }
+
+        const userDoc = await UserService.findUserByEmail(curntUser._id);
+        const user = userDoc?.toJSON();
+    
+        delete user?.password;
+        res.status(200).json(user);
+
+    }catch(err){
+        res.status(400).send({ err: err });
+
+    }
 
    
 };
@@ -72,14 +88,14 @@ const updateProfileById = async (req,res) => {
     let userID = req.params.id;
 
     //Dstructure
-    const {name,apartmentNO,nicNO,phoneNO,email,password} = req.body;
+    const {name,apartmentNo,nicNo,phoneNo,email,password} = req.body;
 
     const updateCustomer = {
 
         name,
-        apartmentNO,
-        nicNO,
-        phoneNO,
+        apartmentNo,
+        nicNo,
+        phoneN,
         email,
         password
         //image
@@ -124,7 +140,7 @@ const viewProfiles = async (req,res)=>{
 
 const resetPassword = async (req,res)  =>{
 
-    const {apartmentNO,password} = req.body;
+    const {apartmentNo,password} = req.body;
 
     const updatePassword = {
       
