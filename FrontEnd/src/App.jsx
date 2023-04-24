@@ -22,6 +22,8 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
+import { AuthGuard, GuestGuard } from './component/AuthGuard'
+
 const useStyles = makeStyles()(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -42,6 +44,30 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
+function ProtectedRoutes() {
+  return(
+      <AuthGuard>
+        <Routes> 
+                <Route path="profile" element={<ProfilePage/>} />
+        </Routes>  
+      </AuthGuard>
+  );
+ 
+
+}
+
+function GuestRoutes() {
+  return (
+    <GuestGuard>
+      <Routes>
+        <Route path="login" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
+      </Routes>
+    </GuestGuard>
+  );
+}
+
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { classes } = useStyles();
@@ -52,18 +78,20 @@ function App() {
         <BrowserRouter>
           <div>
 
-            <Routes>
+            {/* <Routes>
                <Route path="login" element={<SignIn/>} />
                <Route path="signup" element={<SignUp/>} />
-            </Routes>
+            </Routes> */}
             <Navbar />
 
 {/*================================================Customer Routes========================================================*/}
              
             <Routes> 
-              <Route path="/home" element={<Home/>}> 
+              {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
-              </Route>  
+              </Route>   */}
+               <Route path="app/*" element={<ProtectedRoutes />} />
+               <Route path="*" element={<GuestRoutes />} />
             </Routes>
 
  {/*=======================================================================================================================*/}
