@@ -94,7 +94,7 @@ export default function ServiceCard(props) {
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: '#FFBD03',
+                  backgroundColor: '#00B087',
                 }}
                 onClick={displayUpdateForm}
               >
@@ -105,7 +105,7 @@ export default function ServiceCard(props) {
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: '#5ADBB5',
+                  backgroundColor: '#555',
                 }}
                 onClick={enableDialogHandler}
               >

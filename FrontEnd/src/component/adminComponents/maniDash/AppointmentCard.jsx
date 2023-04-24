@@ -56,7 +56,7 @@ export default function AppointmentCard(props) {
                 <Button
                   variant="contained"
                   style={{
-                    backgroundColor: '#FFBD03',
+                    backgroundColor: '#00B087',
                   }}
                 >
                   Accept
@@ -66,7 +66,7 @@ export default function AppointmentCard(props) {
                 <Button
                   variant="contained"
                   style={{
-                    backgroundColor: '#5ADBB5',
+                    backgroundColor: '#555',
                   }}
                 >
                   Decline
