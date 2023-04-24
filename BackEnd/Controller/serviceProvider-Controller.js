@@ -1,18 +1,38 @@
 const router = require('express').Router();
 let ServiceProvider = require('../modles/service-provider');
+const uploadModel = require('../modles/uploadModel');
 
 // Route for adding a new Service Provider
 const newServiceProvider = async (req, res) => {
+
+  var photo =  ""; 
+
+  if (req.file)
+  {
+    photo = req.file.filename;
+  }
+
+  // const photoObject = uploadModel
+  //   .create({ photo })
+  //   .then(data => {
+  //     return data;
+  //   })
+  //   .catch(err => console.log(err)); 
+
+  // console.log(photoObject);
+
   const companyName = req.body.companyName;
   const serviceType = req.body.serviceType;
   const location = req.body.location;
   const contactNumber = req.body.contactNumber;
+  // const photo = req.file.filename
 
   const newServiceProviderData = new ServiceProvider({
     companyName,
     serviceType,
     location,
     contactNumber,
+    photo
   });
 
   newServiceProviderData
@@ -22,7 +42,7 @@ const newServiceProvider = async (req, res) => {
     })
     
     .catch(err => {
-      console.log(error);
+      console.log(err);
     });
 };
 

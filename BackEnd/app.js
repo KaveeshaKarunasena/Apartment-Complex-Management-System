@@ -42,9 +42,17 @@ mongoose.connect("mongodb://0.0.0.0:27017/apartment")
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
+
+const appointmentRouter = require ('./routes/appointment')
+const imageRouter = require('./routes/UploadRoute');
+const customerRouter = require("./routes/customers.js");
+const otpRouter = require("./routes/otp.js");
+
+const EmployeeRouter=require('./routes/Employee');
 const appointmentRouter = require('./routes/appointment')
 const customerRouter = require("./routes/customers.js")
 const otpRouter = require("./routes/otp.js")
+
 
 
 
@@ -89,9 +97,10 @@ app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
 app.use('/service-provider',serviceProviderRouter);
 app.use('/appointment',appointmentRouter);
+app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
 app.use("/sendOTP",otpRouter)
-
+app.use('/employee',EmployeeRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
