@@ -107,7 +107,7 @@ export default function SignIn() {
       validateOnChange: true,
       onSubmit: async values =>{
         axios({ method: "POST", url: "http://localhost:3000/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } });
-       console.log(values)
+       //console.log(values)
       }
     });
 
