@@ -59,7 +59,7 @@ const updateApartment = async (req, res) => {
       type: type,
       status: status,
       ownersName: ownersName,
-      email:email
+      email:email 
     },
     function (err, response) {
       if (err) res.send(err);
