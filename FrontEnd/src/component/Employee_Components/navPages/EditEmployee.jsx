@@ -64,7 +64,7 @@ const EditEmployee = props => {
       await axios.get(`/Employee/getById/${id}`).then(res => {
         if (res.data.success) {
           setState({
-            staffID: res.data.EmployeeModel.staffID,
+            
             name: res.data.EmployeeModel.name,
             nic: res.data.EmployeeModel.nic,
             dob: res.data.EmployeeModel.dob,
@@ -84,11 +84,11 @@ const EditEmployee = props => {
   }, []);
 
   const updateEmployee = async e => {
-    const {staffID,name,nic,address,dob,jobTitle,department,contactNumber,basicSalary,allowance,overtime } = state;
+    const {name,nic,address,dob,jobTitle,department,contactNumber,basicSalary,allowance,overtime } = state;
     const { id } = props;
     const { setOpenPopup, setemployee, employee } = props;
     const data = {
-      staffID: staffID,
+      
       name: name,
       nic: nic,
       address: address,
@@ -107,7 +107,7 @@ const EditEmployee = props => {
 
         employeeCopy.map(item => {
           if (item._id === id) {
-            item.staffID = data.staffID;
+            
             item.nic = data.nic;
             item.address = data.address;
             item.dob = data.dob;
