@@ -23,7 +23,7 @@ import EditEmployee from './component/Employee_Components/navPages/EditEmployee'
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
 import { AuthGuard, GuestGuard } from './component/AuthGuard'
-import VisitorHomePage from './component/userComponent/VisitorHomePage';
+import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 const useStyles = makeStyles()(theme => ({
   root: {
