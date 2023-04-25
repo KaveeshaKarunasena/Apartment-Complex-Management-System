@@ -13,7 +13,7 @@ const usersRouter = require('./routes/users');
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
-
+const complain_Routes = require("./routes/Complain_Route");
 
 
 const app = express();
@@ -34,6 +34,12 @@ app.use('/users', usersRouter);
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
 app.use('/service-provider',serviceProviderRouter);
+
+//Routes to Complain
+
+app.use("/complain",complain_Routes);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

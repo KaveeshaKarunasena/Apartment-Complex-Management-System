@@ -14,6 +14,31 @@ import ManagerDashboard from './component/managerComponents/managerDashboard'
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 
+
+ //complain - imports start
+
+ //test
+// import Compage_Home from './component/adminComponents/Complains/Pages/Admin_complain_pg';
+// //import Compage_Home from './component/adminComponents/Complains/Pages/client_complain_pg'; // client home
+// import All_complain from './component/adminComponents/Complains/Pages/Admin_complain_pg';
+// import Report_complain from './component/adminComponents/Complains/Components/admin_comps/report/Report';
+// import Compage_client_update from './component/adminComponents/Complains/Components/client_comps/Update_Complain/Update_Complain';
+// import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
+
+//---admin
+import Compage_Home from "./component/adminComponents/Complain/Pages/Home"
+import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+
+
+//---client
+import Compage_client_update from "./component/adminComponents/Complain/Pages/client-pg/Complain_Pg/Complain"
+import Compage_client_new from "./component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain"
+
+//complain - imports end
+
+
 const useStyles = makeStyles()(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -51,13 +76,38 @@ function App() {
                 <Route path="maintenance" element={<Maintenance />} />
               </Route>
             </Routes>
-           <Routes>
-                <Route path="/repo" element={<RepoDash />}>
-                  <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
-                  <Route path="amenity" element={<AddApartments />} />
-                  <Route path="complaint" element={<ViewApartments />} />
-                </Route>
-              </Routes>
+
+            <Routes>
+              <Route path="/repo" element={<RepoDash />}>
+                <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
+                <Route path="amenity" element={<AddApartments />} />
+                <Route path="complaint" element={<ViewApartments />} />
+              </Route>
+            </Routes>
+
+            {/* complains start */}
+            <Routes>
+              <Route path="/complain"
+              // element={<Compage_Home />}
+               >
+                {/* <Route path="all" element={<All_complain />} />
+                <Route path="reprot" element={<Report_complain />} />
+                <Route path="update" element={<Compage_client_update />} />
+                <Route path="new" element={<Compage_client_new />} />
+                */}
+                <Route index element={<Compage_Home />} />
+                <Route path=":id" element={<Single_complain />} />
+                <Route path="all" element={<All_complain />} />
+                <Route path="reprot" element={<Report_complain />} />
+                <Route path="update" element={<Compage_client_update />} />
+                <Route path="new" element={<Compage_client_new />} />
+
+              </Route>
+
+            </Routes>
+            {/* complains end */}
+
+
             <Routes>
               {/* Manager Dashboard Routes */}
               <Route path="/mDash" element={<ManagerDashboard />}>
