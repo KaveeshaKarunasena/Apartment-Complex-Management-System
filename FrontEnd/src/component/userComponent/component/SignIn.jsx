@@ -18,24 +18,18 @@ import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider";
-import {Navigate } from "react-router-dom";
+import {useNavigate,NavLink } from "react-router-dom";
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const validationSchema = Yup.object({
   
-    email: Yup.string()
+    apartmentNo: Yup.string()
+    .length(3)
+      .matches( 
+        /^[a-zA-Z]\d{2}$/,
+        "use one letter and two number format \nex: 'A10' "
+      )
       .required("apartment number is required"),
     
   });
@@ -96,26 +90,34 @@ const saveToken = async ( payload) => {
 }
 
 export default function SignIn() {
+  const navigate = useNavigate();
     const { classes } = useStyles();
     let { init } =  useContext(AuthContext);
 
     const formik = useFormik({
       initialValues: {
         
-        email: "",
+        apartmentNo: "",
         password:"",
         
       },
       validationSchema: validationSchema,
       validateOnChange: true,
       onSubmit: async values =>{
-        const res = await axios({ method: "POST", url: "/customer/login", data: { email: values.email , password: values.password } });
-        // await saveToken(res);
-       console.log("success")
-       await saveToken(res.data);
-      //  console.log(res.data)
-       init && (await init());
+        const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
+          
+
+            await saveToken(res);
+            console.log("success")
+            await saveToken(res.data)
+             console.log(res.data)
+            init && (await init());
               
+            navigate('/customerhome')
+              
+          
+       
+        
       }
 
       
@@ -145,12 +147,12 @@ export default function SignIn() {
             <TextField
               margin="normal"
               fullWidth
-              id='email'
-              name='email'
-              label='email'
+              id='apartmentNo'
+              name='apartmentNo'
+              label='ApartmentNo'
               type='text'
-              value={formik.values.email}
-              className={classes.email}
+              value={formik.values.apartmentNo}
+              className={classes.apartmentNo}
               placeholder='Enter apartment No'
               error={
                 formik.errors["apartmentNo"] && formik.touched.apartmentNo
@@ -205,13 +207,15 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link variant="body2" component="button" href='#'>
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                
+                <NavLink to='/signup'> {"Don't have an account? Sign Up"}</NavLink>
+                 
+                
               </Grid>
             </Grid>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        
+
       </Container>
     </ThemeProvider>
   );

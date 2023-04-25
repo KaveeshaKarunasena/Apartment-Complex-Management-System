@@ -15,7 +15,7 @@ const newSignUp = async (req,res)=>{
     const password = req.body.password;
     //const image = Buffer(req.body.image);
 
-    const existingUser = await UserService.findUserByEmail(email);
+    const existingUser = await UserService.findUserByApartmentNo(apartmentNo);
 
     if (existingUser) {
         return res.status(400).send({
@@ -47,9 +47,9 @@ const newSignUp = async (req,res)=>{
 
 const login = async (req,res,session) =>{
     try {
-        const { email, password } = req.body;
+        const { apartmentNo, password } = req.body;
     
-        const LoggedUser =  await UserService.login(email , password);
+        const LoggedUser =  await UserService.login(apartmentNo , password);
     
         res.status(200).send(LoggedUser);
     
@@ -69,7 +69,7 @@ const viewProfileById = async (req,res) => {
             return res.status(400).send({ err: 'User Not Logged In'});
         }
 
-        const userDoc = await UserService.findUserByEmail(curntUser.email);
+        const userDoc = await UserService.findUserByEmail(curntUser._id);
         const user = userDoc?.toJSON();
     
         delete user?.password;
@@ -88,14 +88,14 @@ const updateProfileById = async (req,res) => {
     let userID = req.params.id;
 
     //Dstructure
-    const {name,apartmentNO,nicNO,phoneNO,email,password} = req.body;
+    const {name,apartmentNo,nicNo,phoneNo,email,password} = req.body;
 
     const updateCustomer = {
 
         name,
-        apartmentNO,
-        nicNO,
-        phoneNO,
+        apartmentNo,
+        nicNo,
+        phoneN,
         email,
         password
         //image
@@ -140,7 +140,7 @@ const viewProfiles = async (req,res)=>{
 
 const resetPassword = async (req,res)  =>{
 
-    const {apartmentNO,password} = req.body;
+    const {apartmentNo,password} = req.body;
 
     const updatePassword = {
       

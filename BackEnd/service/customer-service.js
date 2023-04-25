@@ -2,10 +2,10 @@ const User = require('../modles/Customer.js')
 const { createPasswordHash, signToken } =require('./auth.service.js') 
 
 
-async function findUserByEmail(email){
+async function findUserByApartmentNo(apartmentNo){
 
     const existingUser = await User.findOne({
-        email
+        apartmentNo
     })
 
     return existingUser;
@@ -30,9 +30,9 @@ async function findUserByEmail(email){
 
 }
 
-async function login(email , password){
+async function login(apartmentNo , password){
 
-    const acc = await User.findOne({ email})
+    const acc = await User.findOne({ apartmentNo})
     console.log(acc)
     if (!acc){
         throw new Error ('User Not Found');
@@ -40,7 +40,7 @@ async function login(email , password){
 
     
     const payload = await signToken(password, acc.password, {
-        email: acc.email,
+        apartmentNo: acc.apartmentNo,
         id: acc._id.toString(),
     });
 
@@ -50,7 +50,7 @@ async function login(email , password){
 
 
 module.exports = {
-    findUserByEmail,
+    findUserByApartmentNo,
     register,
     login
 }

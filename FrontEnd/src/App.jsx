@@ -23,6 +23,7 @@ import EditEmployee from './component/Employee_Components/navPages/EditEmployee'
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
 import { AuthGuard, GuestGuard } from './component/AuthGuard'
+import VisitorHomePage from './component/userComponent/VisitorHomePage';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -48,7 +49,8 @@ function ProtectedRoutes() {
   return(
       <AuthGuard>
         <Routes> 
-                <Route path="profile" element={<ProfilePage/>} />
+                <Route path="/profile" element={<ProfilePage/>} />
+                <Route path="/customerhome" element={<Home />} />
         </Routes>  
       </AuthGuard>
   );
@@ -60,9 +62,9 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="login" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="/" element={<SignIn />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
     </GuestGuard>
   );
@@ -92,10 +94,18 @@ function App() {
               </Route>   */}
                <Route path="app/*" element={<ProtectedRoutes />} />
                <Route path="*" element={<GuestRoutes />} />
+              
             </Routes>
 
  {/*=======================================================================================================================*/}
 
+
+            <Routes> 
+              {/* <Route path="/home" element={<Home/>}> 
+                <Route path="profile" element={<ProfilePage/>} />
+              </Route>   */}
+               
+            </Routes>
             <Routes>
               <Route path="/app" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />

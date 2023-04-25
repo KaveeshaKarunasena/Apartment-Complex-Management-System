@@ -8,15 +8,15 @@ const customerSchema = new Schema({
         type : String,
         require: true
     },
-    apartmentNO:{
+    apartmentNo:{
         type : String,
         require: true
     },
-    nicNO:{
+    nicNo:{
         type : String,
         require: true
     },
-    phoneNO:{
+    phoneNo:{
         type : Number,
         require: true
     },
