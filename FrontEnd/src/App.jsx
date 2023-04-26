@@ -25,6 +25,7 @@ import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee'
 import { AuthGuard, GuestGuard } from './component/AuthGuard'
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
+
 const useStyles = makeStyles()(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -47,12 +48,15 @@ const useStyles = makeStyles()(theme => ({
 
 function ProtectedRoutes() {
   return(
-      <AuthGuard>
-        <Routes> 
-                <Route path="profile" element={<ProfilePage/>} />
-                <Route path="customerhome" element={<Home />} />
+
+      <AuthGuards>
+        <Routes>  
+            <Route path=""  element={<Home />}/>
+            <Route path="profile"  element={<ProfilePage/>} />   
+            <Route path="add" element={<AddApartments />} /> 
+
         </Routes>  
-      </AuthGuard>
+      </AuthGuards>
   );
  
 
@@ -65,6 +69,7 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
+
       </Routes>
     </GuestGuard>
   );
@@ -76,14 +81,10 @@ function App() {
 
   return (
     <div className="App">
-      <SnackbarProvider>
-        <BrowserRouter>
+      
+        
           <div>
 
-            {/* <Routes>
-               <Route path="login" element={<SignIn/>} />
-               <Route path="signup" element={<SignUp/>} />
-            </Routes> */}
             <Navbar />
 
 {/*================================================Customer Routes========================================================*/}
@@ -94,10 +95,11 @@ function App() {
               </Route>   */}
                <Route path="app/*" element={<ProtectedRoutes />} />
                <Route path="*" element={<GuestRoutes />} />
-              
-            </Routes>
+               
+             </Routes> 
 
  {/*=======================================================================================================================*/}
+
 
 {/* 
             <Routes>  */}
@@ -107,6 +109,7 @@ function App() {
                
             {/* </Routes>
             <Routes>
+
               <Route path="/main" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
@@ -132,12 +135,13 @@ function App() {
                 <Route path="serviceProvider" element={<ServiceProvider />} />
                 
                 {/* <Route path="notices" element={<Cards />} /> */}
-              {/* </Route> 
-            </Routes>  */}
+              {/* </Route>
+            </Routes> */} 
+
 
           </div>
-        </BrowserRouter>
-      </SnackbarProvider>
+      
+      
     </div>
   );
 }

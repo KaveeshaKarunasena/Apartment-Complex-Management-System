@@ -8,12 +8,14 @@ import { AuthProviderComponent } from "./component/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <SnackbarProvider>
-      <BrowserRouter> */}
+
+    <SnackbarProvider>
+    <BrowserRouter>
         <AuthProviderComponent>
           <App />
         </AuthProviderComponent>
-      {/* </BrowserRouter>
-    </SnackbarProvider> */}
+        </BrowserRouter>
+    </SnackbarProvider>
   </React.StrictMode>
 );
+

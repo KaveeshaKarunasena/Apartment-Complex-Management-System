@@ -12,7 +12,7 @@ const cors = require ('cors')
 
 const sessoin = require('express-session');
 
-mongoose.connect("mongodb://0.0.0.0:27017/apartment")
+mongoose.connect("mongodb://127.0.0.1:27017/apartment")
 
 //Connect to your database
 // MongoClient.connect(url, (err, db) => {

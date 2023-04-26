@@ -92,7 +92,9 @@ const saveToken = async ( payload) => {
 export default function SignIn() {
   const navigate = useNavigate();
     const { classes } = useStyles();
+    
     let { init } =  useContext(AuthContext);
+    // let  ctx  =  useContext(AuthContext);
 
     const formik = useFormik({
       initialValues: {
@@ -104,18 +106,29 @@ export default function SignIn() {
       validationSchema: validationSchema,
       validateOnChange: true,
       onSubmit: async values =>{
-        const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
+        try{
+
+          const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
           
 
-            // await saveToken(res);
-            console.log("success")
-            await saveToken(res.data)
-             console.log(res.data)
-            init && (await init());
-              
-            navigate('/customerhome')
-              
-          
+
+           
+          console.log("success")
+          await saveToken(res.data)
+           console.log(res.data)
+          //  console.log("init here",ctx)
+          //  if(init){
+           
+          //   await init()
+          //  }
+          init && (await init());
+            
+          navigate("")
+        }catch(err){
+
+          console.log(err)
+        }
+       
        
         
       }

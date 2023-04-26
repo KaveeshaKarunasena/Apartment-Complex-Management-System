@@ -120,7 +120,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-          <NavLink to='/profile'>Profile</NavLink>
+          <NavLink to=''>Profile</NavLink>
       </MenuItem>
       
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
