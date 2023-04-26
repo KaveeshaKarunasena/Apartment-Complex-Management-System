@@ -24,6 +24,7 @@ import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee'
 
 import { AuthGuard, GuestGuard } from './component/AuthGuard'
 import VisitorHomePage from './component/userComponent/VisitorHomePage';
+import Products from './component/userComponent/component/mainpages/products/Products';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -104,8 +105,18 @@ function App() {
               {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
-               
+
+</Routes>
+            <Routes>
+              <Route path="/amaenity" element={<Products />}>
+                <Route path="home" element={<Cards />} />
+                {/* <Route path="add" element={<AddApartments />} />
+                <Route path="view" element={<ViewApartments />} />
+                <Route path="maintenance" element={<Maintenance />} /> */}
+              </Route>
             </Routes>
+               
+         
             <Routes>
               <Route path="/app" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
