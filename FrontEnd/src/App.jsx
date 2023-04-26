@@ -49,14 +49,14 @@ const useStyles = makeStyles()(theme => ({
 function ProtectedRoutes() {
   return(
 
-      <AuthGuards>
+      <AuthGuard>
         <Routes>  
             <Route path=""  element={<Home />}/>
             <Route path="profile"  element={<ProfilePage/>} />   
             <Route path="add" element={<AddApartments />} /> 
 
         </Routes>  
-      </AuthGuards>
+      </AuthGuard>
   );
  
 

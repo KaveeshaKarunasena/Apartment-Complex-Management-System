@@ -1,28 +1,36 @@
-import { useContext } from "react";
+import { useContext , useEffect } from "react";
 import { AuthContext } from "./AuthProvider";
 import { Navigate , useNavigate} from "react-router-dom";
 
-export function AuthGuards({children}){
-    let authPayload = useContext(AuthContext);
+export const AuthGuard =({children}) =>{
   const navigate = useNavigate();
-    console.log(authPayload)
+    let authPayload = useContext(AuthContext);
+    
+    // console.log(authPayload)
     if(!authPayload || !authPayload.token){
 
-       navigate("/login")
+      console.log("authGuard")
+      //  navigate("/login")
+      return <Navigate to ="/login" />
     }
-
-    console.log("authgurd")
-    return <>{children}</>;
+    
+    if({children}){
+      return <>{children}</>;
+    }
+   
 }
 
 export function GuestGuard({ children }) {
+  const navigate = useNavigate();
     let authPayload = useContext(AuthContext);
-    const navigate = useNavigate();
+    
     // check if user exists
     if (authPayload && authPayload.token) {
-      console.log("called here")
-      navigate("/app")
+      
+        navigate("/app")
 
+     
+      
     }
     
     return <>{children}</>;

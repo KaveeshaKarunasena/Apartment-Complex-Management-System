@@ -35,7 +35,7 @@ export function AuthProviderComponent({ children }) {
               error?.response?.data?.err === 'Forbinded Resources'
             ) {
               localStorage.removeItem('token');
-              window.location.href = 'http://localhost:3000/guest/login';
+              window.location.href = 'http://localhost:3000/login';
             }
 
             return Promise.reject(error);
