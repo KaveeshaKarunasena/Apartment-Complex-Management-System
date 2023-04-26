@@ -95,7 +95,7 @@ const updateProfileById = async (req,res) => {
         name,
         apartmentNo,
         nicNo,
-        phoneN,
+        phoneNo,
         email,
         password
         //image
@@ -139,24 +139,40 @@ const viewProfiles = async (req,res)=>{
 };
 
 const resetPassword = async (req,res)  =>{
+    try {
+                
+        const { email, password } = req.body;
+        
+        try {
+            
+            Customer.findOne({ email})
+                .then(customer => {
+                    bcrypt.hash(password , 10)
+                        .then(hash => {
+                            Customer.updateOne({ email : customer.email },
+                            { password: hash}, function(err, data){
+                                if(err) throw err;
+                                    return res.status(201).send({ msg : "Record Updated...!"})
+                            });
+                        })
+                        .catch( e => {
+                            return res.status(500).send({
+                                error : "Enable to hashed password"
+                            })
+                        })
+                })
+                .catch(error => {
+                    return res.status(404).send({ error : "Customer not Found"});
+                })
 
-    const {apartmentNo,password} = req.body;
+        } catch (error) {
+            return res.status(500).send({ error })
+        }
 
-    const updatePassword = {
-      
-        password,
-    
+    } catch (error) {
+        return res.status(401).send({ error })
     }
 
-    const update =  Customer.findByIdAndUpdate(userPassword, updatePassword).then((customer) => {
-
-        //status = 200 = updated
-        res.status(200).send({status:"User Password Updated", user:update})
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).send({status:"Error with updating data", error:err.message});
-
-    })
 
 }
 module.exports= {

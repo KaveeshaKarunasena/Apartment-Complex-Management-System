@@ -95,7 +95,7 @@ app.use('/service-provider',serviceProviderRouter);
 app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
-app.use("/sendOTP",otpRouter)
+app.use("/otp",otpRouter)
 app.use('/employee',EmployeeRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
