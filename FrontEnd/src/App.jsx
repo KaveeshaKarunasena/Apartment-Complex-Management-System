@@ -23,7 +23,7 @@ import EditEmployee from './component/Employee_Components/navPages/EditEmployee'
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
 import { AuthGuard, GuestGuard } from './component/AuthGuard'
-import VisitorHomePage from './component/userComponent/VisitorHomePage';
+import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -49,8 +49,8 @@ function ProtectedRoutes() {
   return(
       <AuthGuard>
         <Routes> 
-                <Route path="/profile" element={<ProfilePage/>} />
-                <Route path="/customerhome" element={<Home />} />
+                <Route path="profile" element={<ProfilePage/>} />
+                <Route path="customerhome" element={<Home />} />
         </Routes>  
       </AuthGuard>
   );
@@ -62,8 +62,8 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
     </GuestGuard>
@@ -99,15 +99,15 @@ function App() {
 
  {/*=======================================================================================================================*/}
 
-
-            <Routes> 
+{/* 
+            <Routes>  */}
               {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
                
-            </Routes>
+            {/* </Routes>
             <Routes>
-              <Route path="/app" element={<MainDash />}>
+              <Route path="/main" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
                 <Route path="view" element={<ViewApartments />} />
@@ -123,7 +123,7 @@ function App() {
               </Routes>
             <Routes>
               {/* Manager Dashboard Routes */}
-              <Route path="/mDash" element={<ManagerDashboard />}>
+              {/* <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="Employee_add" element={<AddEmployees/>}></Route>
                 <Route path="Employee_view" element={<ViewEmployee/>}></Route>
@@ -132,8 +132,8 @@ function App() {
                 <Route path="serviceProvider" element={<ServiceProvider />} />
                 
                 {/* <Route path="notices" element={<Cards />} /> */}
-              </Route>
-            </Routes>
+              {/* </Route> 
+            </Routes>  */}
 
           </div>
         </BrowserRouter>

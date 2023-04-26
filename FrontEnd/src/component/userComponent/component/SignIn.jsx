@@ -107,7 +107,7 @@ export default function SignIn() {
         const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
           
 
-            await saveToken(res);
+            // await saveToken(res);
             console.log("success")
             await saveToken(res.data)
              console.log(res.data)
