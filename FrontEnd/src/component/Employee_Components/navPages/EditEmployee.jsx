@@ -31,7 +31,7 @@ const useStyles = makeStyles()(theme => ({
   },
   submitBtn: {
     color : 'primary'
-    
+
   },
 }));
 
@@ -40,20 +40,20 @@ const EditEmployee = props => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [state, setState] = useState({
-          name: '',
-          nic: '',
-          dob: '',
-          address: '',
-          jobTitle: '',
-          department: '',
-          contactNumber:'',
-          basicSalary:'',
-          allowance:'',
-          overtime:''
+    name: '',
+    nic: '',
+    dob: '',
+    address: '',
+    jobTitle: '',
+    department: '',
+    contactNumber:'',
+    basicSalary:'',
+    allowance:'',
+    overtime:''
   });
 
   const onInputChange = e => {
-    setState({ ...state, [e.target.name1]: e.target.value });
+    setState({ ...state, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -61,10 +61,10 @@ const EditEmployee = props => {
     const getData = async () => {
       console.log(id);
 
-      await axios.get(`/Employee/getById/${id}`).then(res => {
+      await axios.get(`/employee/getById/${id}`).then(res => {
         if (res.data.success) {
           setState({
-            staffID: res.data.EmployeeModel.staffID,
+
             name: res.data.EmployeeModel.name,
             nic: res.data.EmployeeModel.nic,
             dob: res.data.EmployeeModel.dob,
@@ -81,14 +81,26 @@ const EditEmployee = props => {
     };
 
     getData();
-  }, []);
+  }, [props]);
 
   const updateEmployee = async e => {
-    const {staffID,name,nic,address,dob,jobTitle,department,contactNumber,basicSalary,allowance,overtime } = state;
+    const {
+      name,
+      nic,
+      address,
+      dob,
+      jobTitle,
+      department,
+      contactNumber,
+      basicSalary,
+      allowance,
+      overtime,
+    } = state;
+
     const { id } = props;
     const { setOpenPopup, setemployee, employee } = props;
     const data = {
-      staffID: staffID,
+
       name: name,
       nic: nic,
       address: address,
@@ -101,13 +113,13 @@ const EditEmployee = props => {
       overtime:overtime
     };
     setOpenPopup(false);
-    try {
+    try {  
       await axios.put(`/employee/update/${id}`, data).then(res => {
         const employeeCopy = [...employee];
 
         employeeCopy.map(item => {
           if (item._id === id) {
-            item.staffID = data.staffID;
+            item.name = data.name;
             item.nic = data.nic;
             item.address = data.address;
             item.dob = data.dob;
@@ -126,16 +138,16 @@ const EditEmployee = props => {
 
         if (res.data.success) {
           setState({
-          name: '',
-          nic: '',
-          dob: '',
-          address: '',
-          jobTitle: '',
-          department: '',
-          contactNumber:'',
-          basicSalary:'',
-          allowance:'',
-          overtime:''
+            name: '',
+            nic: '',
+            dob: '',
+            address: '',
+            jobTitle: '',
+            department: '',
+            contactNumber:'',
+            basicSalary:'',
+            allowance:'',
+            overtime:''
           });
         }
       });
@@ -148,19 +160,19 @@ const EditEmployee = props => {
   return (
     <Box className={classes.root}>
       <Formik
-        // validationSchema={Yup.object().shape({
-        //   apartmentno: Yup.string()
-        //     .max(3, 'must have maximum 3 Numbers')
-        //     .required('Required*'),
-        //   floor: Yup.string()
-        //     .max(2, 'must have maximum 2 Numbers')
-        //     .required('Required'),
-        //   buildingNo: Yup.string().required('Required'),
-        //   type: Yup.string().required('Required'),
-        //   ownersName: Yup.string().required('Required'),
-        //   status: Yup.string().required('Required'),
-        //   email: Yup.string().required('Required'),
-        // })}
+      // validationSchema={Yup.object().shape({
+      //   apartmentno: Yup.string()
+      //     .max(3, 'must have maximum 3 Numbers')
+      //     .required('Required*'),
+      //   floor: Yup.string()
+      //     .max(2, 'must have maximum 2 Numbers')
+      //     .required('Required'),
+      //   buildingNo: Yup.string().required('Required'),
+      //   type: Yup.string().required('Required'),
+      //   ownersName: Yup.string().required('Required'),
+      //   status: Yup.string().required('Required'),
+      //   email: Yup.string().required('Required'),
+      // })}
       >
         {({ errors }) => {
           return (
@@ -174,11 +186,7 @@ const EditEmployee = props => {
                   label="name"
                   type="text"
                   size="small"
-                  error={
-                    errors.name && errors.name?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.name && errors.name?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.name}
@@ -206,11 +214,7 @@ const EditEmployee = props => {
                   label="Date of birth"
                   type="text"
                   size="small"
-                  error={
-                    errors.dob && errors.dob?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.dob && errors.dob?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.dob}
@@ -224,7 +228,9 @@ const EditEmployee = props => {
                   label="Address"
                   type="text"
                   size="small"
-                  error={errors.address && errors.address?.length ? true : false}
+                  error={
+                    errors.address && errors.address?.length ? true : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.type}
@@ -239,9 +245,7 @@ const EditEmployee = props => {
                   type="text"
                   size="small"
                   error={
-                    errors.jobTitle && errors.jobTitle?.length
-                      ? true
-                      : false
+                    errors.jobTitle && errors.jobTitle?.length ? true : false
                   }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
@@ -256,7 +260,11 @@ const EditEmployee = props => {
                   label="department"
                   type="text"
                   size="small"
-                  error={errors.department && errors.department?.length ? true : false}
+                  error={
+                    errors.department && errors.department?.length
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.department}
@@ -270,7 +278,11 @@ const EditEmployee = props => {
                   label="contact Number"
                   type="number"
                   size="small"
-                  error={errors.contactNumber && errors.contactNumber?.length ? true : false}
+                  error={
+                    errors.contactNumber && errors.contactNumber?.length
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.contactNumber}
@@ -284,14 +296,16 @@ const EditEmployee = props => {
                   label="Allowance"
                   type="number"
                   size="small"
-                  error={errors.allowance && errors.allowance?.length ? true : false}
+                  error={
+                    errors.allowance && errors.allowance?.length ? true : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.allowance}
                 </FormHelperText>
               </FormControl>
               <Button
-                onClick={() => updateEmployee()}
+                onClick={updateEmployee}
                 type="submit"
                 className={classes.submitBtn}
                 variant="contained"

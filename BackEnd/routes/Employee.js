@@ -19,9 +19,7 @@ router.get('/getById/:id', viewEmployeeById);
 
 router.get('/getById/:name',viewEmployeeByname);
 
-router.put('/update/:_id',validator([
-  body('ContactNumber').exists().isLength(10)
-]), updateEmployee);
+router.put('/update/:_id', updateEmployee);
 
 router.delete('/delete/:id', DeleteEmployee);
 
