@@ -5,7 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const cors = require ('cors')
 
 
@@ -47,14 +47,8 @@ const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require("./routes/customers.js");
 const otpRouter = require("./routes/otp.js");
 const EmployeeRouter=require('./routes/Employee');
-
-
-
-
-
-
-
-
+const CategoryRouter = require('./routes/categoryRouter')
+const ProductsRouter = require ('./routes/productRouter')
 
 const app = express();
 
@@ -95,8 +89,10 @@ app.use('/service-provider',serviceProviderRouter);
 app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
-app.use("/sendOTP",otpRouter)
+app.use("/sendOTP",otpRouter);
 app.use('/employee',EmployeeRouter);
+app.use('/product', ProductsRouter)
+app.use('/category', CategoryRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
