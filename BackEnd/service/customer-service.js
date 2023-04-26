@@ -12,13 +12,16 @@ async function findUserByApartmentNo(apartmentNo){
 }
 
 
- async function register(fname , lname , email , password){
+ async function register(name , apartmentNo , email , phoneNo , nicNo , confPassword , password){
 
     const hash = await createPasswordHash(password);
     const newUser = new User({
-        fname,
-        lname,
+        name,
+        apartmentNo,
         email,
+        phoneNo,
+        nicNo,
+        confPassword,
         password: hash
     });
     

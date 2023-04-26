@@ -50,8 +50,8 @@ function ProtectedRoutes() {
   return(
       <AuthGuard>
         <Routes> 
-                <Route path="/profile" element={<ProfilePage/>} />
-                <Route path="/customerhome" element={<Home />} />
+                <Route path="profile" element={<ProfilePage/>} />
+                <Route path="customerhome" element={<Home />} />
         </Routes>  
       </AuthGuard>
   );
@@ -63,8 +63,8 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
     </GuestGuard>
@@ -100,13 +100,12 @@ function App() {
 
  {/*=======================================================================================================================*/}
 
-
-            <Routes> 
+{/* 
+            <Routes>  */}
               {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
 
-</Routes>
             <Routes>
               <Route path="/amaenity" element={<Products />}>
                 <Route path="home" element={<Cards />} />
@@ -118,7 +117,7 @@ function App() {
                
          
             <Routes>
-              <Route path="/app" element={<MainDash />}>
+              <Route path="/main" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
                 <Route path="view" element={<ViewApartments />} />
@@ -132,9 +131,9 @@ function App() {
                   <Route path="complaint" element={<ViewApartments />} />
                 </Route>
               </Routes>
-            <Routes>
+            {/* <Routes> */}
               {/* Manager Dashboard Routes */}
-              <Route path="/mDash" element={<ManagerDashboard />}>
+              {/* <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="Employee_add" element={<AddEmployees/>}></Route>
                 <Route path="Employee_view" element={<ViewEmployee/>}></Route>
@@ -143,8 +142,8 @@ function App() {
                 <Route path="serviceProvider" element={<ServiceProvider />} />
                 
                 {/* <Route path="notices" element={<Cards />} /> */}
-              </Route>
-            </Routes>
+              {/* </Route> 
+            </Routes>  */}
 
           </div>
         </BrowserRouter>
