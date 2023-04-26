@@ -1,5 +1,5 @@
 const EmployeeModel = require('../modles/Employee-model');
-
+const mongoType = require('mongoose').Types;
 
 const newEmployee = async (req, res) => {
   let newEmployee = new EmployeeModel({
@@ -9,10 +9,10 @@ const newEmployee = async (req, res) => {
     address: req.body.address,
     jobTitle: req.body.jobTitle,
     department: req.body.department,
-    contactNumber:req.body.contactNumber,
-    basicSalary:req.body.basicSalary,
-    allowance:req.body.allowance,
-    overTime:req.body.overTime
+    contactNumber: req.body.contactNumber,
+    basicSalary: req.body.basicSalary,
+    allowance: req.body.allowance,
+    overTime: req.body.overTime,
   });
 
   newEmployee.save(function (err, newEmployee) {
@@ -27,14 +27,13 @@ const newEmployee = async (req, res) => {
 };
 
 const viewEmployee = async (req, res) => {
-  EmployeeModel
-    .find()
+  EmployeeModel.find()
     .then(Employee => res.json(Employee))
     .catch(err => res.status(404).json({ notfound: 'No Employee found' }));
 };
 
 const viewEmployeeById = async (req, res) => {
-  let id = req.body.StaffID;
+  let id = req.params.id;
   EmployeeModel.findById(id, (err, EmployeeModel) => {
     if (err) {
       return res.status(400).json({ success: false, err });
@@ -47,46 +46,50 @@ const viewEmployeeById = async (req, res) => {
   });
 };
 const viewEmployeeByname = async (req, res) => {
-    let name = req.body.Name;
-    EmployeeModel.findByname(name, (err, EmployeeModel) => {
-      if (err) {
-        return res.status(400).json({ success: false, err });
-      }
-  
-      return res.status(200).json({
-        success: true,
-        EmployeeModel,
-      });
+  let name = req.body.Name;
+  EmployeeModel.findByname(name, (err, EmployeeModel) => {
+    if (err) {
+      return res.status(400).json({ success: false, err });
+    }
+
+    return res.status(200).json({
+      success: true,
+      EmployeeModel,
     });
-  };
+  });
+};
 
 const updateEmployee = async (req, res) => {
+  const id = req.params._id;
 
-    const id = req.body.staffID;
-    const name = req.body.name;
-    const nic =  req.body.nic;
-    const dob = req.body.dob;
-    const address=req.body.address;
-    const jobTitle=req.body.jobTitle;
-    const department=req.body.department;
-    const contactNumber=req.body.contactNumber;
-    const basicSalary=req.body.basicSalary;
-    const allowance=req.body.allowance;
-    const overTime=req.body.overTime;
+  const updatedEmployee = {
+    name: req.body.name,
+    nic: req.body.nic,
+    dob: req.body.dob,
+    address: req.body.address,
+    jobTitle: req.body.jobTitle,
+    department: req.body.department,
+    contactNumber: req.body.contactNumber,
+    basicSalary: req.body.basicSalary,
+    allowance: req.body.allowance,
+    overTime: req.body.overTime,
+  };
 
-  EmployeeModel.findOneAndUpdate(
-    { id: id },
+  if (!mongoType.ObjectId.isValid(id)) {
+    return res.status(400).send('Invalid ID');
+  }
+
+  const employee = await EmployeeModel.findById(id);
+
+  if (!employee) {
+    return res.status(404).send('employee not found');
+  }
+
+  EmployeeModel.findByIdAndUpdate(
+    id,
+    updatedEmployee,
     {
-        Name: name,
-        NIC: nic,
-        dob: dob,
-        address: address,
-        jobTitle: jobTitle,
-        department: department,
-        contactNumber: contactNumber,
-        basicSalary: basicSalary,
-        allowance: allowance,
-        overTime:overTime
+      new: true,
     },
     function (err, response) {
       if (err) res.send(err);
@@ -101,7 +104,7 @@ const updateEmployee = async (req, res) => {
 };
 
 const DeleteEmployee = async (req, res) => {
-  const id = req.body.staffID;
+  const id = req.params.id;
 
   EmployeeModel.findByIdAndDelete(id, function (err, response) {
     if (err) res.send(err);

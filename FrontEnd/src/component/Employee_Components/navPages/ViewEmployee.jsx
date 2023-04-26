@@ -26,7 +26,19 @@ function ViewEmployee() {
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const keys = ['id', 'Name', 'NIC','DOB','Address','JobTitle',' Department','ContactNumber','BasicSalary','Allowance','Overtime'];
+  const keys = [
+    'id',
+    'Name',
+    'NIC',
+    'DOB',
+    'Address',
+    'JobTitle',
+    'Department',
+    'ContactNumber',
+    'BasicSalary',
+    'Allowance',
+    'Overtime',
+  ];
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -109,6 +121,9 @@ function ViewEmployee() {
               <TableCell align="center">BasicSalary&nbsp;</TableCell>
               <TableCell align="center">Allowance&nbsp;</TableCell>
               <TableCell align="center">OverTime&nbsp;</TableCell>
+              <TableCell align="center" colSpan={2}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -117,25 +132,54 @@ function ViewEmployee() {
                 .filter(data => {
                   return search.toLowerCase() === ''
                     ? data
-                    : keys.some(key =>
-                        data[key].toLowerCase().includes(search.toLowerCase())
-                      );
-                    
+                    : data.name.toLowerCase().includes(search.toLowerCase()) ||
+                        data.nic.toLowerCase().includes(search.toLowerCase()) ||
+                        data.address
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        data.department
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        data.jobTitle
+                          .toLowerCase()
+                          .includes(search.toLowerCase());
                 })
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
                   <TableRow key={data._id}>
-                    <TableCell align="center">{data._id}</TableCell>
-                    <TableCell align="center">{data.name}</TableCell>
-                    <TableCell align="center">{data.nic}</TableCell>
-                    <TableCell align="center">{data.dob}</TableCell>
-                    <TableCell align="center">{data.address}</TableCell>
-                    <TableCell align="center">{data.department}</TableCell>
-                    <TableCell align="center">{data.jobTitle}</TableCell>
-                    <TableCell align="center">{data.contactNumber}</TableCell>
-                    <TableCell align="center">{data.basicSalary}</TableCell>
-                    <TableCell align="center">{data.allowance}</TableCell>
-                    <TableCell align="center">{data.overtime}</TableCell>
+                    <TableCell align="center">
+                      {data._id || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.name || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.nic || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.dob || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.address || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.department || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.jobTitle || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.contactNumber || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.basicSalary || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.allowance || 'not found'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {data.overtime || 'not found'}
+                    </TableCell>
                     <TableCell align="center">
                       <IconButton onClick={() => handleProps(data._id)}>
                         <EditIcon style={{ color: 'orange' }} />
@@ -149,8 +193,8 @@ function ViewEmployee() {
                   </TableRow>
                 ))}
             {emptyRows > 0 && (
-              <TableRow style={{ height :emptyRows }}>
-                <TableCell colSpan={6} />
+              <TableRow style={{ height: emptyRows }}>
+                <TableCell colSpan={13} />
               </TableRow>
             )}
           </TableBody>
@@ -161,14 +205,14 @@ function ViewEmployee() {
           count={employee.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
-        apartment ={employee}
+        apartment={employee}
         setApartment={setEmployee}
         getId={getId}
       ></Popup>

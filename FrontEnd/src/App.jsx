@@ -22,8 +22,9 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
-import { AuthGuards, GuestGuard } from './component/AuthGuard'
-import VisitorHomePage from './component/userComponent/VisitorHomePage';
+import { AuthGuard, GuestGuard } from './component/AuthGuard'
+import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
+
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -47,11 +48,13 @@ const useStyles = makeStyles()(theme => ({
 
 function ProtectedRoutes() {
   return(
+
       <AuthGuards>
         <Routes>  
             <Route path=""  element={<Home />}/>
             <Route path="profile"  element={<ProfilePage/>} />   
             <Route path="add" element={<AddApartments />} /> 
+
         </Routes>  
       </AuthGuards>
   );
@@ -65,7 +68,8 @@ function GuestRoutes() {
       <Routes>
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
-         <Route path="home"  exact element={<VisitorHomePage />} /> 
+        <Route path="/" exact element={<VisitorHomePage />} />
+
       </Routes>
     </GuestGuard>
   );
@@ -97,8 +101,15 @@ function App() {
  {/*=======================================================================================================================*/}
 
 
-            
-            {/* <Routes>
+{/* 
+            <Routes>  */}
+              {/* <Route path="/home" element={<Home/>}> 
+                <Route path="profile" element={<ProfilePage/>} />
+              </Route>   */}
+               
+            {/* </Routes>
+            <Routes>
+
               <Route path="/main" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
@@ -126,6 +137,7 @@ function App() {
                 {/* <Route path="notices" element={<Cards />} /> */}
               {/* </Route>
             </Routes> */} 
+
 
           </div>
       

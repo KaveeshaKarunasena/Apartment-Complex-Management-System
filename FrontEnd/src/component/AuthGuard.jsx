@@ -22,6 +22,7 @@ export function GuestGuard({ children }) {
     if (authPayload && authPayload.token) {
       console.log("called here")
       navigate("/app")
+
     }
     
     return <>{children}</>;

@@ -111,6 +111,7 @@ export default function SignIn() {
           const res = await axios({ method: "POST", url: "/customer/login", data: { apartmentNo: values.apartmentNo , password: values.password } } )
           
 
+
            
           console.log("success")
           await saveToken(res.data)
@@ -128,8 +129,6 @@ export default function SignIn() {
           console.log(err)
         }
        
-              
-          
        
         
       }

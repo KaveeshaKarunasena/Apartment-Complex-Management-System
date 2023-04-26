@@ -17,20 +17,8 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
-import {NavLink } from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
@@ -39,7 +27,7 @@ const validationSchema = Yup.object({
     apartmentNo: Yup.string()
       .length(3)
       .matches(
-        /^[a-zA-Z]\d{2}$/,
+        /^[A-Z]\d{2}$/,
         "use one letter and two number format \nex: 'A10' "
       )
       .required("apartment number is required"),
@@ -85,6 +73,7 @@ const validationSchema = Yup.object({
 
 export default function SignUp() {
 
+  const navigate = useNavigate();
     const { classes } = useStyles();
 
     const formik = useFormik({
@@ -102,7 +91,7 @@ export default function SignUp() {
         onSubmit: (values) => {
           if (values.confPassword === values.password) {
             
-            axios({ method: "POST", url: "http://localhost:3000/sendOTP/otp", data: { email: values.email } });
+            axios({ method: "POST", url: "/otp/sendOTP", data: { email: values.email } });
             Swal.fire({
               title: "Enter OTP",
               input: "text",
@@ -112,20 +101,27 @@ export default function SignUp() {
               confirmButtonText: "Submit",
               preConfirm: (otp) => {
                 return axios
-                  .post("http://localhost:3000/sendOTP/verifyOTP", { values,otp })
+                  .post("/otp/verifyOTP", { values,otp })
                   .then((response) => {
-                    return response.data;
+                    
+                    return response.data
+                    
                   })
                   .catch((error) => {
                     Swal.showValidationMessage(`Request failed: ${error}`);
+
                   });
               },
             }).then((result) => {
               if (result.value) {
                 console.log(result.value)
+
                 Swal.fire("Submitted!", '', "success");
+
                 axios({ method: "POST", url: "/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
                   alert("Customer added")
+                  navigate('/login')
+                 
                 }).catch((err)=>{
                   alert(err)
                 })
@@ -161,12 +157,14 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
+                  fullWidth
                   id='name'
                   name='name'
                   label='Name'
                   type='text'
+                  autocomplete="off"
                   value={formik.values.name}
                   className={classes.name}
                   placeholder='Enter name'
@@ -179,12 +177,14 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
+                  fullWidth
                   id='apartmentNo'
                   name='apartmentNo'
                   label='Apartment No'
                   type='text'
+                  autocomplete="off"
                   value={formik.values.apartmentNo}
                   className={classes.apartmentNo}
                   placeholder='Enter apartment No'
@@ -201,8 +201,9 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
+                  fullWidth
                   id='nicNo'
                   name='nicNo'
                   label='NIC No'
@@ -219,8 +220,9 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
+                  fullWidth
                   id='phoneNo'
                   name='phoneNo'
                   label='Phone No'
@@ -239,8 +241,9 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
+                  fullWidth
                   id='email'
                   name='email'
                   label='Email'
@@ -313,13 +316,13 @@ export default function SignUp() {
           <br></br>
           <Grid container justifyContent="flex-end">
               <Grid item>
-                <NavLink to='/login'> 
+                <Link component="button"  variant="body2" to="/login">
                   Already have an account? Sign in
-                </NavLink>
+                </Link>
               </Grid>
             </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        
       </Container>
     </ThemeProvider>
   );
