@@ -122,8 +122,9 @@ export default function SignUp() {
               },
             }).then((result) => {
               if (result.value) {
+                console.log(result.value)
                 Swal.fire("Submitted!", '', "success");
-                axios({ method: "POST", url: "http://localhost:3000/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
+                axios({ method: "POST", url: "/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
                   alert("Customer added")
                 }).catch((err)=>{
                   alert(err)

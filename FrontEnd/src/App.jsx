@@ -22,7 +22,7 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
-import { AuthGuard, GuestGuard } from './component/AuthGuard'
+import { AuthGuards, GuestGuard } from './component/AuthGuard'
 import VisitorHomePage from './component/userComponent/VisitorHomePage';
 
 const useStyles = makeStyles()(theme => ({
@@ -47,12 +47,13 @@ const useStyles = makeStyles()(theme => ({
 
 function ProtectedRoutes() {
   return(
-      <AuthGuard>
-        <Routes> 
-                <Route path="/profile" element={<ProfilePage/>} />
-                <Route path="/customerhome" element={<Home />} />
+      <AuthGuards>
+        <Routes>  
+            <Route path=""  element={<Home />}/>
+            <Route path="profile"  element={<ProfilePage/>} />   
+            <Route path="add" element={<AddApartments />} /> 
         </Routes>  
-      </AuthGuard>
+      </AuthGuards>
   );
  
 
@@ -62,9 +63,9 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/" exact element={<VisitorHomePage />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+         <Route path="home"  exact element={<VisitorHomePage />} /> 
       </Routes>
     </GuestGuard>
   );
@@ -76,14 +77,10 @@ function App() {
 
   return (
     <div className="App">
-      <SnackbarProvider>
-        <BrowserRouter>
+      
+        
           <div>
 
-            {/* <Routes>
-               <Route path="login" element={<SignIn/>} />
-               <Route path="signup" element={<SignUp/>} />
-            </Routes> */}
             <Navbar />
 
 {/*================================================Customer Routes========================================================*/}
@@ -94,20 +91,15 @@ function App() {
               </Route>   */}
                <Route path="app/*" element={<ProtectedRoutes />} />
                <Route path="*" element={<GuestRoutes />} />
-              
-            </Routes>
+               
+             </Routes> 
 
  {/*=======================================================================================================================*/}
 
 
-            <Routes> 
-              {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
-               
-            </Routes>
-            <Routes>
-              <Route path="/app" element={<MainDash />}>
+            
+            {/* <Routes>
+              <Route path="/main" element={<MainDash />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
                 <Route path="view" element={<ViewApartments />} />
@@ -123,7 +115,7 @@ function App() {
               </Routes>
             <Routes>
               {/* Manager Dashboard Routes */}
-              <Route path="/mDash" element={<ManagerDashboard />}>
+              {/* <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="Employee_add" element={<AddEmployees/>}></Route>
                 <Route path="Employee_view" element={<ViewEmployee/>}></Route>
@@ -132,12 +124,12 @@ function App() {
                 <Route path="serviceProvider" element={<ServiceProvider />} />
                 
                 {/* <Route path="notices" element={<Cards />} /> */}
-              </Route>
-            </Routes>
+              {/* </Route>
+            </Routes> */} 
 
           </div>
-        </BrowserRouter>
-      </SnackbarProvider>
+      
+      
     </div>
   );
 }

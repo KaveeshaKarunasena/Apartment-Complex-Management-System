@@ -1,10 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';  
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
-ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+import { SnackbarProvider } from "notistack";
+import { AuthProviderComponent } from "./component/AuthProvider";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <SnackbarProvider>
+    <BrowserRouter>
+        <AuthProviderComponent>
+          <App />
+        </AuthProviderComponent>
+        </BrowserRouter>
+    </SnackbarProvider>
+  </React.StrictMode>
 );
