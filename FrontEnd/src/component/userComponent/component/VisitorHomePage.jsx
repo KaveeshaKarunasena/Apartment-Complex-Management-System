@@ -7,6 +7,7 @@ import {Typography,Grid} from '@material-ui/core';
 import Box from '@mui/material/Box';
 import { Card, CardMedia,CardContent, } from '@material-ui/core';
 import {NavLink } from "react-router-dom";
+import Container from '@mui/material/Container';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -89,7 +90,9 @@ function VisitorHomePage() {
   const classes = useStyles();
 
   return (
-    <>
+   
+   <>
+  
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div>
@@ -300,6 +303,7 @@ function VisitorHomePage() {
       </footer>
         
       </Box>
+      
     </>
   );
 }
