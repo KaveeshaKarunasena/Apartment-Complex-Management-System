@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,22 +9,51 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-//import { NavLink } from 'react-router-dom';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
-//import clsx from 'clsx';
-import {NavLink } from "react-router-dom";
+import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
+import AppointmentHandler from './AppointmentHandler';
 
+const DUMMY_DATA = [
+  {
+    id: '1',
+    customerName: 'George',
+    serviceProvider: 'Fixit',
+  },
+  {
+    id: '2',
+    customerName: 'Pat',
+    serviceProvider: 'goFix',
+  },
+  {
+    id: '3',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+  {
+    id: '4',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+  {
+    id: '5',
+    customerName: 'Naruto',
+    serviceProvider: 'Clerky',
+  },
+];
 
-// eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles()(theme => ({
   nav: {
     '&:hover': {
       backgroundColor: 'none',
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     textDecoration: 'none',
     color: 'White',
@@ -44,13 +73,11 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
-  
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(24),
     width: 'auto',
-   
   },
- // borderRadius:'16px'
+  borderRadius: '16px',
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -67,7 +94,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    //verticalpadding + font size from searchIcon
+    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -80,12 +107,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
- // const {classes} = useStyles();
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(true);
+
+  const { classes } = useStyles();
+  const { pathname } = useLocation();
+
+  const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -97,10 +128,13 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const showAppointment = () => {
+    setIsModalOpen(!isModalOpen);
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -120,10 +154,9 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-          <NavLink to='profile'>Profile</NavLink>
-      </MenuItem>
-      
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+        <NavLink to='app/profile' style={{ textDecoration: 'none' , color: '#000'}}>Profile</NavLink>
+        </MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -150,7 +183,6 @@ export default function PrimarySearchAppBar() {
             <MailIcon />
           </Badge>
         </IconButton>
-        
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -162,7 +194,6 @@ export default function PrimarySearchAppBar() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-       
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -174,14 +205,22 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        
       </MenuItem>
     </Menu>
   );
 
+  const navLinkStyle = ({ isActive }) => {
+    return {
+      frontWeight: isActive ? 'bold' : 'normal',
+      color: isActive ? 'green' : 'white',
+    };
+  };
+
   return (
+    <React.Fragment>
+    <AppointmentHandler isModalOpen = {isModalOpen} toggleModal = {showAppointment} DUMMY_DATA = {DUMMY_DATA}/>
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: '#2E3B55' }} >
+      <AppBar position="static" style={{ background: '#2E3B55' }}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -189,30 +228,48 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-           WESCCOT
+            WESCCOT
           </Typography>
-          {/* <NavLink
-          to="/app"
-          style={({ isActive }) => {
-            return {
+          <NavLink
+            to="/admin"
+            style={({ isActive }) => {
+              return {
                 frontWeight: isActive ? 'bold' : 'normal',
-              color: isActive ? "green" : "white",
-            } 
-        }}
-          className={clsx(classes.nav, classes.p2)}
-          
-        >
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-           
+                color: isActive ? 'green' : 'white',
+              };
+            }}
+            className={clsx(classes.nav, classes.p2)}
           >
-           OverView
-          </Typography>
-          </NavLink> */}
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              OverView
+            </Typography>
+          </NavLink>
 
+          <NavLink
+            to="/admin/repo"
+            style={({ isActive, isPending }) => {
+              return {
+                fontWeight: isActive ? 'bold' : '',
+                color: isActive ? 'green' : 'white',
+              };
+            }}
+            className={clsx(classes.nav)}
+          >
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+              style={{ paddingLeft: '15px', frontWeight: 'bold' }}
+            >
+              Report
+            </Typography>
+          </NavLink>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -224,7 +281,11 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -233,8 +294,9 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={showAppointment}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={DUMMY_DATA.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -250,20 +312,11 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    </React.Fragment>
   );
-
-
 }
-
-
-
-
-
-
-

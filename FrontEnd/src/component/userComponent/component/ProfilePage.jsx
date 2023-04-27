@@ -9,13 +9,21 @@ import  Box from "@mui/material/Box";
 import avatar from '../assets/profile.png';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
-import {useState, useEffect} from 'react';
+import {useState, useEffect , useContext} from 'react';
 import axios from "axios";
+import { AuthContext } from '../../AuthProvider';
+import jwt_decode from 'jwt-decode'
 
 function DataFetching(){
   const[posts, setPosts] = useState([])
+  let authPayload = useContext(AuthContext)
+  console.log(authPayload)
+  const decoded_id = jwt_decode(authPayload.token)
+  console.log(decoded_id)
 
   useEffect(() => {
+ 
+
     axios.get('/customer/get/')
     .then((res,err) => {
       alert("Fetched Customer")
