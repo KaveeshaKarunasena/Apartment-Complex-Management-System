@@ -5,24 +5,27 @@ import jwt_decode from 'jwt-decode';
 
 export const AuthGuard = ({ children }) => {
   const navigate = useNavigate();
-  let authPayload = useContext(AuthContext);
-
+ 
   try {
-    console.log(authPayload);
-    if (!authPayload || !authPayload.token || authPayload == null) {
-      //  navigate("/login")
-      return <Navigate to="/login" />;
-    }
+    let authPayload = useContext(AuthContext);
+
+    console.log("auth",authPayload);
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
 
     let adminString = decodedEmail.substring(0, 5);
-    if (adminString == 'admin') {
+    if (adminString === 'admin') {
       return <Navigate to="/manager" />;
     }
 
-    if (adminString == 'super') {
+    if (adminString === 'super') {
       return <Navigate to="/admin" />;
+    }
+
+    if (!authPayload || !authPayload.token) {
+      //  navigate("/login")
+      console.log("no payloard");
+       return <Navigate to="/login" />;
     }
     return <>{children}</>;
   } catch (error) {
@@ -32,20 +35,31 @@ export const AuthGuard = ({ children }) => {
 
 export const SuperAdminAuthGuard = ({ children }) => {
   const navigate = useNavigate();
-  let authPayload = useContext(AuthContext);
+  
 
   try {
+    let authPayload = useContext(AuthContext);
+ 
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
+    
+    let adminString = decodedEmail.substring(0, 5);
+    console.log(adminString);
+    if (adminString === 'admin') {
+      // navigate('/manager')
+      return <Navigate to="/manager" />;
+    }
 
-    if (!authPayload || !authPayload.token) {
-      //  navigate("/login")
+    if (decodedEmail !== 'superAdmin@gmail.com') {
+      console.log("admin not super")
       return <Navigate to="/login" />;
     }
-    console.log(decodedEmail);
-    if (decodedEmail !== 'superAdmin@gmail.com' || decodedEmail == null) {
-      return <Navigate to="/login" />;
-    }
+
+   
+
+    
+
+   
 
     return <>{children}</>;
   } catch (error) {
@@ -55,19 +69,26 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
 export const AdminAuthGuard = ({ children }) => {
   const navigate = useNavigate();
-  let authPayload = useContext(AuthContext);
+ 
 
   try {
-    if (!authPayload || !authPayload.token) {
-      //  navigate("/login")
-      return <Navigate to="/login" />;
-    }
+    let authPayload = useContext(AuthContext);
 
     var decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
     let adminString = decodedEmail.substring(0, 5);
 
-    if (adminString !== 'admin' || adminString == null) {
+    if (adminString === 'super') {
+      return <Navigate to="/admin" />;
+    }
+
+    if (adminString !== 'admin') {
+      return <Navigate to="/login" />;
+    }
+    console.log("Manager")
+
+    if (!authPayload || !authPayload.token) {
+      
       return <Navigate to="/login" />;
     }
 
@@ -79,9 +100,10 @@ export const AdminAuthGuard = ({ children }) => {
 
 export function GuestGuard({ children }) {
   const navigate = useNavigate();
-  let authPayload = useContext(AuthContext);
+
 
   try {
+    let authPayload = useContext(AuthContext);
     if (authPayload && authPayload.token) {
       var decoded = jwt_decode(authPayload.token);
 
