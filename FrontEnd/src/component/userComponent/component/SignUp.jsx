@@ -88,7 +88,7 @@ export default function SignUp() {
         },
         validationSchema: validationSchema,
         validateOnChange: true,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
           if (values.confPassword === values.password) {
             
             axios({ method: "POST", url: "/otp/sendOTP", data: { email: values.email } });
@@ -104,6 +104,7 @@ export default function SignUp() {
                   .post("/otp/verifyOTP", { values,otp })
                   .then((response) => {
                     
+                    
                     return response.data
                     
                   })
@@ -114,9 +115,9 @@ export default function SignUp() {
               },
             }).then((result) => {
               if (result.value) {
-                console.log(result.value)
+                  console.log(result.value)
               
-                  axios({ method: "POST", url: "/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
+                  axios({ method: "POST", url: "/customer/add", data: { name: values.name,apartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
                   alert("Customer added")
                   navigate('/login')
                  
