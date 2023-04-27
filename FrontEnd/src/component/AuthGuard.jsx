@@ -14,7 +14,6 @@ export const AuthGuard = ({ children }) => {
     let adminString = decodedEmail.substring(0, 5);
 
     if (!authPayload || !authPayload.token) {
-      console.log('authGuard');
       //  navigate("/login")
       return <Navigate to="/login" />;
     }
@@ -109,7 +108,7 @@ export function GuestGuard({ children }) {
       navigate('/app');
   }
   return <>{children}</>;
-  
+
   }catch(error){
     console.log(error);
 
