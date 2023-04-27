@@ -35,13 +35,14 @@ export const SuperAdminAuthGuard = ({ children }) => {
   let authPayload = useContext(AuthContext);
 
   try {
-    const decoded = jwt_decode(authPayload.token);
-    const decodedEmail = decoded.email;
+   
 
     if (!authPayload || !authPayload.token) {
       //  navigate("/login")
       return <Navigate to="/login" />;
     }
+    const decoded = jwt_decode(authPayload.token);
+    const decodedEmail = decoded.email;
     console.log(decodedEmail);
     if (decodedEmail !== 'superAdmin@gmail.com' || decodedEmail == null) {
       return <Navigate to="/login" />;

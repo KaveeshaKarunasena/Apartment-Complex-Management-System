@@ -16,13 +16,13 @@ import jwt_decode from 'jwt-decode'
 
 function DataFetching(){
   const[posts, setPosts] = useState([])
-  let authPayload = useContext(AuthContext)
+  const authPayload = useContext(AuthContext)
   console.log(authPayload)
   const decoded_id = jwt_decode(authPayload.token)
-  console.log(decoded_id)
 
   useEffect(() => {
  
+    console.log("here")
 
     axios.get('/customer/get/')
     .then((res,err) => {
