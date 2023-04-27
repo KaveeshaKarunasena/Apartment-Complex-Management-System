@@ -14,7 +14,6 @@ export const AuthGuard = ({ children }) => {
     let adminString = decodedEmail.substring(0, 5);
 
     if (!authPayload || !authPayload.token) {
-      console.log('authGuard');
       //  navigate("/login")
       return <Navigate to="/login" />;
     }
@@ -45,7 +44,7 @@ export const SuperAdminAuthGuard = ({ children }) => {
     return <Navigate to="/login" />;
   }
   console.log(decodedEmail);
-  if (!decodedEmail == 'superAdmin@gmail.com' || decodedEmail == null) {
+  if (decodedEmail != 'superAdmin@gmail.com' || decodedEmail == null) {
     return <Navigate to="/login" />;
   }
 
@@ -71,8 +70,8 @@ export const AdminAuthGuard = ({ children }) => {
       //  navigate("/login")
       return <Navigate to="/login" />;
     }
-  
-    if (!adminString == 'admin' || adminString == null) {
+  console.log(adminString)
+    if (adminString != 'admin' || adminString == null) {
       return <Navigate to="/login" />;
     }
   
@@ -109,7 +108,7 @@ export function GuestGuard({ children }) {
       navigate('/app');
   }
   return <>{children}</>;
-  
+
   }catch(error){
     console.log(error);
 

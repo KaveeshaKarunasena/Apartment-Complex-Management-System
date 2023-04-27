@@ -12,26 +12,26 @@ async function findUserByApartmentNo(apartmentNo){
 }
 
 
- async function register(name , apartmentNo , email , phoneNo , nicNo , confPassword , password){
+//  async function register(name , apartmentNo , email , phoneNo , nicNo , confPassword , password){
 
-    const hash = await createPasswordHash(password);
-    const newUser = new User({
-        name,
-        apartmentNo,
-        email,
-        phoneNo,
-        nicNo,
-        confPassword,
-        password: hash
-    });
+//     const hash = await createPasswordHash(password);
+//     const newUser = new User({
+//         name,
+//         apartmentNo,
+//         email,
+//         phoneNo,
+//         nicNo,
+//         confPassword,
+//         password: hash
+//     });
     
-    await newUser.save();
-    const userCpy =  JSON.parse(JSON.stringify(newUser));
+//     await newUser.save();
+//     const userCpy =  JSON.parse(JSON.stringify(newUser));
 
-    //delete userCpy?.password
-    return userCpy
+//     //delete userCpy?.password
+//     return userCpy
 
-}
+// }
 
 async function login(apartmentNo , password){
 
@@ -55,6 +55,6 @@ async function login(apartmentNo , password){
 
 module.exports = {
     findUserByApartmentNo,
-    register,
+    // register,
     login
 }
