@@ -47,7 +47,30 @@ const login = async (req, res, session) => {
   try {
     const { apartmentNo, password } = req.body;
 
+
+const viewProfileById = async (req,res) => {
+    const curntUser  = req.user;
+    //console.log(currntUser);
+    try{
+        
+        if(!curntUser){
+            alert("User Not Logged In")
+            return res.status(400).send({ err: 'User Not Logged In'});
+            
+        }
+
+        const userDoc = await UserService.findUserById(curntUser._id);
+        const user = userDoc?.toJSON();
+    
+        delete user?.password;
+        res.status(200).json(user);
+
+    }catch(err){
+        res.status(400).send({ err: err });
+
+
     const LoggedUser = await UserService.login(apartmentNo, password);
+
 
     res.status(200).send(LoggedUser);
   } catch (err) {

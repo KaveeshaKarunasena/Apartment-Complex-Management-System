@@ -9,8 +9,25 @@ import  Box from "@mui/material/Box";
 import avatar from '../assets/profile.png';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
+import {useState, useEffect} from 'react';
+import axios from "axios";
+
+function DataFetching(){
+  const[posts, setPosts] = useState([])
+
+  useEffect(() => {
+    axios.get('/customer/get/')
+    .then((res,err) => {
+      alert("Fetched Customer")
+    })
+    .catch((err) => {
+      alert(err)
+    })
+  })
+}
 
 export default function MediaCard(props) {
+  
   return (
     <Box
     sx={{
