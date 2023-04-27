@@ -43,6 +43,7 @@ export function AuthProviderComponent({ children }) {
         );
 
         setAuthPayload({ ...data, client: axiosClient });
+        console.log(authPayload)
       }
     } catch (err) {
     } finally {
