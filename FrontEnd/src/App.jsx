@@ -15,15 +15,20 @@ import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
-import ManagerDashboard from './component/managerComponents/managerDashboard'
+import ManagerDashboard from './component/managerComponents/managerDashboard';
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
-import { AuthGuard, GuestGuard } from './component/AuthGuard'
-import VisitorHomePage from './component/userComponent/VisitorHomePage';
+import {
+  SuperAdminAuthGuard,
+  AdminAuthGuard,
+  AuthGuard,
+  GuestGuard,
+} from './component/AuthGuard';
+import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 
  //complain - imports start
@@ -70,25 +75,60 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
-function ProtectedRoutes() {
-  return(
-      <AuthGuard>
-        <Routes> 
-                <Route path="/profile" element={<ProfilePage/>} />
-                <Route path="/customerhome" element={<Home />} />
-        </Routes>  
-      </AuthGuard>
+function SupserAdminRoute() {
+  return (
+    <SuperAdminAuthGuard>
+      <Routes>
+        <Route path="" element={<MainDash />}>
+          <Route path="" element={<Cards />} />
+          <Route path="add" element={<AddApartments />} />
+          <Route path="view" element={<ViewApartments />} />
+          <Route path="maintenance" element={<Maintenance />} />
+        </Route>
+        <Route path="repo" element={<RepoDash />}>
+          <Route path="" element={<MaintenanceRepo />} />
+          <Route path="amenity" element={<AddApartments />} />
+          <Route path="complaint" element={<ViewApartments />} />
+        </Route>
+      </Routes>
+    </SuperAdminAuthGuard>
   );
- 
+}
 
+function AdminRoute() {
+  return (
+    <AdminAuthGuard>
+      <Routes>
+        <Route path="" element={<ManagerDashboard />}>
+          <Route path="" element={<Cards />} />
+          <Route path="Employee_add" element={<AddEmployees />} />
+          <Route path="Employee_view" element={<ViewEmployee />} />
+          <Route path="staff" element={<Cards />} />
+          <Route path="serviceProvider" element={<ServiceProvider />} />
+          <Route path="notices" element={<Cards />} /> 
+        </Route>
+      </Routes>
+    </AdminAuthGuard>
+  );
+}
+
+function ProtectedRoutes() {
+  return (
+    <AuthGuard>
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="profile" element={<ProfilePage />} />
+      </Routes>
+    </AuthGuard>
+  );
 }
 
 function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
     </GuestGuard>
@@ -96,98 +136,18 @@ function GuestRoutes() {
 }
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const { classes } = useStyles();
 
   return (
     <div className="App">
-      <SnackbarProvider>
-        <BrowserRouter>
-          <div>
+      <Navbar />
 
-            {/* <Routes>
-               <Route path="login" element={<SignIn/>} />
-               <Route path="signup" element={<SignUp/>} />
-            </Routes> */}
-            <Navbar />
-
-{/*================================================Customer Routes========================================================*/}
-             
-            <Routes> 
-              {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
-               <Route path="app/*" element={<ProtectedRoutes />} />
-               <Route path="*" element={<GuestRoutes />} />
-              
-            </Routes>
-
- {/*=======================================================================================================================*/}
-
-
-            <Routes> 
-              {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
-               
-            </Routes>
-            <Routes>
-              <Route path="/app" element={<MainDash />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="add" element={<AddApartments />} />
-                <Route path="view" element={<ViewApartments />} />
-                <Route path="maintenance" element={<Maintenance />} />
-              </Route>
-            </Routes>
-
-            <Routes>
-              <Route path="/repo" element={<RepoDash />}>
-                <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
-                <Route path="amenity" element={<AddApartments />} />
-                <Route path="complaint" element={<ViewApartments />} />
-              </Route>
-            </Routes>
-
-            {/* complains start */}
-            <Routes>
-              <Route path="/complain"
-              // element={<Compage_Home />}
-               >
-                {/* <Route path="all" element={<All_complain />} />
-                <Route path="reprot" element={<Report_complain />} />
-                <Route path="update" element={<Compage_client_update />} />
-                <Route path="new" element={<Compage_client_new />} />
-                */}
-                <Route index element={<Compage_Home />} />
-                <Route path=":id" element={<Single_complain />} />
-                <Route path="all" element={<All_complain />} />
-                <Route path="reprot" element={<Report_complain />} />
-                <Route path="update" element={<Compage_client_update />} />
-                <Route path="new" element={<Compage_client_new />} />
-
-              </Route>
-
-            </Routes>
-            {/* complains end */}
-
-
-            <Routes>
-              {/* Manager Dashboard Routes */}
-              <Route path="/mDash" element={<ManagerDashboard />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="Employee_add" element={<AddEmployees/>}></Route>
-                <Route path="Employee_view" element={<ViewEmployee/>}></Route>
-                <Route path="Employee_Update" element={<EditEmployee/>}></Route>
-                <Route path="staff" element={<Cards />} />
-                <Route path="serviceProvider" element={<ServiceProvider />} />
-                
-                {/* <Route path="notices" element={<Cards />} /> */}
-              </Route>
-            </Routes>
-
-          </div>
-        </BrowserRouter>
-      </SnackbarProvider>
+      <Routes>
+        <Route path="app/*" element={<ProtectedRoutes />} />
+        <Route path="admin/*" element={<SupserAdminRoute />} />
+        <Route path="manager/*" element={<AdminRoute />} />
+        <Route path="*" element={<GuestRoutes />} />
+      </Routes>
     </div>
   );
 }

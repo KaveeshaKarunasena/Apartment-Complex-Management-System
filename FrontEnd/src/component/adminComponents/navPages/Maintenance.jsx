@@ -89,7 +89,7 @@ function Maintanence() {
           apartmentNo: Yup.string().required('Required'),
           amount: Yup.number().required('Required*'),
           description: Yup.string().required('Required'),
-          date: Yup.string().required('Required'),
+          date: Yup.date().max(new Date()).required('Required'),
         })}
         onSubmit={addMaintenance}
       >
@@ -161,6 +161,7 @@ function Maintanence() {
                   name="date"
                   type="date"
                   size="small"
+                  maxDate={new Date()}
                   error={errors.date && errors.date?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>

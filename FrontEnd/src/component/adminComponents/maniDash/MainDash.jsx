@@ -61,7 +61,7 @@ function MainDash() {
       <h1>Dashboard</h1>
       <div className={classes.content}>
         <NavLink
-          to="home"
+          to=""
           className={clsx(classes.nav, classes.p2)}
           style={navLinkStyle}
         >

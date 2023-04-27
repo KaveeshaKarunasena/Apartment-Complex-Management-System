@@ -5,7 +5,7 @@ const {
     verifyOTP,
 } = require('../Controller/otpController');
 
-router.post("/otp",sendOTP);
+router.post("/sendOTP",sendOTP);
 router.post("/verifyOTP",verifyOTP);
 
 module.exports= router;

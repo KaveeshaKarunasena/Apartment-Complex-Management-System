@@ -63,7 +63,7 @@ function RepoDash() {
       <h1>Report Dashboard</h1>
       <div className={classes.content}>
         <NavLink
-          to="maintenanceRepo"
+          to=""
           className={clsx(classes.nav, classes.p2)}
           style={navLinkStyle}
         >
