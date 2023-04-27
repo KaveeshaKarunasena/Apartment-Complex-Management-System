@@ -55,7 +55,10 @@ export const SuperAdminAuthGuard = ({ children }) => {
       return <Navigate to="/login" />;
     }
 
-   
+    if (!authPayload || !authPayload.token) {
+      
+      return <Navigate to="/login" />;
+    }
 
     
 
