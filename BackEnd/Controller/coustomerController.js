@@ -47,22 +47,38 @@ const login = async (req, res, session) => {
   try {
     const { apartmentNo, password } = req.body;
     const LoggedUser = await UserService.login(apartmentNo, password);
-    
+
     res.status(200).send(LoggedUser);
   } catch (err) {
     res.status(400).send({ err: err.message });
   }
 };
 
+const viewCustomer = async (req, res) => {
+  let id = req.params.id;
+  console.log(id)
+  Customer.findById(id, (err, customerModle) => {
+    if (err) {
+      return res.status(400).json({ success: false, err });
+    }
+
+    return res.status(200).json({
+      success: true,
+      customerModle,
+    });
+  });
+};
+
 const viewProfileById = async (req, res) => {
   const curntUser = req.user;
-  //console.log(currntUser);
+  // console.log(curntUser);
   try {
     if (!curntUser) {
       return res.status(400).send({ err: 'User Not Logged In' });
     }
 
-    const userDoc = await UserService.findUserByEmail(curntUser._id);
+    const userDoc = await Customer.findById(curntUser.id)
+     console.log(userDoc)
     const user = userDoc?.toJSON();
 
     delete user?.password;
@@ -172,4 +188,5 @@ module.exports = {
   deleteProfile,
   viewProfiles,
   resetPassword,
+  viewCustomer
 };
