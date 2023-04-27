@@ -85,7 +85,7 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
  // const {classes} = useStyles();
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(true);
   };
 
   const handleMobileMenuClose = () => {
@@ -120,10 +120,10 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-          <NavLink to=''>Profile</NavLink>
+          <NavLink to='profile'>Profile</NavLink>
       </MenuItem>
       
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 

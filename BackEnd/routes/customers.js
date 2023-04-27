@@ -19,7 +19,7 @@ router.post("/add",newSignUp);
 
 router.post("/login",login);
 
-router.get("/get",authGuard,viewProfileById);
+router.get("/get/:id",authGuard,viewProfileById);
 
 router.put("/update/:id",updateProfileById);
 
