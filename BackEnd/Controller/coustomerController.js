@@ -71,7 +71,7 @@ const viewProfileById = async (req,res) => {
             
         }
 
-        const userDoc = await UserService.findUserByEmail(curntUser._id);
+        const userDoc = await UserService.findUserById(curntUser._id);
         const user = userDoc?.toJSON();
     
         delete user?.password;
