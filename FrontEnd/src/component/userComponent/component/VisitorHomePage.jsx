@@ -7,7 +7,7 @@ import {Typography,Grid} from '@material-ui/core';
 import Box from '@mui/material/Box';
 import { Card, CardMedia,CardContent, } from '@material-ui/core';
 import {NavLink } from "react-router-dom";
-import Container from '@mui/material/Container';
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -102,10 +102,10 @@ function VisitorHomePage() {
           </div>
           <div>
             <Button  variant="contained" color="primary" style={{ fontWeight: 600, marginLeft: '10px',backgroundColor:'#DBE8D8',color: '#000'}}>
-              <NavLink to='/login' style={{ textDecoration: 'none' , color: '#000'}}>Sign In</NavLink>
+              <NavLink to='login' style={{ textDecoration: 'none' , color: '#000'}}>Sign In</NavLink>
             </Button>
             <Button variant="contained" color="primary" style={{ fontWeight: 600, marginLeft: '10px',backgroundColor:'#FDB750',color: '#000'}}>
-            <NavLink to='/signup' style={{ textDecoration: 'none' , color: '#000'}}>Sign Up</NavLink>
+            <NavLink to='signup' style={{ textDecoration: 'none' , color: '#000'}}>Sign Up</NavLink>
             </Button>
           </div>
         </Toolbar>

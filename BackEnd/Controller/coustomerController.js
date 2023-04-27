@@ -66,7 +66,9 @@ const viewProfileById = async (req,res) => {
     try{
         
         if(!curntUser){
+            alert("User Not Logged In")
             return res.status(400).send({ err: 'User Not Logged In'});
+            
         }
 
         const userDoc = await UserService.findUserByEmail(curntUser._id);
