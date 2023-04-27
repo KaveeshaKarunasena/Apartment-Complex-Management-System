@@ -27,7 +27,7 @@ export function GuestGuard({ children }) {
     // check if user exists
     if (authPayload && authPayload.token) {
       
-        navigate("/app")
+        navigate("/")
 
      
       
