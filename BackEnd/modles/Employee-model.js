@@ -2,49 +2,46 @@ const mongoose = require("mongoose");
 
 const EmployeeSchema = mongoose.Schema({
 
-    StaffID: {
+
+    name :  {
         type :String,
         required :true
     },
-    Name :  {
+    nic :  {
         type :String,
         required :true
     },
-    NIC :  {
+    dob :  {
         type :String,
         required :true
     },
-    DOB :  {
-        type :Date,
-        required :true
-    },
-    Address:  {
+    address:  {
         type :String,
         required :true
     },
-    JobTitle:  {
+    jobTitle:  {
         type :String,
         required :true
     },
-    Department:  {
+    department:  {
         type :String,
         required :true
     },
-    ContactNumber: {
+    contactNumber: {
         type :String,
         required :true
     },
-    BasicSalary:{
+    basicSalary:{
+        type:Number
+        
+    },
+    allowance:{
         type:Number,
         required:true
     },
-    Allowance:{
-        type:Number,
-        required:true
-    },
-    Overtime:{
-        type:Number,
-        required:true
+    overtime:{
+        type:Number
+        
     }
 })
 const EmployeeModel = mongoose.model("Employee", EmployeeSchema);

@@ -3,17 +3,16 @@ const EmployeeModel = require('../modles/Employee-model');
 
 const newEmployee = async (req, res) => {
   let newEmployee = new EmployeeModel({
-    id: req.body.StaffID,
-    Name: req.body.Name,
-    NIC: req.body.NIC,
-    DOB: req.body.DOB,
-    Address: req.body.Address,
-    JobTitle: req.body.JobTitle,
-    Department: req.body.Department,
-    ContactNumber:req.body.ContactNumber,
-    BasicSalary:req.body.BasicSalary,
-    Allowance:req.body.Allowance,
-    OverTime:req.body.OverTime
+    name: req.body.name,
+    nic: req.body.nic,
+    dob: req.body.dob,
+    address: req.body.address,
+    jobTitle: req.body.jobTitle,
+    department: req.body.department,
+    contactNumber:req.body.contactNumber,
+    basicSalary:req.body.basicSalary,
+    allowance:req.body.allowance,
+    overTime:req.body.overTime
   });
 
   newEmployee.save(function (err, newEmployee) {
@@ -63,31 +62,31 @@ const viewEmployeeByname = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
 
-    const id = req.body.StaffID;
-    const Name = req.body.Name;
-    const NIC =  req.body.NIC;
-    const DOB = req.body.DOB;
-    const Address=req.body.Address;
-    const JobTitle=req.body.JobTitle;
-    const Department=req.body.Department;
-    const ContactNumber=req.body.ContactNumber;
-    const BasicSalary=req.body.BasicSalary;
-    const Allowance=req.body.Allowance;
-    const OverTime=req.body.OverTime;
+    const id = req.body.staffID;
+    const name = req.body.name;
+    const nic =  req.body.nic;
+    const dob = req.body.dob;
+    const address=req.body.address;
+    const jobTitle=req.body.jobTitle;
+    const department=req.body.department;
+    const contactNumber=req.body.contactNumber;
+    const basicSalary=req.body.basicSalary;
+    const allowance=req.body.allowance;
+    const overTime=req.body.overTime;
 
   EmployeeModel.findOneAndUpdate(
     { id: id },
     {
-        Name: Name,
-        NIC: NIC,
-        DOB: DOB,
-        Address: Address,
-        JobTitle: JobTitle,
-        Department: Department,
-        ContactNumber: ContactNumber,
-        BasicSalary: BasicSalary,
-        Allowance: Allowance,
-        OverTime:OverTime
+        Name: name,
+        NIC: nic,
+        dob: dob,
+        address: address,
+        jobTitle: jobTitle,
+        department: department,
+        contactNumber: contactNumber,
+        basicSalary: basicSalary,
+        allowance: allowance,
+        overTime:overTime
     },
     function (err, response) {
       if (err) res.send(err);
@@ -102,7 +101,7 @@ const updateEmployee = async (req, res) => {
 };
 
 const DeleteEmployee = async (req, res) => {
-  const id = req.body.StaffID;
+  const id = req.body.staffID;
 
   EmployeeModel.findByIdAndDelete(id, function (err, response) {
     if (err) res.send(err);

@@ -48,7 +48,7 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(24),
     width: 'auto',
   },
-  borderRadius: '16px'
+  borderRadius:'16px'
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -147,7 +147,7 @@ export default function PrimarySearchAppBar() {
             <MailIcon />
           </Badge>
         </IconButton>
-
+        
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -159,7 +159,7 @@ export default function PrimarySearchAppBar() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-
+       
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -171,7 +171,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-
+        
       </MenuItem>
     </Menu>
   );
@@ -193,79 +193,52 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            WESCCOT
+           WESCCOT
           </Typography>
           <NavLink
-            to="/app"
-            style={({ isActive }) => {
-              return {
+          to="/app"
+          style={({ isActive }) => {
+            return {
                 frontWeight: isActive ? 'bold' : 'normal',
-                color: isActive ? "green" : "white",
-              }
-            }}
-            className={clsx(classes.nav, classes.p2)}
-
+              color: isActive ? "green" : "white",
+            } 
+        }}
+          className={clsx(classes.nav, classes.p2)}
+          
+        >
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+           
           >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-
-            >
-              OverView
-            </Typography>
+           OverView
+          </Typography>
           </NavLink>
 
           <NavLink
-            to="/repo"
-            style={({ isActive, isPending }) => {
-              return {
-                fontWeight: isActive ? "bold" : "",
-                color: isActive ? "green" : "white",
-              }
-            }}
-            className={clsx(classes.nav)}
-
+          to="/repo"
+          style={({ isActive, isPending }) => {
+            return {
+              fontWeight: isActive ? "bold" : "",
+              color: isActive ? "green" : "white",
+            } 
+        }}
+          className={clsx(classes.nav)}
+          
+        >
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+            style={{ paddingLeft: '15px' , frontWeight:'bold'}}
+            
           >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-              style={{ paddingLeft: '15px', frontWeight: 'bold' }}
-
-            >
-              Report
-            </Typography>
+           Report
+          </Typography>
           </NavLink>
-
-          {/* complains start */}
-          <NavLink
-            to="/complain"
-            style={({ isActive, isPending }) => {
-              return {
-                fontWeight: isActive ? "bold" : "",
-                color: isActive ? "green" : "white",
-              }
-            }}
-            className={clsx(classes.nav)}
-
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-              style={{ paddingLeft: '15px', frontWeight: 'bold' }}
-
-            >
-              Complain
-            </Typography>
-          </NavLink>
-          {/* complains end */}
-
-
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -303,7 +276,7 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-
+          
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

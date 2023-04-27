@@ -1,64 +1,64 @@
+// Library imports
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import MenuItem from '@mui/material/MenuItem';
-import { makeStyles } from 'tss-react/mui';
-import {
-  FormGroup,
-  FormControl,
-  InputLabel,
-  Input,
-  TextField,
-  Select
-} from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 
+// Custom imports
+import ServiceCard from './ServiceCard';
 import './serviceProvider.css';
+import AddService from './AddService';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  border: '2px solid black',
   borderRadius: '5px',
-  boxShadow: 24,
-  p: 4,
-};
-
-const useStyles = makeStyles()(theme => ({
-  root: {
-    [theme.breakpoints.up('md')]: {
-      width: '30%',
-    },
-    [theme.breakpoints.down('md')]: {
-      width: '60%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '95%',
-    },
-    margin: '0 auto',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '30px',
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  formControl: {
-    marginTop: '10px',
-    padding: '5px',
-  },
-  submitBtn: {
-    marginTop: '15px',
-    backgroundColor: '#488042'
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '50%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
   },
 }));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+// Service Provider Main component
 const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
-  const { classes } = useStyles();
+
+  const [serviceProviders, setServiceProviders] = useState([]);
+  const [isService, setIsService] = useState(false);
 
   const displayFormHandler = () => {
     setShowForm(true);
@@ -67,74 +67,79 @@ const ServiceProvider = () => {
   const submitFormHandler = () => {
     setShowForm(false);
   };
+
+  // useEffect is used to make sure once service provider is added the service provider is displayed instantly on the service provider dashboard
+  useEffect(() => {
+    const fetchServiceProviderDetails = async () => {
+      const response = await fetch('/service-provider/');
+      const json = await response.json();
+
+      if (response.ok) {
+        setServiceProviders(json);
+        setIsService(false);
+      }
+    };
+
+    fetchServiceProviderDetails();
+  }, [isService]);
+
+  //JSX Components start here
   return (
     <React.Fragment>
       <div className="serviceProviderContainer">
-        <Button
-          variant="contained"
-          onClick={displayFormHandler}
-          style={{
-            backgroundColor: '#488042',
-            marginLeft: '82%',
-            marginTop: '2%',
-          }}
-        >
-          Add Service Provider
-        </Button>
-
-        <Modal
-          open={showForm}
-          onClose={submitFormHandler}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style} className={classes.root}>
-            <h1>Add Service Provider</h1>
-            <FormGroup>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Company Name</InputLabel>
-                <Input />
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  label="Address"
-                  multiline
-                  maxRows={4}
-                />
-              </FormControl>
-              <FormControl style={{ marginTop: '15%' }} fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Service Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value="Service Type"
-                  label="Service Type"
-                  //   onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl style={{ marginTop: '10%' }}>
-                <InputLabel>Contact Number</InputLabel>
-                <Input />
-              </FormControl>
-            </FormGroup>
-            <Button
-                // onClick={() => handleSubmit()}
-                type="submit"
-                className={classes.submitBtn}
+        <Grid container justifyContent = {'space-between'} style = {{marginBottom: '4%'}}>
+          <Grid item xs={3}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+          </Grid>
+          <Grid item xs={7}>
+            <div>
+              <Button
                 variant="contained"
-                style={{ marginTop: '10%' }}
+                onClick={displayFormHandler}
+                style={{
+                  backgroundColor: '#488042',
+                  padding: '2%'
+                }}
               >
-                ADD
+                Add Service Provider
               </Button>
-          </Box>
-        </Modal>
+            </div>
+          </Grid>
+        </Grid>
+
+        <div className="serviceProviderList">
+          <Grid container spacing={12}>
+            {serviceProviders.map(serviceProvider => (
+              <Grid item xs={4} key={serviceProvider._id}>
+                <ServiceCard
+                  id={serviceProvider._id}
+                  cName={serviceProvider.companyName}
+                  sType={serviceProvider.serviceType}
+                  location={serviceProvider.location}
+                  cNumber={serviceProvider.contactNumber}
+                  spList={serviceProviders}
+                  setServiceProviders={setServiceProviders}
+                  setIsService={setIsService}
+                  image={serviceProvider.photo}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        <AddService
+          showForm={showForm}
+          submitFormHandler={submitFormHandler}
+          setShowForm={setShowForm}
+          setIsService={setIsService}
+        />
       </div>
     </React.Fragment>
   );

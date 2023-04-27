@@ -11,14 +11,7 @@ const {
   DeleteEmployee,
 } = require('../Controller/Employee-Controller');
 
-router.post(
-  '/add',
-  validator([
-    body('ContactNumber').exists().isLength(10)
-    
-  ]),
-  newEmployee
-);
+router.post('/add', newEmployee);
 
 router.get('/view', viewEmployee);
 
