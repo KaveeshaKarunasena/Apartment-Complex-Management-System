@@ -22,7 +22,7 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
-import { AuthGuard, GuestGuard } from './component/AuthGuard'
+import { SuperAdminAuthGuard,AdminAuthGuard,AuthGuard, GuestGuard } from './component/AuthGuard'
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 
@@ -46,6 +46,53 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
+
+function SupserAdminRoute() {
+  return(
+
+      <SuperAdminAuthGuard>
+        <Routes>    
+          <Route path="" element={<MainDash />}>
+            <Route path="" element={<Cards />} />
+            <Route path="add" element={<AddApartments />} />
+            <Route path="view" element={<ViewApartments />} />
+            <Route path="maintenance" element={<Maintenance />} />
+            {/* <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
+            <Route path="amenity" element={<AddApartments />} />
+            <Route path="complaint" element={<ViewApartments />} /> */}
+          </Route>
+          <Route path="repo" element={<RepoDash />}>
+                  <Route path="" element={<MaintenanceRepo />} />
+                  <Route path="amenity" element={<AddApartments />} />
+                  <Route path="complaint" element={<ViewApartments />} />
+                </Route>
+        </Routes>  
+      </SuperAdminAuthGuard>
+  );
+ 
+
+}
+
+function AdminRoute() {
+  return(
+
+      <AdminAuthGuard>
+        <Routes>  
+          <Route path="" element={<ManagerDashboard />}>
+            <Route path="" element={<Cards />} />
+            <Route path="Employee_add" element={<AddEmployees/>} />
+            <Route path="Employee_view" element={<ViewEmployee/>} />
+            <Route path="staff" element={<Cards />} />
+            <Route path="serviceProvider" element={<ServiceProvider />} />
+            {/* <Route path="notices" element={<Cards />} />  */}
+          </Route>
+        </Routes>  
+      </AdminAuthGuard>
+  );
+ 
+
+}
+
 function ProtectedRoutes() {
   return(
 
@@ -54,7 +101,6 @@ function ProtectedRoutes() {
             <Route path=""  element={<Home />}/>
             <Route path="profile"  element={<ProfilePage/>} />   
             <Route path="add" element={<AddApartments />} /> 
-
         </Routes>  
       </AuthGuard>
   );
@@ -69,7 +115,6 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
-
       </Routes>
     </GuestGuard>
   );
@@ -90,41 +135,17 @@ function App() {
 {/*================================================Customer Routes========================================================*/}
              
             <Routes> 
-              {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
                <Route path="app/*" element={<ProtectedRoutes />} />
-               <Route path="*" element={<GuestRoutes />} />
-               
-             </Routes> 
+               <Route path="admin/*" element={<SupserAdminRoute />} /> 
+               <Route path="manager/*" element={<AdminRoute />} /> 
+               <Route path="*" element={<GuestRoutes />} /> 
+            </Routes> 
 
  {/*=======================================================================================================================*/}
 
 
 {/* 
             <Routes>  */}
-              {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
-               
-            {/* </Routes>
-            <Routes>
-
-              <Route path="/main" element={<MainDash />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="add" element={<AddApartments />} />
-                <Route path="view" element={<ViewApartments />} />
-                <Route path="maintenance" element={<Maintenance />} />
-              </Route>
-            </Routes>
-           <Routes>
-                <Route path="/repo" element={<RepoDash />}>
-                  <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
-                  <Route path="amenity" element={<AddApartments />} />
-                  <Route path="complaint" element={<ViewApartments />} />
-                </Route>
-              </Routes>
-            <Routes>
               {/* Manager Dashboard Routes */}
               {/* <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
