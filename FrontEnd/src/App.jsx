@@ -93,7 +93,6 @@ function ProtectedRoutes() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="add" element={<AddApartments />} />
       </Routes>
     </AuthGuard>
   );
