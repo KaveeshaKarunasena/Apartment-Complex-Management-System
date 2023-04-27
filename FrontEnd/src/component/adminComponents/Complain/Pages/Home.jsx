@@ -10,19 +10,19 @@ const Home = () => {
 
 
       <div className="container">
-        <Link to={`/complain/all`} style={{ textDecoration: "none" }}>
+        <Link to={`/Comlpain/all`} style={{ textDecoration: "none" }}>
           <div className="viewButton">  View All </div>
         </Link>
 
-        <Link to={`/complain/new`} style={{ textDecoration: "none" }}>
+        <Link to={`/Comlpain/new`} style={{ textDecoration: "none" }}>
           <div className="viewButton"> new </div>
         </Link>
 
-        <Link to={`/complain/update`} style={{ textDecoration: "none" }}>
+        <Link to={`/Comlpain/update`} style={{ textDecoration: "none" }}>
           <div className="viewButton"> Update </div>
         </Link>
 
-        <Link to={`/complain/reprot`} style={{ textDecoration: "none" }}>
+        <Link to={`/Comlpain/reprot`} style={{ textDecoration: "none" }}>
           <div className="viewButton"> reprot </div>
         </Link>
       </div>

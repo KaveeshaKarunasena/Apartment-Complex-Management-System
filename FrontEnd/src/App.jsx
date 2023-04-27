@@ -22,6 +22,9 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
+
+
+import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -127,6 +130,18 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
+        {/* //Complain Routes Start */}
+        <Route path="Comlpain" element={<Compage_Home />} />
+        <Route path="Comlpain/:id" element={<Single_complain />} />
+        <Route path="Complain/new" element={<Compage_client_new />} />
+        <Route path="Comlpain/update" element={<Compage_client_update />} />
+        <Route path="Comlpain/reprot" element={<Report_complain />} />
+        <Route path="Comlpain/all" element={<All_complain />} />
+         {/* //Complain Routes End */}
+
+
+
+
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
