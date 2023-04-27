@@ -15,17 +15,20 @@ import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
-import ManagerDashboard from './component/managerComponents/managerDashboard'
+import ManagerDashboard from './component/managerComponents/managerDashboard';
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
-import { AuthGuard, GuestGuard } from './component/AuthGuard'
-import VisitorHomePage from './component/userComponent/VisitorHomePage';
-import Products from './component/userComponent/component/mainpages/products/Products';
-
+import {
+  SuperAdminAuthGuard,
+  AdminAuthGuard,
+  AuthGuard,
+  GuestGuard,
+} from './component/AuthGuard';
+import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -47,20 +50,53 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
-function ProtectedRoutes() {
-  return(
-
-      <AuthGuard>
-        <Routes>  
-            <Route path=""  element={<Home />}/>
-            <Route path="profile"  element={<ProfilePage/>} />   
-            <Route path="add" element={<AddApartments />} /> 
-
-        </Routes>  
-      </AuthGuard>
+function SupserAdminRoute() {
+  return (
+    <SuperAdminAuthGuard>
+      <Routes>
+        <Route path="" element={<MainDash />}>
+          <Route path="" element={<Cards />} />
+          <Route path="add" element={<AddApartments />} />
+          <Route path="view" element={<ViewApartments />} />
+          <Route path="maintenance" element={<Maintenance />} />
+        </Route>
+        <Route path="repo" element={<RepoDash />}>
+          <Route path="" element={<MaintenanceRepo />} />
+          <Route path="amenity" element={<AddApartments />} />
+          <Route path="complaint" element={<ViewApartments />} />
+        </Route>
+      </Routes>
+    </SuperAdminAuthGuard>
   );
- 
+}
 
+function AdminRoute() {
+  return (
+    <AdminAuthGuard>
+      <Routes>
+        <Route path="" element={<ManagerDashboard />}>
+          <Route path="" element={<Cards />} />
+          <Route path="Employee_add" element={<AddEmployees />} />
+          <Route path="Employee_view" element={<ViewEmployee />} />
+          <Route path="staff" element={<Cards />} />
+          <Route path="serviceProvider" element={<ServiceProvider />} />
+          <Route path="notices" element={<Cards />} /> 
+        </Route>
+      </Routes>
+    </AdminAuthGuard>
+  );
+}
+
+function ProtectedRoutes() {
+  return (
+    <AuthGuard>
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="add" element={<AddApartments />} />
+      </Routes>
+    </AuthGuard>
+  );
 }
 
 function GuestRoutes() {
@@ -70,21 +106,17 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
-
       </Routes>
     </GuestGuard>
   );
 }
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const { classes } = useStyles();
 
   return (
     <div className="App">
-      
-        
-          <div>
+      <Navbar />
 
             <Navbar />
 
@@ -151,8 +183,6 @@ function App() {
 
           </div>
       
-      
-    </div>
   );
 }
 

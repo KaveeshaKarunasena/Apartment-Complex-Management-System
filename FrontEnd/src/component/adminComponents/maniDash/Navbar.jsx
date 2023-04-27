@@ -229,7 +229,7 @@ export default function PrimarySearchAppBar() {
             WESCCOT
           </Typography>
           <NavLink
-            to="/main"
+            to="/admin"
             style={({ isActive }) => {
               return {
                 frontWeight: isActive ? 'bold' : 'normal',
@@ -249,7 +249,7 @@ export default function PrimarySearchAppBar() {
           </NavLink>
 
           <NavLink
-            to="/repo"
+            to="/admin/repo"
             style={({ isActive, isPending }) => {
               return {
                 fontWeight: isActive ? 'bold' : '',
