@@ -44,7 +44,8 @@ async function login(apartmentNo , password){
     
     const payload = await signToken(password, acc.password, {
         apartmentNo: acc.apartmentNo,
-        id: acc._id.toString(),
+        email : acc.email,
+        id: acc._id.toString()
     });
 
     return payload;
