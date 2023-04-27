@@ -3,9 +3,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as Yup from "yup";
 import axios from "axios";
-import Swal from 'sweetalert2'
+//import Swal from 'sweetalert2'
 import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
 import {useNavigate} from 'react-router-dom'
@@ -73,7 +73,7 @@ const validationSchema = Yup.object({
 
 export default function SignUp() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const { classes } = useStyles();
 
     const formik = useFormik({
@@ -88,48 +88,11 @@ export default function SignUp() {
         },
         validationSchema: validationSchema,
         validateOnChange: true,
-        onSubmit: async (values) => {
-          if (values.confPassword === values.password) {
-            
-            axios({ method: "POST", url: "/otp/sendOTP", data: { email: values.email } });
-            Swal.fire({
-              title: "Enter OTP",
-              input: "text",
-              inputLabel: "",
-              inputPlaceholder: "Enter otp",
-              showCancelButton: true,
-              confirmButtonText: "Submit",
-              preConfirm: (otp) => {
-                return axios
-                  .post("/otp/verifyOTP", { values,otp })
-                  .then((response) => {
-                    
-                    
-                    return response.data
-                    
-                  })
-                  .catch((error) => {
-                    Swal.showValidationMessage(`Request failed: ${error}`);
-
-                  });
-              },
-            }).then((result) => {
-              if (result.value) {
-                  console.log(result.value)
-              
-                  axios({ method: "POST", url: "/customer/add", data: { name: values.name,apartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
-                  alert("Customer added")
-                  navigate('/login')
-                 
-                }).catch((err)=>{
-                  alert(err)
-                })
-              }
-            })
-            .catch((err)=>{
-              alert(err)
-            });
-          }
+        onSubmit: (values) => {
+                     
+            axios({ method: "put", url: "/customer/update/:id", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password }});
+             navigate('/profile')
+          
         },
       });
 
@@ -152,7 +115,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Update Customer Details
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -167,6 +130,7 @@ export default function SignUp() {
                   value={formik.values.name}
                   className={classes.name}
                   placeholder='Enter name'
+                 // defaultValue="Hello World"
                   onChange={handleChange}
                   error={formik.errors["name"] && formik.touched.name ? true : false}
                   helperText={
@@ -187,6 +151,7 @@ export default function SignUp() {
                   value={formik.values.apartmentNo}
                   className={classes.apartmentNo}
                   placeholder='Enter apartment No'
+                   // defaultValue="Hello World"
                   error={
                     formik.errors["apartmentNo"] && formik.touched.apartmentNo
                       ? true
@@ -210,6 +175,7 @@ export default function SignUp() {
                   value={formik.values.nicNo}
                   className={classes.nicNo}
                   placeholder='Enter NIC No'
+                   // defaultValue="Hello World"
                   error={formik.errors["nicNo"] && formik.touched.nicNo ? true : false}
                   onChange={handleChange}
                   helperText={
@@ -229,6 +195,7 @@ export default function SignUp() {
                   className={classes.phoneNo}
                   value={formik.values.phoneNo}
                   placeholder='Enter phone number'
+                   // defaultValue="Hello World"
                   error={
                     formik.errors["phoneNo"] && formik.touched.phoneNo ? true : false
                   }
@@ -251,6 +218,7 @@ export default function SignUp() {
                   value={formik.values.email}
                   error={formik.errors["email"] && formik.touched.email ? true : false}
                   placeholder='Enter email'
+                   // defaultValue="Hello World"
                   onChange={handleChange}
                   helperText={
                     formik.errors["email"] && formik.touched.email
@@ -266,6 +234,7 @@ export default function SignUp() {
                   name='password'
                   label='Password'
                   type='password'
+                   // defaultValue="Hello World"
                   className={classes.password}
                   value={formik.values.password}
                   error={
@@ -280,27 +249,8 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                 fullWidth
-                 name='confPassword'
-                 label='Conform Password'
-                 type='password'
-                 autoComplete='current-password'
-                 value={formik.values.confPassword}
-                 error={formik.errors["confPassword"] ? true : false}
-                 onChange={handleChange}
-                 helperText={
-                   formik.errors["confPassword"] ? formik.errors["confPassword"] : null
-                 }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+              
+              
             </Grid>
             <Button
               type="submit"
@@ -308,18 +258,11 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Get OTP
+              Update Details
             </Button>
 
           </Box>
-          <br></br>
-          <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link component="button"  variant="body2" to="/login">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+                   
         </Box>
         
       </Container>
