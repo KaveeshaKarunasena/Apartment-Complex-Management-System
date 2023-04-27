@@ -140,14 +140,14 @@ function App() {
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
 
-            <Routes>
+            {/* <Routes>
               <Route path="/amaenity" element={<Products />}>
                 <Route path="home" element={<Cards />} />
-                {/* <Route path="add" element={<AddApartments />} />
+                <Route path="add" element={<AddApartments />} />
                 <Route path="view" element={<ViewApartments />} />
-                <Route path="maintenance" element={<Maintenance />} /> */}
+                <Route path="maintenance" element={<Maintenance />} />
               </Route>
-            </Routes>
+            </Routes> */}
                
          
             <Routes>

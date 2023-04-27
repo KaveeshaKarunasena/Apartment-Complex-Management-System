@@ -40,17 +40,9 @@ const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
 const appointmentRouter = require('./routes/appointment');
 const imageRouter = require('./routes/UploadRoute');
-<<<<<<< HEAD
-const customerRouter = require("./routes/customers.js");
-const otpRouter = require("./routes/otp.js");
-const EmployeeRouter=require('./routes/Employee');
-const CategoryRouter = require('./routes/categoryRouter')
-const ProductsRouter = require ('./routes/productRouter')
-=======
 const customerRouter = require('./routes/customers.js');
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
->>>>>>> a0fbbdb7a7bd57bc1f0e7f74acabd528cdec1642
 
 const app = express();
 
@@ -65,23 +57,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
-<<<<<<< HEAD
-app.use('/service-provider',serviceProviderRouter);
-app.use('/appointment',appointmentRouter);
-app.use('/upload',imageRouter);
-app.use("/customer",customerRouter)
-app.use("/sendOTP",otpRouter);
-app.use('/employee',EmployeeRouter);
-app.use('/product', ProductsRouter)
-app.use('/category', CategoryRouter)
-=======
 app.use('/service-provider', serviceProviderRouter);
 app.use('/appointment', appointmentRouter);
 app.use('/upload', imageRouter);
 app.use('/customer', customerRouter);
 app.use('/otp', otpRouter);
 app.use('/employee', EmployeeRouter);
->>>>>>> a0fbbdb7a7bd57bc1f0e7f74acabd528cdec1642
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
