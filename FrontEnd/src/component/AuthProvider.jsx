@@ -55,7 +55,7 @@ export function AuthProviderComponent({ children }) {
   }, [init]);
 
   if (loading) return React.createElement('div', null, 'Loading....');
-  console.log("authpayload",{ ...authPayload, init })
+ 
 return <AuthContext.Provider value = {{ ...authPayload, init }}>{children}</AuthContext.Provider>
   // return React.createElement(AuthContext.Provider, { value: { ...authPayload, init } }, children);
 }
