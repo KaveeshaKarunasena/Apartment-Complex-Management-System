@@ -114,7 +114,7 @@ export default function SignIn() {
         //  }
         init && (await init());
 
-        navigate('/app');
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
