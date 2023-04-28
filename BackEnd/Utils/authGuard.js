@@ -2,7 +2,7 @@ const {verifyToken} = require('../service/auth.service')
 
 const authGuard = async (req, res, next) => {
     const authToken = req.headers['authorization'];
-    console.log(authToken)
+    // console.log(authToken)
     if (!authToken) {
         return res.status(400).send({
             err: 'Forbinded Resources1'
