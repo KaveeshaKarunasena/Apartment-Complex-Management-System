@@ -38,7 +38,7 @@ const Add_Complain = () => {
         return;
     }
         try {
-            const response = await axios.post('http://localhost:8070/complain/add', formdata);
+            const response = await axios.post('/complain/add', formdata);
             console.log(response.data); // if you want to log the response data
             setFormData(initialData); // reset the form data after successful submission
         } catch (error) {

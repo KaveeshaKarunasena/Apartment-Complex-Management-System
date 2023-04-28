@@ -5,16 +5,16 @@ import "./Single_complain.scss"
 
 const Single_complain = () => {
     const location = useLocation();
-    const id = location.state.id;
+    const id = location.state?.id;
     const [item, setItem] = useState({});
+
+    // console.log("xxxx")
 
     //get single ( sleceted data ) data
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(
-                    `http://localhost:8070/complain/get/${id}`
-                );
+                const response = await axios.get(`/complain/get/${id}` );
                 setItem(response.data);
                 //console.log(response.data);
                 console.log(response.data);

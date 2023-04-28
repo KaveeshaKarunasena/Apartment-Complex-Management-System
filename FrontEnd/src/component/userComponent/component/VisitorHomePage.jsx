@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     
   },
   slide: {
-    
     height: '600px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Home.scss"
 
-const Home = () => {
+const Complain_navigation = () => {
   //complain navigation bar------------------------------------------
   return (
     <div className='repot_home'>
@@ -31,4 +31,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Complain_navigation
