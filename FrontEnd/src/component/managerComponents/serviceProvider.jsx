@@ -72,7 +72,6 @@ const ServiceProvider = () => {
   const requestSearch = (searchedVal) => {
     
     const searchValue = searchedVal.target.value;
-
     const filteredRows = defaultServiceProviders.filter((serviceProvider) => {
       return serviceProvider.location.toLowerCase().includes(searchValue.toLowerCase()) || serviceProvider.serviceType.toLowerCase().includes(searchValue.toLowerCase())
     });
