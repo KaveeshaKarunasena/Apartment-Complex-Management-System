@@ -1,10 +1,10 @@
-import React from 'react'
+
 import "./Report.scss"
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-
+import Calander from "../../../../rightSide/CalenderComp"
+//import Chart from "../../Complain_chart/Complain_chart"
 
 const Report = () => {
 
@@ -54,7 +54,6 @@ const Report = () => {
     
 
 
-
     console.log(nc_percentage)
 
     return (
@@ -101,7 +100,11 @@ const Report = () => {
             </div>
 
             <div className="calender">
-                calender
+                <Calander/>
+            </div>
+
+            <div className="charts">
+                {/* <Chart/> */}
             </div>
         </div>
     )
