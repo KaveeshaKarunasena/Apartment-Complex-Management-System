@@ -35,7 +35,6 @@ import {
 } from './component/AuthGuard';
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
-<<<<<<< HEAD
 
  //complain - imports start
 
@@ -60,11 +59,6 @@ import Compage_client_new from "./component/adminComponents/Complain/Components/
 
 //complain - imports end
 
-=======
-// const Amenities = () => {
-//   return <h1>"Hello"</h1>;
-// }
->>>>>>> f93181a2f5459d1571030c8b9852dc56f0f1de37
 
 const useStyles = makeStyles()(theme => ({
   root: {
