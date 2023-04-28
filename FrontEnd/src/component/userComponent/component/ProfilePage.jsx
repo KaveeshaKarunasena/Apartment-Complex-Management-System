@@ -9,12 +9,29 @@ import  Box from "@mui/material/Box";
 import avatar from '../assets/profile.png';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
+import { AuthContext } from '../../AuthProvider';
 import axios from "axios";
+import jwt_decode from 'jwt-decode'
 
 function DataFetching(){
   const[posts, setPosts] = useState([])
+  
 
+  try{
+    // const fromStorage = localStorage.getItem('token');
+  //   const authPayload = useContext(AuthContext)
+
+  //  console.log(fromStorage)
+
+  // // const decoded = jwt_decode(authPayload.token)
+  // // console.log(decoded)
+
+
+  }catch(err){
+    console.log(err)
+  }
+  
   useEffect(() => {
     axios.get('/customer/get/')
     .then((res,err) => {

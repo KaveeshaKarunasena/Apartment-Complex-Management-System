@@ -9,7 +9,7 @@ export const AuthGuard = ({ children }) => {
   try {
     let authPayload = useContext(AuthContext);
 
-    console.log("auth",authPayload);
+    //console.log("auth",authPayload);
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
 
