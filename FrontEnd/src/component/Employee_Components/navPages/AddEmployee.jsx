@@ -47,7 +47,7 @@ function AddEmployees() {
 
   const AddEmployee = async formData => {
     try {
-      console.log(formData)
+      
       const res = await axios.post('/employee/add', {
         ...formData,
     

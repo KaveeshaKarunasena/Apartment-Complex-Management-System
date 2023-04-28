@@ -71,8 +71,7 @@ function Maintanence() {
       const res = await axios.post('/maintenance/add', {
         ...formData,
       });
-
-      console.log(formData);
+     
 
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
     } catch (err) {

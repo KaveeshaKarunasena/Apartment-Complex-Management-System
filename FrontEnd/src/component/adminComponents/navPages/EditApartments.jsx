@@ -56,11 +56,11 @@ const EditApartments = props => {
   useEffect(() => {
     const { id } = props;
     const getData = async () => {
-      console.log(id);
+     
 
       await axios.get(`/apartment/getById/${id}`).then(res => {
         if (res.data.success) {
-          console.log(res)
+         
           setState({
             apartmentno: res.data.apartmentModel.apartmentno,
             floor: res.data.apartmentModel.floor,
@@ -70,7 +70,7 @@ const EditApartments = props => {
             ownersName: res.data.apartmentModel.ownersName,
             email:res.data.apartmentModel.email
           });
-        } else console.log('Error ');
+        } else alert('Error ');
       });
      
     };

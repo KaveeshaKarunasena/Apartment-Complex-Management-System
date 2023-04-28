@@ -296,7 +296,7 @@ function VisitorHomePage() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} container justify="flex-end">
-            <img src="../assets/logo.png" alt="Logo" className={classes.logo} />
+            <img src="../assets/logo.png " alt="Logo" className={classes.logo} />
             
           </Grid>
         </Grid>

@@ -19,7 +19,7 @@ export default function DeleteDialog(props) {
         () => {
         const serviceProvidersCopy = [...props.spList];
         const filteredServiceProviders = serviceProvidersCopy.filter(item => item._id !== id);
-        console.log(filteredServiceProviders);
+        alert(filteredServiceProviders);
         props.setServiceProviders(filteredServiceProviders);
         props.setIsService(true);
         enqueueSnackbar('Succesfully Deleted', { variant: 'success' });

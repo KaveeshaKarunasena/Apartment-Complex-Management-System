@@ -104,17 +104,17 @@ export default function SignIn() {
           url: '/customer/login',
           data: { apartmentNo: values.apartmentNo, password: values.password },
         });
-        console.log('success');
+       
         await saveToken(res.data);
-        console.log(res.data);
-        //  console.log("init here",ctx)
+        
+       
         //  if(init){
 
         //   await init()
         //  }
         init && (await init());
 
-        navigate('');
+        navigate('/app');
       } catch (err) {
         console.log(err);
       }
@@ -205,9 +205,9 @@ export default function SignIn() {
           </Box>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <NavLink to="/recoveryPassword">
+                {"Forgot password?"}
+              </NavLink>
             </Grid>
             <Grid item>
               <NavLink to="/signup">

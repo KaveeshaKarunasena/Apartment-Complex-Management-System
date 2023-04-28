@@ -13,6 +13,12 @@ import {useState, useEffect, useContext} from 'react';
 import axios from "axios";
 import { AuthContext } from '../../AuthProvider';
 import jwt_decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom';
+import UpdateCustomer from './UpdateCustomer'
+
+//import Popup from './Popup';
+
+
 //import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
 
 // function DataFetching(){
@@ -34,23 +40,33 @@ export default function MediaCard(props) {
   const [customer,setCustomer] = useState([])
   const decoded = jwt_decode(authPayload.token);
   const Id = decoded.id;
-
+  const [getId, setGetId] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
+  const navigate = useNavigate()
   
   useEffect(() =>  {
 
     const fetchData =  async() =>{
-      //console.log("profile",Id)
+      
       const {data} = await axios.get(`/customer/getCustomer/${Id}`)
 
       const cus = data.customerModle
       //const val =Object.values(cus)
       setCustomer(cus)
-      //console.log(val)
+      
     }
     fetchData()
   },[])
 
-  //console.log("profile",authPayload)
+  const handleProps = id => {
+    //setGetId(id);
+
+    <UpdateCustomer id={id}></UpdateCustomer>
+    navigate(`/app/updateCustomer/${id}`)
+    
+   };
+
+  
   return (
     <Box
     sx={{
@@ -63,7 +79,7 @@ export default function MediaCard(props) {
      <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }}/>
      <Typography gutterBottom variant="h5" component="div">
               Name
-            </Typography>
+      </Typography>
       <Box component="form"  noValidate sx={{ mt: 1,  }}>
         <Card sx={{ maxWidth: 600,height:550}}>
           <CardMedia
@@ -81,7 +97,7 @@ export default function MediaCard(props) {
                 style={{
                   backgroundColor: '#006ee6',
                 }}
-                //onClick={displayUpdateForm}
+                //onClick={() => handleProps(customer._id)}
               >
                 Update
               </Button>
@@ -142,7 +158,8 @@ export default function MediaCard(props) {
                 style={{
                   backgroundColor: '#006ee6',
                 }}
-                //onClick={displayUpdateForm}
+                onClick={() => handleProps(customer._id)}
+                
               >
                 Update Profile
               </Button>
@@ -176,6 +193,13 @@ export default function MediaCard(props) {
           </Grid>
         </CardActions>
         </Card>
+        {/* <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        customer={customer}
+        setCustomer={setCustomer}
+        getId={getId}
+      ></Popup> */}
         </Box>
   </Box>
   );
