@@ -15,7 +15,7 @@ const View_complain = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8070/complain/")
+        axios.get("/complain/")
             .then((res) => {
                 const rows = res.data.map((row, index) => ({ ...row, id: index }));
                 setData(rows);
@@ -39,7 +39,7 @@ const View_complain = () => {
 
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8070/complain/delete/${id}`)
+        axios.delete(`/complain/delete/${id}`)
             .then((res) => {
                 console.log(`Row with ID ${id} deleted successfully`);
                 alert(`Row with ID ${id} deleted successfully`);
@@ -60,7 +60,7 @@ const View_complain = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/complain/${params.row._id}`} style={{ textDecoration: "none" }} state={{ id: params.row._id }}>
+                        <Link to={`/Comlpain/${params.row._id}`} style={{ textDecoration: "none" }} state={{ id: params.row._id }}>
                             <div className="viewButton"> View </div>
                         </Link>
                         <div className="deleteButton" onClick={() => handleDelete(params.row._id)}  > Delete </div>
