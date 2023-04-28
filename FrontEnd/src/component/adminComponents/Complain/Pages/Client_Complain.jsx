@@ -1,8 +1,8 @@
 import React from 'react'
-// import Add_Complain from '../../../Components/client_comps/Add_Complain/Add_Complain'
-import Update_Complain from '../../../Components/client_comps/Update_Complain/Update_Complain'
+// import Add_Complain from '../Components/client_comps/Add_Complain/Add_Complain'
+import Update_Complain from '../Components/client_comps/Update_Complain/Update_Complain'
 
-const Complain = () => {
+const Client_Complain = () => {
   return (
     <div>
       {/* <select>
@@ -20,4 +20,4 @@ const Complain = () => {
   )
 }
 
-export default Complain
+export default Client_Complain

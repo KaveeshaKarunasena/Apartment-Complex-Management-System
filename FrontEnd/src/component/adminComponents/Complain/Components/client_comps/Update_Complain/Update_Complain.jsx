@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import "./Add_Complain.scss"
+import "./Update_Complain.scss"
 
 const Update_Complain = () => {
 
@@ -27,7 +27,7 @@ const Update_Complain = () => {
         event.preventDefault();
         try {
             const response = await axios.put(
-                `http://localhost:8070/complain/update/${selectId}`,
+                `/update/${selectId}`,
                 formdata
             );
             // console.log(response.data); // if you want to log the response data
@@ -47,7 +47,7 @@ const Update_Complain = () => {
     const [c_id, setCId] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8070/complain/${selectId}`)
+        axios.get(`/complain/${selectId}`)
             .then((res) => {
                 const rows = res.data.map((row, index) => ({ ...row, id: index }));
                 setCId(rows);

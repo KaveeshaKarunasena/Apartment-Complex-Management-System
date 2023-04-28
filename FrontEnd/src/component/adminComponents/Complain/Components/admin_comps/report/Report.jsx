@@ -28,7 +28,7 @@ const Report = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:8070/complain/");
+                const res = await axios.get("/complain/");
                 const rows = res.data.map((row, index) => ({ ...row, id: index }));
                 setData(rows);
     
