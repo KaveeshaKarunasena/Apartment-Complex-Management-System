@@ -13,6 +13,7 @@ import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
+import HomeBar from './component/userComponent/component/HomeBar';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -21,6 +22,7 @@ import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRep
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+import Amenity from './component/userComponent/amenitiesComponent/amenity'
 
 import {
   SuperAdminAuthGuard,
@@ -29,6 +31,10 @@ import {
   GuestGuard,
 } from './component/AuthGuard';
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
+
+// const Amenities = () => {
+//   return <h1>"Hello"</h1>;
+// }
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -80,7 +86,7 @@ function AdminRoute() {
           <Route path="Employee_view" element={<ViewEmployee />} />
           <Route path="staff" element={<Cards />} />
           <Route path="serviceProvider" element={<ServiceProvider />} />
-          <Route path="notices" element={<Cards />} /> 
+          <Route path="notices" element={<Cards />} />
         </Route>
       </Routes>
     </AdminAuthGuard>
@@ -90,9 +96,11 @@ function AdminRoute() {
 function ProtectedRoutes() {
   return (
     <AuthGuard>
+      <HomeBar/>
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="amenities" element={<Amenity />} />
       </Routes>
     </AuthGuard>
   );
@@ -105,6 +113,7 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
+
       </Routes>
     </GuestGuard>
   );
@@ -117,13 +126,70 @@ function App() {
     <div className="App">
       <Navbar />
 
+
+      {/*================================================Customer Routes========================================================*/}
+
       <Routes>
+        {/* <Route path="/home" element={<Home/>}> 
+                <Route path="profile" element={<ProfilePage/>} />
+              </Route>   */}
         <Route path="app/*" element={<ProtectedRoutes />} />
-        <Route path="admin/*" element={<SupserAdminRoute />} />
-        <Route path="manager/*" element={<AdminRoute />} />
         <Route path="*" element={<GuestRoutes />} />
+
       </Routes>
+
+      {/*=======================================================================================================================*/}
+
+
+      {/* 
+            <Routes>  */}
+      {/* <Route path="/home" element={<Home/>}> 
+                <Route path="profile" element={<ProfilePage/>} />
+              </Route>   */}
+
+      {/* <Routes>
+              <Route path="/amaenity" element={<Products />}>
+                <Route path="home" element={<Cards />} />
+                <Route path="add" element={<AddApartments />} />
+                <Route path="view" element={<ViewApartments />} />
+                <Route path="maintenance" element={<Maintenance />} />
+              </Route>
+            </Routes> */}
+
+
+      <Routes>
+
+        <Route path="/main" element={<MainDash />}>
+          <Route path="home" element={<Cards />} />
+          <Route path="add" element={<AddApartments />} />
+          <Route path="view" element={<ViewApartments />} />
+          <Route path="maintenance" element={<Maintenance />} />
+        </Route>
+      </Routes>
+      <Routes>
+        <Route path="/repo" element={<RepoDash />}>
+          <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
+          <Route path="amenity" element={<AddApartments />} />
+          <Route path="complaint" element={<ViewApartments />} />
+        </Route>
+      </Routes>
+      {/* <Routes> */}
+      {/* Manager Dashboard Routes */}
+      {/* <Route path="/mDash" element={<ManagerDashboard />}>
+                <Route path="home" element={<Cards />} />
+                <Route path="Employee_add" element={<AddEmployees/>}></Route>
+                <Route path="Employee_view" element={<ViewEmployee/>}></Route>
+                <Route path="Employee_Update" element={<EditEmployee/>}></Route>
+                <Route path="staff" element={<Cards />} />
+                <Route path="serviceProvider" element={<ServiceProvider />} />
+                
+                {/* <Route path="notices" element={<Cards />} /> */}
+      {/* </Route>
+            </Routes> */}
+
+
     </div>
+
   );
 }
 
