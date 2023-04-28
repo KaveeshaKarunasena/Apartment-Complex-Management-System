@@ -8,6 +8,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { makeStyles } from 'tss-react/mui';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -48,17 +51,17 @@ function AddEmployees() {
   const AddEmployee = async formData => {
     try {
       
+      console.log(formData);
       const res = await axios.post('/employee/add', {
         ...formData,
-    
       });
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
-      navigate('/mDash/Employee_view');
+      navigate('/manager/Employee_view');
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
   };
-  
+
   return (
     <Box className={classes.root}>
       <Formik
@@ -69,17 +72,25 @@ function AddEmployees() {
           address: '',
           jobTitle: '',
           department: '',
-          contactNumber:'',
-          basicSalary:'',
-          allowance:'',
+          contactNumber: '',
+          basicSalary: 0,
+          allowance: 0,
+          overtime:0
         }}
-        // validationSchema={Yup.object().shape({
-        // dob:Yup.
-        //   type: Yup.string().required('Required'),
-        //   ownersName: Yup.string().required('Required'),
-        //   status: Yup.string().required('Required'),
-        //   email: Yup.string().email('Invalid Email').required('Required'),
-        // })}
+        validationSchema={Yup.object().shape({
+          nic: Yup.string()
+            .max(12, 'must have maximum 12 Numbers')
+            .required('Required*'),
+          jobTitle: Yup.string().required('Required'),
+          department: Yup.string().required('Required'),
+          basicSalary: Yup.string().required('Required'),
+          allowance: Yup.string().required('Required'),
+          basicSalary: Yup.number().min(12500).required('Required'),
+          contactNumber: Yup.string().length(9).required('Required'),
+          address: Yup.string().required('Required'),
+          name:Yup.string().required('Required'),
+          
+        })}
         onSubmit={AddEmployee}
       >
         {({ values, errors, handleChange, handleSubmit }) => {
@@ -94,11 +105,7 @@ function AddEmployees() {
                   label="Name"
                   type="text"
                   size="small"
-                  error={
-                    errors.name && errors.name?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.name && errors.name?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.name}
@@ -112,25 +119,23 @@ function AddEmployees() {
                   label="NIC"
                   type="text"
                   size="small"
-                  error={errors.nic && errors.nic?.length ? true : false}
+                  error={errors.nic && errors.nic?.length? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.nic}
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
+                <FormHelperText id="component-helper-text">
+                  Date of Birth
+                </FormHelperText>
                 <TextField
                   value={values.dob}
                   onChange={handleChange}
                   name="dob"
-                  label="Date of Birth"
-                  type="text"
+                  type="date"
                   size="small"
-                  error={
-                    errors.dob && errors.dob?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.dob && errors.dob?.length ?   true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.dob}
@@ -144,7 +149,9 @@ function AddEmployees() {
                   label="Address"
                   type="text"
                   size="small"
-                  error={errors.address && errors.address?.length ? true : false}
+                  error={
+                    errors.address && errors.address?.length ? true : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.type}
@@ -159,9 +166,7 @@ function AddEmployees() {
                   type="text"
                   size="small"
                   error={
-                    errors.jobTitle && errors.jobTitle?.length
-                      ? true
-                      : false
+                    errors.jobTitle && errors.jobTitle?.length ? true : false
                   }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
@@ -176,7 +181,11 @@ function AddEmployees() {
                   label="Department"
                   type="text"
                   size="small"
-                  error={errors.department && errors.department?.length ? true : false}
+                  error={
+                    errors.department && errors.department?.length
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.department}
@@ -190,7 +199,13 @@ function AddEmployees() {
                   label="Contact Number"
                   type="number"
                   size="small"
-                  error={errors.contactNumber && errors.contactNumber?.length ? true : false}
+                  error={
+                    errors.contactNumber &&
+                    errors.contactNumber?.length.toFixed(10) &&
+                    !errors.allowance?.charAt(0).includes('-')
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.contactNumber}
@@ -204,7 +219,13 @@ function AddEmployees() {
                   label="basic Salary"
                   type="number"
                   size="small"
-                  error={errors.basicSalary && errors.basicSalary?.length ? true : false}
+                  error={
+                    errors.basicSalary &&
+                    errors.basicSalary?.length &&
+                    !errors.allowance?.charAt(0).includes('-')
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.basicSalary}
@@ -215,10 +236,16 @@ function AddEmployees() {
                   value={values.allowance}
                   onChange={handleChange}
                   name="allowance"
-                  label="Allowance"
+                  label="Over-time Rate"
                   type="number"
                   size="small"
-                  error={errors.allowance && errors.allowance?.length ? true : false}
+                  error={
+                    errors.allowance &&
+                    errors.allowance?.length &&
+                    !errors.allowance?.charAt(0).includes('-')
+                      ? true
+                      : false
+                  }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.allowance}

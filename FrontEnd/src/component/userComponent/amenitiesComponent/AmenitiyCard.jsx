@@ -6,65 +6,25 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import DeleteDialog from './DeleteDialog';
+// import DeleteDialog from './DeleteDialog';
 
-import './serviceProvider.css';
-import UpdateService from './UpdateService';
+import '../../managerComponents/serviceProvider.css';
 
-export default function ServiceCard(props) {
+export default function AmenitiyCard(props) {
 
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [updateForm, showUpdateForm] = useState(false);
-
-  const enableDialogHandler = () => {
-    setShowDeleteDialog(true);
-  };
-
-  const disableDialogHandler = () => {
-    setShowDeleteDialog(false);
-  };
-
-  const displayUpdateForm = () => {
-    showUpdateForm(true);
-  };
-
-  const hideUpdateForm = () => {
-    showUpdateForm(false);
-  };
+  const product = {props};
 
   return (
     <React.Fragment>
-      <UpdateService
-        showForm={updateForm}
-        submitFormHandler={() => {}}
-        setShowForm={() => {}}
-        setIsService={props.setIsService}
-        hideUpdateForm={hideUpdateForm}
-        cName={props.cName}
-        sType={props.sType}
-        location={props.location}
-        cNumber={props.cNumber}
-        id={props.id}
-        spList={props.spList}
-        setServiceProviders={props.setServiceProviders}
-      />
-      <DeleteDialog
-        showDeleteDialog={showDeleteDialog}
-        cancel={disableDialogHandler}
-        cName={props.cName}
-        id={props.id}
-        spList={props.spList}
-        setServiceProviders={props.setServiceProviders}
-        setIsService={props.setIsService}
-      />
-      <Card sx={{ maxWidth: 345, margin: '0 auto', padding: '0.1em'}}>
+    
+      <Card sx={{ maxWidth: 345, margin: '0 auto', padding: '0.1em' }}>
         <CardMedia
           component = "img"
-          sx={{ height: 250, padding: '1em 1em 1em 1em', objectFit: 'contain', marginLeft: '-3%'}}
-          image={`http://localhost:5000/uploads/${props.image}`}
+          sx={{ height: 250, padding: '1em 1em 0 1em', objectFit: 'contain' }}
+          image={product.images.url}
           title={props.cName}
         />
-        <CardContent>
+        {/* <CardContent>
           <Typography
             gutterBottom
             variant="h5"
@@ -113,7 +73,7 @@ export default function ServiceCard(props) {
               </Button>
             </Grid>
           </Grid>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </React.Fragment>
   );

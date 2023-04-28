@@ -12,7 +12,7 @@ const EmployeeSchema = mongoose.Schema({
         required :true
     },
     dob :  {
-        type :String,
+        type :Date,
         required :true
     },
     address:  {
@@ -33,16 +33,18 @@ const EmployeeSchema = mongoose.Schema({
     },
     basicSalary:{
         type:Number
-        
     },
     allowance:{
         type:Number,
         required:true
     },
     overtime:{
-        type:Number
+        type:Number,
+        required:true
         
     }
+    
+    
 })
 const EmployeeModel = mongoose.model("Employee", EmployeeSchema);
  module.exports = EmployeeModel;

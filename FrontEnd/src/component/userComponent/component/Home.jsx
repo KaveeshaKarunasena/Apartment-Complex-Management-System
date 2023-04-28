@@ -1,7 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Card, CardContent } from '@material-ui/core';
-import {  NavLink } from 'react-router-dom';
-import { Slide } from 'react-slideshow-image';
+import { Typography, Card, CardContent } from '@material-ui/core';
+
 
 function HomePage() {
   const styles = `
@@ -55,29 +54,6 @@ function HomePage() {
 
   return (
     <div>
-      <style>{styles}</style>
-      <AppBar position="static" className="app-bar">
-        <Toolbar style={{ align: "center" }}>
-          
-          <Button color="inherit"><NavLink  to="/app" style={{textDecoration: 'none',color:'white'}}>Home</NavLink></Button>
-          <Button color="inherit">Amenities</Button>
-          <Button color="inherit">Payment</Button>
-          <Button color="inherit">Services</Button>
-          <Button color="inherit">Notices</Button>
-          <Button color="inherit">Complaint</Button>
-        </Toolbar>
-      </AppBar>
-
-      <div className={styles.slideshowContainer}>
-          <Slide easing="ease">
-            <div className={styles.slide} style={{ backgroundImage: `url("https://www.trulia.com/pictures/thumbs_6/zillowstatic/fp/a437a906e33b179367ab8fdd3c6e8c9a-f_b.webp")` }}></div>
-                        
-            <div className={styles.slide} style={{ backgroundImage: `url("https://cdna.artstation.com/p/assets/images/images/052/835/088/large/rodrigo-salvo-rainnightv2-copy.jpg?1660775583")` }}></div>
-                         
-            <div className={styles.slide} style={{ backgroundImage: `url("https://wallpaperset.com/w/full/e/4/d/175796.jpg")` }}></div>
-                          
-          </Slide>
-        </div>
 
       <div className="content">
         <Card className="card">

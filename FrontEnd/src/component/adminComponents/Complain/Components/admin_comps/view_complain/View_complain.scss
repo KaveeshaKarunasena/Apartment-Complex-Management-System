@@ -1,0 +1,47 @@
+.view {
+    .datatable {
+        margin: 100px;
+
+        .title {
+            
+            margin: 50px 20px 50px -1000px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .datagrid {
+
+            height: 630px;
+            padding: 20px;
+            width: 50%;
+
+        }
+
+
+        .cellAction {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            .viewButton {
+                padding: 2px 5px;
+                border-radius: 5px;
+                color: darkblue;
+                border: 1px dotted rgba(0, 0, 139, 0.579);
+                cursor: pointer;
+            }
+
+            .deleteButton {
+                padding: 2px 5px;
+                border-radius: 5px;
+                color: crimson;
+                border: 1px dotted rgba(220, 20, 60, 0.6);
+                cursor: pointer;
+            }
+        }
+
+
+
+
+    }
+}
