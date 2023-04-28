@@ -57,10 +57,10 @@ export default function ServiceCard(props) {
         setServiceProviders={props.setServiceProviders}
         setIsService={props.setIsService}
       />
-      <Card sx={{ maxWidth: 345, margin: '0 auto', padding: '0.1em' }}>
+      <Card sx={{ maxWidth: 345, margin: '0 auto', padding: '0.1em'}}>
         <CardMedia
           component = "img"
-          sx={{ height: 250, padding: '1em 1em 0 1em', objectFit: 'contain' }}
+          sx={{ height: 250, padding: '1em 1em 1em 1em', objectFit: 'contain', marginLeft: '-3%'}}
           image={`http://localhost:5000/uploads/${props.image}`}
           title={props.cName}
         />
