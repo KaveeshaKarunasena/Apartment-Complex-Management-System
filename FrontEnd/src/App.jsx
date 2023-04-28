@@ -163,6 +163,7 @@ function App() {
         <Route path="manager/*" element={<AdminRoute />} />
         <Route path="*" element={<GuestRoutes />} />
       </Routes>
+
     </div>
   );
 }
