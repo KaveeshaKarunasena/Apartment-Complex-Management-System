@@ -70,26 +70,13 @@ function RepoDash() {
           <span>Maintenance Report</span>
         </NavLink>
         <NavLink
-          to="Home"
+          to="Comlpain/reprot"
           className={clsx(classes.nav, classes.p1)}
           style={navLinkStyle}
         >
-          <span>Add Apartment</span>
+          <span>Complains Report</span>
         </NavLink>
-        <NavLink
-          to="view"
-          className={clsx(classes.nav, classes.p1)}
-          style={navLinkStyle}
-        >
-          <span>View Apartment</span>
-        </NavLink>
-        <NavLink
-          to="maintenance"
-          className={clsx(classes.nav, classes.p1)}
-          style={navLinkStyle}
-        >
-          <span>Maintenance Cost</span>
-        </NavLink>
+        
 
         {/* <div><CalenderComp/></div> */}
         <Outlet />

@@ -40,13 +40,13 @@ const HomeBar = () => {
           }}
         >
            <NavLink
-            to="/mDash/Employee_View"
+            to="Comlpain/update"
             style = {{textDecoration: 'none', color: 'black', padding: '10px'}}
           >
-          <MenuItem>View</MenuItem>
+          <MenuItem>Update</MenuItem>
           </NavLink>
           <NavLink
-            to="/mDash/Employee_add"
+            to="Comlpain/new"
             style = {{textDecoration: 'none', color: 'black', padding: '10px'}}
           >
             <MenuItem onClick={handleClose}>Add </MenuItem>

@@ -13,13 +13,14 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
-import './RditForm.css'
+import { useState, useEffect, useContext } from 'react';
+import './RditForm.css';
+import { AuthContext } from '../../AuthProvider';
 
 const useStyles = makeStyles()(theme => ({
   root: {
     margin: '0 auto',
-    paddingTop:'5px',
+    paddingTop: '5px',
     height: '75vh',
     display: 'flex',
     flexDirection: 'column',
@@ -30,14 +31,18 @@ const useStyles = makeStyles()(theme => ({
     paddingTop: '5px',
   },
   submitBtn: {
-    color : 'primary',
-    backgroundColor: '#488042'
+    color: 'primary',
+    backgroundColor: '#488042',
   },
 }));
 
 const EditApartments = props => {
   const { classes } = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+
+  let authPayload = useContext(AuthContext);
+  const ctx = authPayload.token;
+  const headers = { Authorization: 'Bearer ' + ctx };
 
   const [state, setState] = useState({
     apartmentno: '',
@@ -46,7 +51,7 @@ const EditApartments = props => {
     type: '',
     ownersName: '',
     status: '',
-    email:''
+    email: '',
   });
 
   const onInputChange = e => {
@@ -56,11 +61,8 @@ const EditApartments = props => {
   useEffect(() => {
     const { id } = props;
     const getData = async () => {
-      console.log(id);
-
-      await axios.get(`/apartment/getById/${id}`).then(res => {
+      await axios.get(`/apartment/getById/${id}`, { headers }).then(res => {
         if (res.data.success) {
-          console.log(res)
           setState({
             apartmentno: res.data.apartmentModel.apartmentno,
             floor: res.data.apartmentModel.floor,
@@ -68,18 +70,18 @@ const EditApartments = props => {
             type: res.data.apartmentModel.type,
             status: res.data.apartmentModel.status,
             ownersName: res.data.apartmentModel.ownersName,
-            email:res.data.apartmentModel.email
+            email: res.data.apartmentModel.email,
           });
         } else console.log('Error ');
       });
-     
     };
 
     getData();
   }, []);
 
   const updateApartment = async e => {
-    const { apartmentno, floor, buildingNo, type, status, ownersName,email } = state;
+    const { apartmentno, floor, buildingNo, type, status, ownersName, email } =
+      state;
     const { id } = props;
     const { setOpenPopup, setApartment, apartment } = props;
     const data = {
@@ -89,43 +91,43 @@ const EditApartments = props => {
       type: type,
       status: status,
       ownersName: ownersName,
-      email:email
+      email: email,
     };
     setOpenPopup(false);
     try {
-      await axios.put(`/apartment/update/${id}`, data).then(res => {
-        const apartmentCopy = [...apartment];
+      await axios
+        .put(`/apartment/update/${id}`, data, { headers })
+        .then(res => {
+          const apartmentCopy = [...apartment];
 
-        
+          apartmentCopy.map(item => {
+            if (item._id === id) {
+              item.apartmentno = data.apartmentno;
+              item.floor = data.floor;
+              item.buildingNo = data.buildingNo;
+              item.type = data.type;
+              item.status = data.status;
+              item.ownersName = data.ownersName;
+              item.email = data.email;
+            }
+          });
 
-        apartmentCopy.map(item => {
-          if (item._id === id) {
-            item.apartmentno = data.apartmentno;
-            item.floor = data.floor;
-            item.buildingNo = data.buildingNo;
-            item.type = data.type;
-            item.status = data.status;
-            item.ownersName = data.ownersName;
-            item.email = data.email;
+          setApartment(apartmentCopy);
+
+          enqueueSnackbar('Succesfully Updated', { variant: 'success' });
+
+          if (res.data.success) {
+            setState({
+              apartmentno: '',
+              floor: '',
+              buildingNo: '',
+              type: '',
+              status: '',
+              ownersName: '',
+              email: '',
+            });
           }
         });
-
-        setApartment(apartmentCopy);
-
-        enqueueSnackbar('Succesfully Updated', { variant: 'success' });
-
-        if (res.data.success) {
-          setState({
-            apartmentno: '',
-            floor: '',
-            buildingNo: '',
-            type: '',
-            status: '',
-            ownersName: '',
-            email:''
-          });
-        }
-      });
     } catch (err) {
       const error = err.response.data.err;
       enqueueSnackbar(error, { variant: 'error' });
@@ -146,16 +148,15 @@ const EditApartments = props => {
           return (
             <>
               <Typography variant="h3">Edit Apartment</Typography>
-              <FormControl className = 'formControl' variant="outlined">
+              <FormControl className="formControl" variant="outlined">
                 <TextField
                   value={state.apartmentno}
                   onChange={onInputChange}
-                  
                   name="apartmentno"
                   label="Apartment No"
                   type="text"
                   size="small"
-                  disabled ={true}
+                  disabled={true}
                   error={
                     errors.apartmentno && errors.apartmentno?.length
                       ? true
@@ -175,7 +176,7 @@ const EditApartments = props => {
                   label="Floor No"
                   type="text"
                   size="small"
-                  disabled ={true}
+                  disabled={true}
                   error={errors.floor && errors.floor?.length ? true : false}
                 />
                 <FormHelperText style={{ color: 'red' }}>
@@ -190,7 +191,7 @@ const EditApartments = props => {
                   label="Building No"
                   type="text"
                   size="small"
-                  disabled ={true}
+                  disabled={true}
                   error={
                     errors.buildingNo && errors.buildingNo?.length
                       ? true
@@ -232,8 +233,8 @@ const EditApartments = props => {
                 <FormHelperText style={{ color: 'red' }}>
                   {errors.ownersName}
                 </FormHelperText>
-                </FormControl>
-                <FormControl className={classes.formControl} variant="outlined">
+              </FormControl>
+              <FormControl className={classes.formControl} variant="outlined">
                 <TextField
                   value={state.email}
                   onChange={onInputChange}
@@ -241,11 +242,7 @@ const EditApartments = props => {
                   label="Owners Email"
                   type="email"
                   size="small"
-                  error={
-                    errors.email && errors.email?.length
-                      ? true
-                      : false
-                  }
+                  error={errors.email && errors.email?.length ? true : false}
                 />
                 <FormHelperText style={{ color: 'red' }}>
                   {errors.ownersName}
