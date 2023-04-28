@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Card, CardContent } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 function HomePage() {
   const styles = `
@@ -33,7 +34,7 @@ function HomePage() {
         <Toolbar style={{ align: "center" }}>
           
           <Button color="inherit">Home</Button>
-          <Button color="inherit">Amenities</Button>
+          <Button color="inherit"><NavLink to = "amenities">Amenities</NavLink></Button>
           <Button color="inherit">Payment</Button>
           <Button color="inherit">Services</Button>
           <Button color="inherit">Notices</Button>
@@ -41,7 +42,7 @@ function HomePage() {
           <Button color="inherit">Appointment</Button>
         </Toolbar>
       </AppBar>
-      <div className="content">
+      {/* <div className="content">
         <Card className="card">
           <CardContent>
             <Typography variant="h5" component="h2" className="card-title">
@@ -50,7 +51,7 @@ function HomePage() {
             
           </CardContent>
         </Card>
-      </div>
+      </div> */}
     </div>
   );
 }

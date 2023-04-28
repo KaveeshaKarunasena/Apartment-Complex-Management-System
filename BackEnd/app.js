@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
+const fileUpload = require('express-fileupload')
 const cors = require('cors');
 
 const sessoin = require('express-session');
@@ -43,7 +44,8 @@ const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
-
+const imageRouter2 = require('./routes/UploadAmenityImage');
+const productRouter = require('./routes/productRouter');
 const app = express();
 
 // view engine setup
@@ -54,6 +56,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload({
+  useTempFiles: true
+}))
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
@@ -63,6 +68,10 @@ app.use('/upload', imageRouter);
 app.use('/customer', customerRouter);
 app.use('/otp', otpRouter);
 app.use('/employee', EmployeeRouter);
+app.use('/api', imageRouter2);
+app.use('/product', productRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

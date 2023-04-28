@@ -48,25 +48,25 @@ const login = async (req, res, session) => {
     const { apartmentNo, password } = req.body;
 
 
-const viewProfileById = async (req,res) => {
-    const curntUser  = req.user;
-    //console.log(currntUser);
-    try{
+// const viewProfileById = async (req,res) => {
+//     const curntUser  = req.user;
+//     //console.log(currntUser);
+//     try{
         
-        if(!curntUser){
-            alert("User Not Logged In")
-            return res.status(400).send({ err: 'User Not Logged In'});
+//         if(!curntUser){
+//             alert("User Not Logged In")
+//             return res.status(400).send({ err: 'User Not Logged In'});
             
-        }
+//         }
 
-        const userDoc = await UserService.findUserById(curntUser._id);
-        const user = userDoc?.toJSON();
+//         const userDoc = await UserService.findUserById(curntUser._id);
+//         const user = userDoc?.toJSON();
     
-        delete user?.password;
-        res.status(200).json(user);
+//         delete user?.password;
+//         res.status(200).json(user);
 
-    }catch(err){
-        res.status(400).send({ err: err });
+//     }catch(err){
+//         res.status(400).send({ err: err });
 
 
     const LoggedUser = await UserService.login(apartmentNo, password);

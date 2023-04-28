@@ -21,6 +21,7 @@ import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRep
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+import Amenity from './component/userComponent/amenitiesComponent/amenity'
 
 import {
   SuperAdminAuthGuard,
@@ -29,6 +30,10 @@ import {
   GuestGuard,
 } from './component/AuthGuard';
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
+
+// const Amenities = () => {
+//   return <h1>"Hello"</h1>;
+// }
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -80,7 +85,7 @@ function AdminRoute() {
           <Route path="Employee_view" element={<ViewEmployee />} />
           <Route path="staff" element={<Cards />} />
           <Route path="serviceProvider" element={<ServiceProvider />} />
-          <Route path="notices" element={<Cards />} /> 
+          <Route path="notices" element={<Cards />} />
         </Route>
       </Routes>
     </AdminAuthGuard>
@@ -91,9 +96,9 @@ function ProtectedRoutes() {
   return (
     <AuthGuard>
       <Routes>
-        <Route path="" element={<Home />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="add" element={<AddApartments />} />
+        <Route path="" element={<Home />}>
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
       </Routes>
     </AuthGuard>
   );
@@ -106,6 +111,7 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
+        <Route path="amenities" element={<Amenity />} />
       </Routes>
     </GuestGuard>
   );
@@ -118,29 +124,28 @@ function App() {
     <div className="App">
       <Navbar />
 
-            <Navbar />
 
-{/*================================================Customer Routes========================================================*/}
-             
-            <Routes> 
-              {/* <Route path="/home" element={<Home/>}> 
+      {/*================================================Customer Routes========================================================*/}
+
+      <Routes>
+        {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
-               <Route path="app/*" element={<ProtectedRoutes />} />
-               <Route path="*" element={<GuestRoutes />} />
-               
-             </Routes> 
+        <Route path="app/*" element={<ProtectedRoutes />} />
+        <Route path="*" element={<GuestRoutes />} />
 
- {/*=======================================================================================================================*/}
+      </Routes>
+
+      {/*=======================================================================================================================*/}
 
 
-{/* 
+      {/* 
             <Routes>  */}
-              {/* <Route path="/home" element={<Home/>}> 
+      {/* <Route path="/home" element={<Home/>}> 
                 <Route path="profile" element={<ProfilePage/>} />
               </Route>   */}
 
-            {/* <Routes>
+      {/* <Routes>
               <Route path="/amaenity" element={<Products />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="add" element={<AddApartments />} />
@@ -148,27 +153,27 @@ function App() {
                 <Route path="maintenance" element={<Maintenance />} />
               </Route>
             </Routes> */}
-               
-         
-            <Routes>
 
-              <Route path="/main" element={<MainDash />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="add" element={<AddApartments />} />
-                <Route path="view" element={<ViewApartments />} />
-                <Route path="maintenance" element={<Maintenance />} />
-              </Route>
-            </Routes>
-           <Routes>
-                <Route path="/repo" element={<RepoDash />}>
-                  <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
-                  <Route path="amenity" element={<AddApartments />} />
-                  <Route path="complaint" element={<ViewApartments />} />
-                </Route>
-              </Routes>
-            {/* <Routes> */}
-              {/* Manager Dashboard Routes */}
-              {/* <Route path="/mDash" element={<ManagerDashboard />}>
+
+      <Routes>
+
+        <Route path="/main" element={<MainDash />}>
+          <Route path="home" element={<Cards />} />
+          <Route path="add" element={<AddApartments />} />
+          <Route path="view" element={<ViewApartments />} />
+          <Route path="maintenance" element={<Maintenance />} />
+        </Route>
+      </Routes>
+      <Routes>
+        <Route path="/repo" element={<RepoDash />}>
+          <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
+          <Route path="amenity" element={<AddApartments />} />
+          <Route path="complaint" element={<ViewApartments />} />
+        </Route>
+      </Routes>
+      {/* <Routes> */}
+      {/* Manager Dashboard Routes */}
+      {/* <Route path="/mDash" element={<ManagerDashboard />}>
                 <Route path="home" element={<Cards />} />
                 <Route path="Employee_add" element={<AddEmployees/>}></Route>
                 <Route path="Employee_view" element={<ViewEmployee/>}></Route>
@@ -177,12 +182,12 @@ function App() {
                 <Route path="serviceProvider" element={<ServiceProvider />} />
                 
                 {/* <Route path="notices" element={<Cards />} /> */}
-              {/* </Route>
-            </Routes> */} 
+      {/* </Route>
+            </Routes> */}
 
 
-          </div>
-      
+    </div>
+
   );
 }
 
