@@ -125,68 +125,13 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-
-
-      {/*================================================Customer Routes========================================================*/}
-
       <Routes>
-        {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
         <Route path="app/*" element={<ProtectedRoutes />} />
+        <Route path="admin/*" element={<SupserAdminRoute />} />
+        <Route path="manager/*" element={<AdminRoute />} />
         <Route path="*" element={<GuestRoutes />} />
 
       </Routes>
-
-      {/*=======================================================================================================================*/}
-
-
-      {/* 
-            <Routes>  */}
-      {/* <Route path="/home" element={<Home/>}> 
-                <Route path="profile" element={<ProfilePage/>} />
-              </Route>   */}
-
-      {/* <Routes>
-              <Route path="/amaenity" element={<Products />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="add" element={<AddApartments />} />
-                <Route path="view" element={<ViewApartments />} />
-                <Route path="maintenance" element={<Maintenance />} />
-              </Route>
-            </Routes> */}
-
-
-      <Routes>
-
-        <Route path="/main" element={<MainDash />}>
-          <Route path="home" element={<Cards />} />
-          <Route path="add" element={<AddApartments />} />
-          <Route path="view" element={<ViewApartments />} />
-          <Route path="maintenance" element={<Maintenance />} />
-        </Route>
-      </Routes>
-      <Routes>
-        <Route path="/repo" element={<RepoDash />}>
-          <Route path="maintenanceRepo" element={<MaintenanceRepo />} />
-          <Route path="amenity" element={<AddApartments />} />
-          <Route path="complaint" element={<ViewApartments />} />
-        </Route>
-      </Routes>
-      {/* <Routes> */}
-      {/* Manager Dashboard Routes */}
-      {/* <Route path="/mDash" element={<ManagerDashboard />}>
-                <Route path="home" element={<Cards />} />
-                <Route path="Employee_add" element={<AddEmployees/>}></Route>
-                <Route path="Employee_view" element={<ViewEmployee/>}></Route>
-                <Route path="Employee_Update" element={<EditEmployee/>}></Route>
-                <Route path="staff" element={<Cards />} />
-                <Route path="serviceProvider" element={<ServiceProvider />} />
-                
-                {/* <Route path="notices" element={<Cards />} /> */}
-      {/* </Route>
-            </Routes> */}
-
 
     </div>
 
