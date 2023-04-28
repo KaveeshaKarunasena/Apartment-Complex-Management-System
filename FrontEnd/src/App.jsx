@@ -57,6 +57,7 @@ import Report_complain from "./component/adminComponents/Complain/Components/adm
 //---client
 import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
 import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+import HomeBar from './component/userComponent/component/HomeBar';
 
 //complain - imports end
 
@@ -90,11 +91,13 @@ function SupserAdminRoute() {
           <Route path="add" element={<AddApartments />} />
           <Route path="view" element={<ViewApartments />} />
           <Route path="maintenance" element={<Maintenance />} />
+          <Route path="Comlpain/:id" element={<Single_complain />} />
+          <Route path="Comlpain/all" element={<All_complain />} />
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
           <Route path="amenity" element={<AddApartments />} />
-          <Route path="complaint" element={<ViewApartments />} />
+          <Route path="Comlpain/reprot" element={<Report_complain />} />
         </Route>
       </Routes>
     </SuperAdminAuthGuard>
@@ -121,9 +124,12 @@ function AdminRoute() {
 function ProtectedRoutes() {
   return (
     <AuthGuard>
+      <HomeBar></HomeBar>
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="Comlpain/new" element={<Compage_client_new />} />
+        <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
       </Routes>
     </AuthGuard>
@@ -134,18 +140,6 @@ function GuestRoutes() {
   return (
     <GuestGuard>
       <Routes>
-        {/* //Complain Routes Start */}
-        <Route path="Comlpain" element={<Compage_Home />} />
-        <Route path="Comlpain/:id" element={<Single_complain />} />
-        <Route path="Comlpain/new" element={<Compage_client_new />} />
-        <Route path="Comlpain/update" element={<Compage_client_update />} />
-        <Route path="Comlpain/reprot" element={<Report_complain />} />
-        <Route path="Comlpain/all" element={<All_complain />} />
-         {/* //Complain Routes End */}
-
-
-
-
         <Route path="login" element={<SignIn />} />
         <Route path="recoveryPassword" element={<RecoveryPassword />} />
         <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
