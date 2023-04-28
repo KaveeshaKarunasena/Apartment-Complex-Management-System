@@ -110,13 +110,13 @@ function ManagerDashboard() {
           }}
         >
            <NavLink
-            to="/mDash/Employee_View"
+            to="/manager/Employee_View"
             style = {{textDecoration: 'none', color: 'black'}}
           >
           <MenuItem>View Staff</MenuItem>
           </NavLink>
           <NavLink
-            to="/mDash/Employee_add"
+            to="/manager/Employee_add"
             style = {{textDecoration: 'none', color: 'black'}}
           >
             <MenuItem onClick={handleClose}>Add Staff</MenuItem>

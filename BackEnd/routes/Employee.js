@@ -12,7 +12,15 @@ const {
 } = require('../Controller/Employee-Controller');
 
 router.post('/add', newEmployee);
-
+router.post(
+  '/add',
+  validator([
+    body('nic').exists().isLength(12),
+    body('contactNumber').exists().isLength(9),
+    
+  ]),
+  newEmployee
+);
 router.get('/view', viewEmployee);
 
 router.get('/getById/:id', viewEmployeeById);

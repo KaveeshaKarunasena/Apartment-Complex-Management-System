@@ -12,7 +12,7 @@ const newEmployee = async (req, res) => {
     contactNumber: req.body.contactNumber,
     basicSalary: req.body.basicSalary,
     allowance: req.body.allowance,
-    overTime: req.body.overTime,
+    overtime: req.body.overtime,
   });
 
   newEmployee.save(function (err, newEmployee) {
@@ -72,7 +72,7 @@ const updateEmployee = async (req, res) => {
     contactNumber: req.body.contactNumber,
     basicSalary: req.body.basicSalary,
     allowance: req.body.allowance,
-    overTime: req.body.overTime,
+    overtime: req.body.overtime,
   };
 
   if (!mongoType.ObjectId.isValid(id)) {
