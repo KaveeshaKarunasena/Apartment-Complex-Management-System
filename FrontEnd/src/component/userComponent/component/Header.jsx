@@ -16,8 +16,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 //import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 //import clsx from 'clsx';
-import {NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { Dispatch } from 'react';
+import { AuthContext } from '../../AuthProvider';
 
 // eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles()(theme => ({
@@ -80,7 +81,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const navigate = useNavigate()
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
  // const {classes} = useStyles();
@@ -95,6 +96,15 @@ export default function PrimarySearchAppBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleLogOut = async () => {
+    localStorage.removeItem("_chuck-38e6e39a-ab69-4aac-bb0c");
+    await Dispatch({ type: "reset", payload: AuthContext });
+  };
+
+  const handleProfile = async () => {
+    navigate('/app/profile')
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -119,11 +129,11 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>
-          <NavLink to='profile'>Profile</NavLink>
+      <MenuItem onClick={handleProfile}>
+          Profile
       </MenuItem>
       
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogOut}>Logout</MenuItem>
     </Menu>
   );
 

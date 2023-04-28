@@ -25,7 +25,32 @@ function HomePage() {
       align-items: center;
       height: calc(100vh - 64px);
     }
+    .slideshowContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      maxWidth: '80%',
+      marginTop: '4%',
+      marginLeft:'10%',
+      placeItems: 'center',
+      
+    }
+    .slide: {
+      
+      height: '600px',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'rgba(255,255,255, 0.6)', 
+      fontSize: '48px',
+      fontWeight: 'bold',
+      textShadow: '2px 2px 4px #000000',
+    }
+    
   `;
+
+  
 
   return (
     <div>

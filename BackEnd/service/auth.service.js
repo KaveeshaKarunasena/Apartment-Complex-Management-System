@@ -35,14 +35,11 @@ else{
 }
 
 async function verifyToken(token) {
-    // console.log(token)
-    // console.log(APP_SECRET)
+
     const payload = await jwt.verify(token, APP_SECRET, JWT_OPTIONS);
-    //console.log(payload);
-     console.log({payload})
-    
+        
     return payload;
-    //console log this
+   
 }
 
 

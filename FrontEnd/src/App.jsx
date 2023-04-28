@@ -13,6 +13,9 @@ import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
+import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
+import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
+import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -121,6 +124,7 @@ function ProtectedRoutes() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
       </Routes>
     </AuthGuard>
   );
@@ -143,6 +147,8 @@ function GuestRoutes() {
 
 
         <Route path="login" element={<SignIn />} />
+        <Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>

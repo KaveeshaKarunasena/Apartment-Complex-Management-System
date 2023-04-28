@@ -113,8 +113,7 @@ export default function SignUp() {
         })
           .then(result => {
             if (result.value) {
-              console.log(result.value);
-
+              
               axios({
                 method: 'POST',
                 url: '/customer/add',
@@ -346,7 +345,7 @@ export default function SignUp() {
           <br></br>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component="button" variant="body2" to="app/login">
+              <Link component="button" variant="body2" to="/login">
                 Already have an account? Sign in
               </Link>
             </Grid>
