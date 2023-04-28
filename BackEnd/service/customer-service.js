@@ -35,12 +35,12 @@ async function findUserByApartmentNo(apartmentNo){
 
 async function login(apartmentNo , password){
 
-    const acc = await User.findOne({ apartmentNo})
-    alert(acc)
+    const acc = await User.findOne({apartmentNo: apartmentNo})
+   
     if (!acc){
         throw new Error ('User Not Found');
     }
-
+    
     
     const payload = await signToken(password, acc.password, {
         apartmentNo: acc.apartmentNo,
