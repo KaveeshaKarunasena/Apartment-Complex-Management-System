@@ -13,6 +13,7 @@ import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
+import HomeBar from './component/userComponent/component/HomeBar';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -95,9 +96,11 @@ function AdminRoute() {
 function ProtectedRoutes() {
   return (
     <AuthGuard>
+      <HomeBar/>
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="amenities" element={<Amenity />} />
       </Routes>
     </AuthGuard>
   );
@@ -110,7 +113,7 @@ function GuestRoutes() {
         <Route path="login" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
-        <Route path="amenities" element={<Amenity />} />
+
       </Routes>
     </GuestGuard>
   );

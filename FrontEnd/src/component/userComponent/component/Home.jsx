@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Card, CardContent } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { Typography, Card, CardContent } from '@material-ui/core';
+
 
 function HomePage() {
   const styles = `
@@ -29,20 +29,8 @@ function HomePage() {
 
   return (
     <div>
-      <style>{styles}</style>
-      <AppBar position="static" className="app-bar">
-        <Toolbar style={{ align: "center" }}>
-          
-          <Button color="inherit">Home</Button>
-          <Button color="inherit"><NavLink to = "amenities">Amenities</NavLink></Button>
-          <Button color="inherit">Payment</Button>
-          <Button color="inherit">Services</Button>
-          <Button color="inherit">Notices</Button>
-          <Button color="inherit">Complaint</Button>
-          <Button color="inherit">Appointment</Button>
-        </Toolbar>
-      </AppBar>
-      {/* <div className="content">
+
+      <div className="content">
         <Card className="card">
           <CardContent>
             <Typography variant="h5" component="h2" className="card-title">
@@ -51,7 +39,7 @@ function HomePage() {
             
           </CardContent>
         </Card>
-      </div> */}
+      </div>
     </div>
   );
 }
