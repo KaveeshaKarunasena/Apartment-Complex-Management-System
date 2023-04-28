@@ -39,7 +39,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/apartment');
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');
 const serviceProviderRouter = require('./routes/serviceProvider');
-const appointmentRouter = require('./routes/appointment');
+const complain_Routes = require("./routes/Complain_Route");
+const appointmentRouter = require ('./routes/appointment')
 const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
 const otpRouter = require('./routes/otp.js');
@@ -62,10 +63,19 @@ app.use(fileUpload({
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
+app.use('/service-provider',serviceProviderRouter);
+
+//Routes to Complain
+
+app.use("/complain",complain_Routes);
+
+
+app.use('/appointment',appointmentRouter);
+app.use('/upload',imageRouter);
+app.use("/customer",customerRouter)
+app.use("/sendOTP",otpRouter)
+app.use('/employee',EmployeeRouter);
 app.use('/service-provider', serviceProviderRouter);
-app.use('/appointment', appointmentRouter);
-app.use('/upload', imageRouter);
-app.use('/customer', customerRouter);
 app.use('/otp', otpRouter);
 app.use('/employee', EmployeeRouter);
 app.use('/api', imageRouter2);
