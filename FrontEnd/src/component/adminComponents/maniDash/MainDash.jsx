@@ -25,7 +25,8 @@ const useStyles = makeStyles()(theme => ({
     paddingLeft: '60px',
   },
   content:{
-    paddingTop:'40px'
+    paddingTop:'20px',
+   
   },
   nav: {
     '&:hover': {
@@ -58,7 +59,7 @@ function MainDash() {
 
   return (
     <div className={classes.root}>
-      <h1>Dashboard</h1>
+      <h1>Admin Dashboard</h1>
       <div className={classes.content}>
         <NavLink
           to=""

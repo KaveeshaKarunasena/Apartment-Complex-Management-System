@@ -26,18 +26,28 @@ function ViewApaertment() {
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const keys = ['apartmentno', 'type', 'status','email'];
+  const keys = ['apartmentno', 'type', 'status', 'email'];
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const response = await fetch('/apartment/view');
-      const json = await response.json();
+      try {
+        const response = await fetch('/apartment/view');
+        //  const sortData = response.sort((a, b) => (a.apartmentno > b.apartmentno ? 1 : -1));
 
-      if (response.ok) {
-        setApartment(json);
+        const json = await response.json();
+
+        const sortData = json.sort((a, b) =>
+          a.apartmentno > b.apartmentno ? 1 : -1
+        );
+
+        if (response.ok) {
+          setApartment(sortData);
+        }
+      } catch (err) {
+        // const error = err.response.data.err;
+        enqueueSnackbar(err.message, { variant: 'error' });
       }
     };
-
     fetchDetails();
   }, []);
 
@@ -70,18 +80,18 @@ function ViewApaertment() {
     rowsPerPage - Math.min(rowsPerPage, apartment.length - page * rowsPerPage);
 
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <form>
         <InputGroup
           className="my-3"
           style={{
-            paddingTop: 50,
+            paddingTop: '50px',
             padding: 5,
             justifyContent: 'normal',
             fontSize: 20,
-            color: 'blue',
             margin: 1,
-            width: '250px',
+            width: '260px',
+            height: '40px',
             BorderColor: 'green',
             borderWidth: '10px',
           }}
@@ -116,7 +126,6 @@ function ViewApaertment() {
                     : keys.some(key =>
                         data[key].toLowerCase().includes(search.toLowerCase())
                       );
-                    
                 })
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
@@ -141,7 +150,7 @@ function ViewApaertment() {
                   </TableRow>
                 ))}
             {emptyRows > 0 && (
-              <TableRow style={{ height :emptyRows }}>
+              <TableRow style={{ height: emptyRows }}>
                 <TableCell colSpan={6} />
               </TableRow>
             )}
@@ -160,7 +169,7 @@ function ViewApaertment() {
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
-        apartment ={apartment}
+        apartment={apartment}
         setApartment={setApartment}
         getId={getId}
       ></Popup>
