@@ -1,15 +1,20 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect,useState } from 'react';
 import { AuthContext } from './AuthProvider';
 import { Navigate, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import Profile from '../component/userComponent/component/ProfilePage'
 
 export const AuthGuard = ({ children }) => {
+  // const [token,setToken] = useState([]);
   const navigate = useNavigate();
  
   try {
     let authPayload = useContext(AuthContext);
-
-    //console.log("auth",authPayload);
+const ctx = authPayload.token
+    console.log("auths",authPayload.token);
+    <Profile token= {{ctx}}></Profile>
+    // setToken(authPayload.token)
+    // console.log("auth",token);
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
 

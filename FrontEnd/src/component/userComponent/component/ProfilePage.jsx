@@ -10,41 +10,47 @@ import avatar from '../assets/profile.png';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import {useState, useEffect, useContext} from 'react';
-import { AuthContext } from '../../AuthProvider';
 import axios from "axios";
+import { AuthContext } from '../../AuthProvider';
 import jwt_decode from 'jwt-decode'
+//import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
 
-function DataFetching(){
-  const[posts, setPosts] = useState([])
-  
+// function DataFetching(){
+//   const[posts, setPosts] = useState([])
 
-  try{
-    // const fromStorage = localStorage.getItem('token');
-  //   const authPayload = useContext(AuthContext)
-
-  //  console.log(fromStorage)
-
-  // // const decoded = jwt_decode(authPayload.token)
-  // // console.log(decoded)
-
-
-  }catch(err){
-    console.log(err)
-  }
-  
-  useEffect(() => {
-    axios.get('/customer/get/')
-    .then((res,err) => {
-      alert("Fetched Customer")
-    })
-    .catch((err) => {
-      alert(err)
-    })
-  })
-}
+//   useEffect(() => {
+//     axios.get('/customer/get/')
+//     .then((res,err) => {
+//       alert("Fetched Customer")
+//     })
+//     .catch((err) => {
+//       alert(err)
+//     })
+//   })
+// }
 
 export default function MediaCard(props) {
+  let authPayload = useContext(AuthContext)
+  const [customer,setCustomer] = useState([])
+  const decoded = jwt_decode(authPayload.token);
+  const Id = decoded.id;
+
   
+  useEffect(() =>  {
+
+    const fetchData =  async() =>{
+      //console.log("profile",Id)
+      const {data} = await axios.get(`/customer/getCustomer/${Id}`)
+
+      const cus = data.customerModle
+      //const val =Object.values(cus)
+      setCustomer(cus)
+      //console.log(val)
+    }
+    fetchData()
+  },[])
+
+  //console.log("profile",authPayload)
   return (
     <Box
     sx={{
@@ -95,32 +101,36 @@ export default function MediaCard(props) {
         </CardActions>
           <CardContent>
 
-            <Typography variant="body2" color="text.secondary">
-            <span>
-              <b>Apartment No:</b> {props.sType}
-            </span>
-            <br />
-            <span>
-              <b>Name:</b> {props.location}{' '}
-            </span>
-            <br />
-            <span>
-              <b>NIC No:</b> {props.cNumber}{' '}
-            </span>
-            <br />
-            <span>
-              <b>Phone No:</b> {props.sType}
-            </span>
-            <br />
-            <span>
-              <b>Email:</b> {props.location}{' '}
-            </span>
-            <br />
-            <span>
-              <b>Password:</b> {props.cNumber}{' '}
-            </span>
-            <br />
+           
+              {/* {customer && customer.map(data => (
+
+              ))} */}
+              <Typography variant="body2" color="text.secondary">
+                <span>
+                  <b>Apartment No:</b> {customer.apartmentNo}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>Name:</b> {customer.name}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>NIC No:</b> {customer.nicNo}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>Phone No:</b> {customer.phoneNo}
+                </span>
+                <br />
+                <span>
+                  <b>Email:</b> {customer.email}{' '}
+                </span>
+                <br />
+                
+              
+              <br />
             </Typography>
+           
           </CardContent>
           <CardActions >
           <Grid container justifyContent="center" spacing={2}>
