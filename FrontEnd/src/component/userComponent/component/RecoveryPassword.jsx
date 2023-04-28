@@ -5,6 +5,9 @@ import { makeStyles } from "tss-react/mui";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from 'sweetalert2'
+import CryptoJs from 'crypto-js'
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
 
 
 const validationSchema = Yup.object({
@@ -42,24 +45,27 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function RecoveryPassword() {
+
+  const[email,setEmail] = useState("")
   const { classes } = useStyles();
+  const ciphertext = CryptoJs.AES.encrypt( email, 'my-secret-key@123').toString();
+  const navigate = useNavigate()
+
+  //const bytes = CryptoJs.AES.decrypt(ciphertext, 'my-secret-key@123');
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      apartmentNo: "",
+      
       email: "",
-      phoneNo: "",
-      nicNo: "",
-      confPassword: "",
-      password: "",
+      
     },
     validationSchema: validationSchema,
     validateOnChange: true,
     onSubmit: (values) => {
-      if (values.confPassword === values.password) {
-        alert(JSON.stringify(values, null, 2));
-        axios({ method: "POST", url: "http://localhost:8000/sendOTP/otp", data: { email: values.email } });
+        setEmail(values.email)
+        
+        //alert(JSON.stringify(values, null, 2));
+        axios({ method: "POST", url: "/otp/sendOTP", data: { email: values.email } });
         Swal.fire({
           title: "Enter OTP",
           input: "text",
@@ -69,8 +75,9 @@ export default function RecoveryPassword() {
           confirmButtonText: "Submit",
           preConfirm: (otp) => {
             return axios
-              .post("http://localhost:8000/sendOTP/verifyOTP", { values,otp })
+              .post("/otp/verifyOTP", { values,otp })
               .then((response) => {
+                navigate(`/recoveryPasswordSet/${ciphertext}`)
                 return response.data;
               })
               .catch((error) => {
@@ -78,19 +85,12 @@ export default function RecoveryPassword() {
               });
           },
         }).then((result) => {
-          if (result.value) {
-            Swal.fire("Submitted!", '', "success");
-            axios({ method: "POST", url: "http://localhost:8000/customer/add", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password } }).then(()=>{
-              alert("Customer added")
-            }).catch((err)=>{
-              alert(err)
-            })
-          }
+         
         })
         .catch((err)=>{
           alert(err)
         });
-      }
+      
     },
   });
 

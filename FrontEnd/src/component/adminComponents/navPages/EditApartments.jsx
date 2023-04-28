@@ -72,7 +72,7 @@ const EditApartments = props => {
             ownersName: res.data.apartmentModel.ownersName,
             email: res.data.apartmentModel.email,
           });
-        } else console.log('Error ');
+        } else alert('Error ');
       });
     };
 

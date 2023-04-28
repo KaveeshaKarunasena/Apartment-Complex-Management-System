@@ -38,7 +38,7 @@ const createApartment = async (apartmentno,floor,buildingNo,type,status,ownersNa
 
 const updateItem = async (_id,apartmentno, floor, buildingNo, type, status, ownersName, email) => {
 
-    console.log(_id)
+    
     const updatedApartment = await apartmentModel.findOneAndUpdate(
         { _id: _id },
         {  
@@ -51,7 +51,7 @@ const updateItem = async (_id,apartmentno, floor, buildingNo, type, status, owne
           email:email
         },
     )
-  console.log(updatedApartment)
+  
     const apartmentItem = JSON.parse(JSON.stringify(updatedApartment));
     return apartmentItem;
   };
