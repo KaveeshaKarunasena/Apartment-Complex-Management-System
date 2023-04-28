@@ -98,7 +98,7 @@ function Maintanence() {
             <>
               <Typography variant="h3">Add Maintenance</Typography>
               <FormControl className={classes.formControl} variant="outlined">
-                <InputLabel>Type</InputLabel>
+                <InputLabel>Apartment No</InputLabel>
                 <Select
                   value={values.apartmentNo}
                   onChange={handleChange}

@@ -54,9 +54,10 @@ function AddApartments() {
         ...formData,
       });
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
-      navigate('/app/view');
+      navigate('/admin/view');
     } catch (err) {
-      enqueueSnackbar(err, { variant: 'error' });
+      const error = err.response.data.err;
+      enqueueSnackbar(error, { variant: 'error' });
     }
   };
 

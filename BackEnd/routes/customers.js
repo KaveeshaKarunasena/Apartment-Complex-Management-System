@@ -11,6 +11,7 @@ const{
     deleteProfile,
     viewProfiles,
     resetPassword,
+    viewCustomer
 } = require('../Controller/coustomerController');
 
 
@@ -19,8 +20,9 @@ router.post("/add",newSignUp);
 
 router.post("/login",login);
 
-router.get("/get/:id",authGuard,viewProfileById);
+router.get("/get",authGuard,viewProfileById);
 
+router.get("/getCustomer/:id",viewCustomer);
 router.put("/update/:id",updateProfileById);
 
 router.delete("/delete/:id",deleteProfile);
