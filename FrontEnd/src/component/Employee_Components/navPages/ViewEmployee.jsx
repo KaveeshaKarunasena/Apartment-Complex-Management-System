@@ -26,6 +26,7 @@ function ViewEmployee() {
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
+  const [display,setdisplay] = useState(false);
   const keys = [
     'id',
     'Name',
@@ -47,11 +48,12 @@ function ViewEmployee() {
 
       if (response.ok) {
         setEmployee(json);
+        setdisplay(true)
       }
     };
 
     fetchDetails();
-  }, []);
+  }, [display]);
 
   const deleteDetails = async id => {
     await axios
@@ -110,7 +112,6 @@ function ViewEmployee() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Employee Id</TableCell>
               <TableCell align="center">Name&nbsp;</TableCell>
               <TableCell align="center">NIC No&nbsp;</TableCell>
               <TableCell align="center">DOB</TableCell>
@@ -119,7 +120,7 @@ function ViewEmployee() {
               <TableCell align="center">Job Title&nbsp;</TableCell>
               <TableCell align="center">ContactNumber&nbsp;</TableCell>
               <TableCell align="center">BasicSalary&nbsp;</TableCell>
-              <TableCell align="center">Allowance&nbsp;</TableCell>
+              <TableCell align="center">OverTime-Rate&nbsp;</TableCell>
               <TableCell align="center">OverTime&nbsp;</TableCell>
               <TableCell align="center" colSpan={2}>
                 Action
@@ -147,9 +148,6 @@ function ViewEmployee() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
                   <TableRow key={data._id}>
-                    <TableCell align="center">
-                      {data._id || 'not found'}
-                    </TableCell>
                     <TableCell align="center">
                       {data.name || 'not found'}
                     </TableCell>
