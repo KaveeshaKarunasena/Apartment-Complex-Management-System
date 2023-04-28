@@ -1,6 +1,26 @@
 const Apartment = require('../modles/apartment-model');
 
+const findApartmentByNo = async (apartmentNo) =>{
+
+const foundApartment = await Apartment.findOne({apartmentno:apartmentNo})
+  return foundApartment
+}
+
+
+const findApartmentByName = async (ownerName) =>{
+
+  const foundApartment = await Apartment.findOne({ownersName:ownerName})
+    return foundApartment
+  }
+
+  const findApartmentByEmail = async (ownerEmail) =>{
+
+    const foundApartment = await Apartment.findOne({email:ownerEmail})
+      return foundApartment
+    }
+
 const createApartment = async (apartmentno,floor,buildingNo,type,status,ownersName,email) => {
+
   const newApartment = new Apartment({
     apartmentno,
     floor,
@@ -38,5 +58,8 @@ const updateItem = async (_id,apartmentno, floor, buildingNo, type, status, owne
 
 module.exports = {
     createApartment,
-    updateItem
+    updateItem,
+    findApartmentByNo,
+    findApartmentByEmail,
+    findApartmentByName
 };
