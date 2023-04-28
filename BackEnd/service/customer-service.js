@@ -36,7 +36,7 @@ async function findUserByApartmentNo(apartmentNo){
 async function login(apartmentNo , password){
 
     const acc = await User.findOne({ apartmentNo})
-    console.log(acc)
+    alert(acc)
     if (!acc){
         throw new Error ('User Not Found');
     }

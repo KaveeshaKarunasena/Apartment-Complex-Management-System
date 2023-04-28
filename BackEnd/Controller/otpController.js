@@ -4,8 +4,7 @@ const OTP = require("../modles/otp");
 const sendOTP = async (req, res) => {
     const email = req.body.email;
       let generatedOTP = Math.floor(Math.random() * 10000);
-      console.log(generatedOTP);
-    
+          
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -24,9 +23,9 @@ const sendOTP = async (req, res) => {
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          return console.log(error);
+          return alert(error);
         }
-        console.log("Message sent: %s", info.messageId);
+        alert("Message sent: %s", info.messageId);
     
         
         const createdAt = Date.now();
@@ -42,7 +41,7 @@ const sendOTP = async (req, res) => {
       newOTP.save().then(() => {
           res.json("OTP Added")
       }).catch((err) => {
-          console.log(err);
+          alert(err);
       })
         
   
@@ -58,13 +57,13 @@ const sendOTP = async (req, res) => {
         .then((otp) => {
           if (otp) {
             if (otp.expiredAt > Date.now()) {
-              OTP.deleteMany({ email: email }).then(console.log("deleted")).catch(error =>{
-                console.log(error)
+              OTP.deleteMany({ email: email }).then(alert("deleted")).catch(error =>{
+                alert(error)
               })
                 res.json("verified");
             } else {
-              OTP.deleteMany({ email: email }).then(console.log("deleted")).catch(error =>{
-                console.log(error)
+              OTP.deleteMany({ email: email }).then(alert("deleted")).catch(error =>{
+                alert(error)
               })
               res.json("expired");
             }
@@ -73,7 +72,7 @@ const sendOTP = async (req, res) => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     };
   

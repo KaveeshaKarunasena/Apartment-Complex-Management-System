@@ -29,7 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/apartment');
 //         .createIndex({ "createdAt": 1 }, { expireAfterSeconds: 30 },
 //             (err, dbResult) => {
 //                 if (err) throw err;
-//                 console.log("Index Created");
+//                 
 //                 db.close();
 //             });
 
@@ -82,7 +82,7 @@ app.use(function (err, req, res, next) {
 var PORT = 5000;
 
 app.listen(PORT, function (err) {
-  if (err) console.log('Error in server setup');
+  if (err) alert('Error in server setup');
   console.log('Server listening on Port', PORT);
 });
 
