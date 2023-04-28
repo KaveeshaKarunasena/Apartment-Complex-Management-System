@@ -68,7 +68,7 @@ function ManagerDashboard() {
       <h1>Manager Dashboard</h1>
       <div className={classes.content}>
         <NavLink
-          to="home"
+          to=""
           className={clsx(classes.nav)}
           style={navLinkStyle}
         >

@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
+import './RditForm.css'
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -29,8 +30,8 @@ const useStyles = makeStyles()(theme => ({
     paddingTop: '5px',
   },
   submitBtn: {
-    color : 'primary'
-    
+    color : 'primary',
+    backgroundColor: '#488042'
   },
 }));
 
@@ -126,8 +127,8 @@ const EditApartments = props => {
         }
       });
     } catch (err) {
-      console.log(err)
-      enqueueSnackbar("Not Updated", { variant: 'error' });
+      const error = err.response.data.err;
+      enqueueSnackbar(error, { variant: 'error' });
     }
   };
 
@@ -145,10 +146,11 @@ const EditApartments = props => {
           return (
             <>
               <Typography variant="h3">Edit Apartment</Typography>
-              <FormControl className={classes.formControl} variant="outlined">
+              <FormControl className = 'formControl' variant="outlined">
                 <TextField
                   value={state.apartmentno}
                   onChange={onInputChange}
+                  
                   name="apartmentno"
                   label="Apartment No"
                   type="text"
@@ -168,6 +170,7 @@ const EditApartments = props => {
                 <TextField
                   value={state.floor}
                   onChange={onInputChange}
+                  // className='txt'
                   name="floor"
                   label="Floor No"
                   type="text"

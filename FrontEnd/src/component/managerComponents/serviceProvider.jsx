@@ -57,6 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const ServiceProvider = () => {
   const [showForm, setShowForm] = React.useState(false);
 
+  const [defaultServiceProviders, setdefaultServiceProviders] = useState([]);
   const [serviceProviders, setServiceProviders] = useState([]);
   const [isService, setIsService] = useState(false);
 
@@ -68,6 +69,15 @@ const ServiceProvider = () => {
     setShowForm(false);
   };
 
+  const requestSearch = (searchedVal) => {
+    
+    const searchValue = searchedVal.target.value;
+    const filteredRows = defaultServiceProviders.filter((serviceProvider) => {
+      return serviceProvider.location.toLowerCase().includes(searchValue.toLowerCase()) || serviceProvider.serviceType.toLowerCase().includes(searchValue.toLowerCase())
+    });
+    setServiceProviders(filteredRows);
+  };
+
   // useEffect is used to make sure once service provider is added the service provider is displayed instantly on the service provider dashboard
   useEffect(() => {
     const fetchServiceProviderDetails = async () => {
@@ -75,6 +85,7 @@ const ServiceProvider = () => {
       const json = await response.json();
 
       if (response.ok) {
+        setdefaultServiceProviders(json);
         setServiceProviders(json);
         setIsService(false);
       }
@@ -89,13 +100,14 @@ const ServiceProvider = () => {
       <div className="serviceProviderContainer">
         <Grid container justifyContent = {'space-between'} style = {{marginBottom: '4%'}}>
           <Grid item xs={3}>
-            <Search>
+            <Search >
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={(searchVal) => {requestSearch(searchVal)}}
               />
             </Search>
           </Grid>

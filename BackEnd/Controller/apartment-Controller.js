@@ -5,6 +5,33 @@ const newApartment = async (req, res) => {
   try {
     const { apartmentno, floor, buildingNo, type, status, ownersName, email } = req.body;
 
+
+    const existApartment = await apartmentService.findApartmentByNo(apartmentno);
+   
+  if(existApartment){
+    return res.status(401).send({
+      err: 'Apartment Already Exist',
+    });
+  }
+
+  const existOwner = await apartmentService.findApartmentByName(ownersName);
+   
+  if(existOwner){
+    return res.status(401).send({
+      err: 'Owner Already Exist',
+    });
+  }
+
+
+
+  const existEmail = await apartmentService.findApartmentByEmail(email);
+   
+  if(existEmail){
+    return res.status(401).send({
+      err: 'Email Already Exist',
+    });
+  }
+
     const createdApartment = await apartmentService.createApartment(
       apartmentno,
       floor,
@@ -26,10 +53,9 @@ const viewApartment = async (req, res) => {
     await apartmentModel
     .find()
     .then(apartment => res.json(apartment))
-    .catch(err => res.status(404).json({ notfound: 'No Apartment found' }));
 
   }catch(err){
-    res.status(400).send({ err: err });
+    res.status(404).send({ err: 'No Apartment found' });
   }
   
 };
@@ -62,7 +88,7 @@ const updateApartment = async (req, res) => {
       email:email 
     },
     function (err, response) {
-      if (err) res.send(err);
+      if (err) res.send({err:'Not Updated'});
       else
         res.send({
           status: 200,
