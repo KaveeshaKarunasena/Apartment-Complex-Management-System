@@ -53,7 +53,7 @@ const [total, setTotal] = useState({data:0});
 
   const fetchTotal = async () =>{
     const {data} = await axios.get('/maintenance/getTotalCost')
-        console.log("resss", data.total)
+        // console.log("resss", data.total)
         const data1 = data.total.map(item =>item.total)
         
         setTotal({

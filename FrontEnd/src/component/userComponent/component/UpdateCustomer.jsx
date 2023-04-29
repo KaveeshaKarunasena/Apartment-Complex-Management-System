@@ -90,7 +90,7 @@ export default function SignUp() {
         validateOnChange: true,
         onSubmit: (values) => {
                      
-            axios({ method: "put", url: "/customer/update/:id", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password }});
+            axios({ method: "PUT", url: "/customer/update/:id", data: { name: values.name,appartmentNo: values.apartmentNo,email: values.email,phoneNo: values.phoneNo,nicNo: values.nicNo,password: values.password }});
              navigate('/profile')
           
         },
