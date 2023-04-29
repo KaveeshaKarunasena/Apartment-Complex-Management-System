@@ -24,17 +24,17 @@ const Add_Complain = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (isNaN(formdata.Complain_No)) {
-            alert("Enter a Number for Complain Number");
+            console.log("Enter a Number for Complain Number");
             return;
         }
 
         if (isNaN(formdata.Contact_No)) {
-            alert("Enter a Number for Contact Number");
+            console.log("Enter a Number for Contact Number");
             return;
         }
         const checkbox = document.getElementsByName("myCheckbox")[0];
     if (!checkbox.checked) {
-        alert("Please check the 'I am Not A Robot' checkbox");
+        console.log("Please check the 'I am Not A Robot' checkbox");
         return;
     }
         try {

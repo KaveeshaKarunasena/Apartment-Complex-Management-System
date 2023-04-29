@@ -101,7 +101,7 @@ app.use(function (err, req, res, next) {
 var PORT = 5000;
 
 app.listen(PORT, function (err) {
-  if (err) alert('Error in server setup');
+  if (err) console.log('Error in server setup');
   console.log('Server listening on Port', PORT);
 });
 

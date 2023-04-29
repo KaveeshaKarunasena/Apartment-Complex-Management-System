@@ -29,12 +29,12 @@ const ctx = authPayload.token
 
     if (!authPayload || !authPayload.token) {
       //  navigate("/login")
-      alert("no payloard");
+     
        return <Navigate to="/login" />;
     }
     return <>{children}</>;
   } catch (error) {
-    alert(error);
+ 
   }
 };
 
@@ -49,14 +49,14 @@ export const SuperAdminAuthGuard = ({ children }) => {
     const decodedEmail = decoded.email;
     
     let adminString = decodedEmail.substring(0, 5);
-    alert(adminString);
+ 
     if (adminString === 'admin') {
       // navigate('/manager')
       return <Navigate to="/manager" />;
     }
 
     if (decodedEmail !== 'superAdmin@gmail.com') {
-      alert("admin not super")
+ 
       return <Navigate to="/login" />;
     }
 
@@ -71,7 +71,7 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
     return <>{children}</>;
   } catch (error) {
-    alert(error);
+    
   }
 };
 
@@ -93,7 +93,7 @@ export const AdminAuthGuard = ({ children }) => {
     if (adminString !== 'admin') {
       return <Navigate to="/login" />;
     }
-    alert("Manager")
+   
 
     if (!authPayload || !authPayload.token) {
       
@@ -102,7 +102,7 @@ export const AdminAuthGuard = ({ children }) => {
 
     return <>{children}</>;
   } catch (error) {
-    alert(error);
+    
   }
 };
 
@@ -129,6 +129,6 @@ export function GuestGuard({ children }) {
     }
     return <>{children}</>;
   } catch (error) {
-   alert(error);
+  
   }
 }

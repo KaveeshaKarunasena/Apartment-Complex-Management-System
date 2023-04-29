@@ -22,7 +22,7 @@ const View_complain = () => {
                 //console.log(rows)
             })
             .catch((err) => {
-                alert(err.message);
+                console.log(err.message);
             });
     }, []);
 
@@ -42,7 +42,7 @@ const View_complain = () => {
         axios.delete(`/complain/delete/${id}`)
             .then((res) => {
                 console.log(`Row with ID ${id} deleted successfully`);
-                alert(`Row with ID ${id} deleted successfully`);
+                console.log(`Row with ID ${id} deleted successfully`);
                 setData(data.filter((item) => item.id !== id));
                 window.location.reload();
             })

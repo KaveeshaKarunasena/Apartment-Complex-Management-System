@@ -54,7 +54,7 @@ const Update_Complain = () => {
                 //console.log(rows)
             })
             .catch((err) => {
-                alert(err.message);
+                console.log(err.message);
             });
     }, []);
 

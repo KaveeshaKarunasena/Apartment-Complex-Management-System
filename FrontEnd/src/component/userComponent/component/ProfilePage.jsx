@@ -27,10 +27,10 @@ import UpdateCustomer from './UpdateCustomer'
 //   useEffect(() => {
 //     axios.get('/customer/get/')
 //     .then((res,err) => {
-//       alert("Fetched Customer")
+//       console.log("Fetched Customer")
 //     })
 //     .catch((err) => {
-//       alert(err)
+//       console.log(err)
 //     })
 //   })
 // }

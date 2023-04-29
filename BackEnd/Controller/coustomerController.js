@@ -39,7 +39,7 @@ const newSignUp = async (req, res) => {
       res.json('Customer Added');
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 };
 
@@ -112,7 +112,7 @@ const updateProfileById = async (req, res) => {
       res.status(200).send({ status: 'User Updated', user: customer });
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
       res
         .status(500)
         .send({ status: 'Error with updating data', error: err.message });
@@ -127,7 +127,7 @@ const deleteProfile = async (req, res) => {
       res.status(200).send({ status: 'User deleted' });
     })
     .catch(err => {
-      alert(err.message);
+      console.log(err.message);
       res
         .status(500)
         .send({ status: 'Error with delete user', error: err.message });
@@ -140,7 +140,7 @@ const viewProfiles = async (req, res) => {
       res.json(customers);
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 
   

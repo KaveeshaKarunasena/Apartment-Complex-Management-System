@@ -127,16 +127,16 @@ export default function SignUp() {
                 },
               })
                 .then(() => {
-                  alert('Customer added');
+                  console.log('Customer added');
                   navigate('/login');
                 })
                 .catch(err => {
-                  alert(err);
+                  console.log(err);
                 });
             }
           })
           .catch(err => {
-            alert(err);
+            console.log(err);
           });
       }
     },
