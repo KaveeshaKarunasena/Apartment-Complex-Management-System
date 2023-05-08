@@ -13,14 +13,18 @@ import {useState, useEffect, useContext} from 'react';
 import axios from "axios";
 import { AuthContext } from '../../AuthProvider';
 import jwt_decode from 'jwt-decode'
-import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
+import { useNavigate } from 'react-router-dom';
+import UpdateCustomer from './UpdateCustomer'
 
-// function DataFetching(props){
+//import Popup from './Popup';
+
+
+//import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
+
+// function DataFetching(){
 //   const[posts, setPosts] = useState([])
-//     // let authPayload = useContext(AuthContext)
-   
+
 //   useEffect(() => {
-//     // console.log("profile",authPayload)
 //     axios.get('/customer/get/')
 //     .then((res,err) => {
 //       alert("Fetched Customer")
@@ -36,23 +40,33 @@ export default function MediaCard(props) {
   const [customer,setCustomer] = useState([])
   const decoded = jwt_decode(authPayload.token);
   const Id = decoded.id;
-
+  const [getId, setGetId] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
+  const navigate = useNavigate()
   
   useEffect(() =>  {
 
     const fetchData =  async() =>{
-      console.log("profile",Id)
+      
       const {data} = await axios.get(`/customer/getCustomer/${Id}`)
 
       const cus = data.customerModle
-      const val =Object.values(cus)
-      setCustomer(val)
-      console.log(val[2])
+      //const val =Object.values(cus)
+      setCustomer(cus)
+      
     }
     fetchData()
   },[])
 
-  //console.log("profile",authPayload)
+  const handleProps = id => {
+    //setGetId(id);
+
+    <UpdateCustomer id={id}></UpdateCustomer>
+    navigate(`/app/updateCustomer/${id}`)
+    
+   };
+
+  
   return (
     <Box
     sx={{
@@ -65,7 +79,7 @@ export default function MediaCard(props) {
      <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }}/>
      <Typography gutterBottom variant="h5" component="div">
               Name
-            </Typography>
+      </Typography>
       <Box component="form"  noValidate sx={{ mt: 1,  }}>
         <Card sx={{ maxWidth: 600,height:550}}>
           <CardMedia
@@ -83,7 +97,7 @@ export default function MediaCard(props) {
                 style={{
                   backgroundColor: '#006ee6',
                 }}
-                //onClick={displayUpdateForm}
+                //onClick={() => handleProps(customer._id)}
               >
                 Update
               </Button>
@@ -104,35 +118,34 @@ export default function MediaCard(props) {
           <CardContent>
 
            
-              {customer && customer.map(data => (
-                 <Typography variant="body2" color="text.secondary">
-                     <span>
-                <b>Apartment No:</b> {data.apartmentNo}
-              </span>
+              {/* {customer && customer.map(data => (
+
+              ))} */}
+              <Typography variant="body2" color="text.secondary">
+                <span>
+                  <b>Apartment No:</b> {customer.apartmentNo}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>Name:</b> {customer.name}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>NIC No:</b> {customer.nicNo}{' '}
+                </span>
+                <br />
+                <span>
+                  <b>Phone No:</b> {customer.phoneNo}
+                </span>
+                <br />
+                <span>
+                  <b>Email:</b> {customer.email}{' '}
+                </span>
+                <br />
+                
+              
               <br />
-              <span>
-                <b>Name:</b> {data.values[2]}{' '}
-              </span>
-              <br />
-              <span>
-                <b>NIC No:</b> {data.nicNo}{' '}
-              </span>
-              <br />
-              <span>
-                <b>Phone No:</b> {data.phoneNo}
-              </span>
-              <br />
-              <span>
-                <b>Email:</b> {data.email}{' '}
-              </span>
-              <br />
-              <span>
-                <b>Password:</b> {data.password}{' '}
-              </span>
-            
-            <br />
             </Typography>
-              ))}
            
           </CardContent>
           <CardActions >
@@ -145,7 +158,8 @@ export default function MediaCard(props) {
                 style={{
                   backgroundColor: '#006ee6',
                 }}
-                //onClick={displayUpdateForm}
+                onClick={() => handleProps(customer._id)}
+                
               >
                 Update Profile
               </Button>
@@ -179,6 +193,13 @@ export default function MediaCard(props) {
           </Grid>
         </CardActions>
         </Card>
+        {/* <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        customer={customer}
+        setCustomer={setCustomer}
+        getId={getId}
+      ></Popup> */}
         </Box>
   </Box>
   );

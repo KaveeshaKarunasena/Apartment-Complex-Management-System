@@ -75,7 +75,6 @@ const UpdateService = props => {
   // });
 
   // const onInputChange = e => {
-  //   console.log(e.target.value)
   //   setState({ ...state, [e.target.name]: e.target.value });
   // };
 

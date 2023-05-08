@@ -23,6 +23,7 @@ router.post("/login",login);
 router.get("/get",authGuard,viewProfileById);
 
 router.get("/getCustomer/:id",viewCustomer);
+
 router.put("/update/:id",updateProfileById);
 
 router.delete("/delete/:id",deleteProfile);

@@ -39,7 +39,7 @@ const newSignUp = async (req, res) => {
       res.json('Customer Added');
     })
     .catch(err => {
-      console.log(err);
+      alert(err);
     });
 };
 
@@ -56,7 +56,7 @@ const login = async (req, res, session) => {
 
 const viewCustomer = async (req, res) => {
   let id = req.params.id;
-  console.log(id)
+  
   Customer.findById(id, (err, customerModle) => {
     if (err) {
       return res.status(400).json({ success: false, err });
@@ -71,14 +71,14 @@ const viewCustomer = async (req, res) => {
 
 const viewProfileById = async (req, res) => {
   const curntUser = req.user;
-  // console.log(curntUser);
+ 
   try {
     if (!curntUser) {
       return res.status(400).send({ err: 'User Not Logged In' });
     }
 
     const userDoc = await Customer.findById(curntUser.id)
-     console.log(userDoc)
+    
     const user = userDoc?.toJSON();
 
     delete user?.password;
@@ -92,7 +92,7 @@ const updateProfileById = async (req, res) => {
   let userID = req.params.id;
 
   //Dstructure
-  const { name, apartmentNo, nicNo, phoneNo, email, password } = req.body;
+  const { name, apartmentNo, nicNo, phoneNo, email} = req.body;
 
   const updateCustomer = {
     name,
@@ -100,18 +100,19 @@ const updateProfileById = async (req, res) => {
     nicNo,
     phoneNo,
     email,
-    password,
-    //image
+    
   };
 
   //Search the that id is available or not
-  const update = Customer.findByIdAndUpdate(userID, updateCustomer)
+  const update = await Customer.findByIdAndUpdate(userID,{name: name,apartmentNo: apartmentNo,nicNo: nicNo,phoneNo: phoneNo,email: email})
+    
     .then(customer => {
+   
       //status = 200 = updated
-      res.status(200).send({ status: 'User Updated', user: update });
+      res.status(200).send({ status: 'User Updated', user: customer });
     })
     .catch(err => {
-      console.log(err);
+      alert(err);
       res
         .status(500)
         .send({ status: 'Error with updating data', error: err.message });
@@ -126,7 +127,7 @@ const deleteProfile = async (req, res) => {
       res.status(200).send({ status: 'User deleted' });
     })
     .catch(err => {
-      console.log(err.message);
+      alert(err.message);
       res
         .status(500)
         .send({ status: 'Error with delete user', error: err.message });
@@ -139,10 +140,10 @@ const viewProfiles = async (req, res) => {
       res.json(customers);
     })
     .catch(err => {
-      console.log(err);
+      alert(err);
     });
 
-  console.log('Hello');
+  
 };
 
 const resetPassword = async (req, res) => {
@@ -180,6 +181,8 @@ const resetPassword = async (req, res) => {
     return res.status(401).send({ error });
   }
 };
+
+
 module.exports = {
   newSignUp,
   login,

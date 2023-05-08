@@ -112,10 +112,10 @@ const AddService = props => {
       const res1 = await axios
         .post('/service-provider/add', formData)
         .then(res => {
-          console.log(res.data);
+          alert(res.data);
         })
         .catch(err => {
-          console.log(err.message);
+          alert(err.message);
         });
 
       // const res = await axios.post('/service-provider/add', { ...formData });

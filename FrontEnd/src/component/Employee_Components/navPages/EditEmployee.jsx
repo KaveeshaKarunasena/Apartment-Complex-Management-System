@@ -59,7 +59,7 @@ const EditEmployee = props => {
   useEffect(() => {
     const { id } = props;
     const getData = async () => {
-      console.log(id);
+      
 
       await axios.get(`/employee/getById/${id}`).then(res => {
         if (res.data.success) {
@@ -76,7 +76,7 @@ const EditEmployee = props => {
             allowance:res.data.EmployeeModel.allowance,
             overtime:res.data.EmployeeModel.overtime
           });
-        } else console.log('Error ');
+        } else alert('Error ');
       });
     };
 
@@ -133,8 +133,8 @@ const EditEmployee = props => {
         }
       });
     } catch (err) {
-      console.log(err)
-      enqueueSnackbar(err.message, { variant: 'error' });
+      alert(err)
+      enqueueSnackbar("Not Updated", { variant: 'error' });
     }
   };
 
