@@ -12,13 +12,13 @@ const MaintenanceRepo = () =>{
         <div className='App'>
         < div className='repo'>
            <div className='lineChart'> <LineChart></LineChart></div>
-          <BarChart2></BarChart2>
+          {/* <BarChart2></BarChart2> */}
           
         </div> 
         < div className='repo2'>
             
-            <div className='table'><CostTable></CostTable></div>
-            <PieChart></PieChart>
+            {/* <div className='table'><CostTable></CostTable></div> */}
+            {/* <PieChart></PieChart> */}
         </div>
         </div>
     )

@@ -110,7 +110,7 @@ export default function UpdateCustomer(props) {
         validateOnChange: true,
 
         handleChange : e => {
-          setCustomer({ ...state, [e.target.name]: e.target.value });
+          setCustomer({ ...customer, [e.target.name]: e.target.value });
          
         },
         
