@@ -43,6 +43,7 @@ const complain_Routes = require("./routes/Complain_Route");
 const appointmentRouter = require ('./routes/appointment')
 const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
+const paymentRouter = require('./routes/payment')
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
 const imageRouter2 = require('./routes/UploadAmenityImage');
@@ -73,6 +74,7 @@ app.use("/complain",complain_Routes);
 app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
+app.use("/addPayment",paymentRouter)
 app.use("/sendOTP",otpRouter)
 app.use('/employee',EmployeeRouter);
 app.use('/service-provider', serviceProviderRouter);
