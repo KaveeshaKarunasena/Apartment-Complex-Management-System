@@ -9,7 +9,7 @@ const{
     login,
     viewProfileById,
     updateProfileById,
-    deleteProfile,
+    deleteProfilePic,
     viewProfiles,
     resetPassword,
     viewCustomer,
@@ -28,7 +28,7 @@ router.put("/update/:id",updateProfileById);
 
 router.put("/upload/:id",uploadMiddleware.single("photo"),upload)
 
-router.delete("/delete/:id",deleteProfile);
+router.delete("/delete/:id/photo",deleteProfilePic);
 
 router.get("/",viewProfiles);
 
