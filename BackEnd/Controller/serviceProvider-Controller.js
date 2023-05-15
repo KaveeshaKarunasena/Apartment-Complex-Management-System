@@ -118,10 +118,32 @@ const viewSingleProvider = async (req, res) => {
     });
 };
 
+const getServiceProviderNames = async (req, res) => {
+
+  try {
+    const serviceProviderList = await ServiceProvider.find({}, {'companyName': 1});
+
+    res
+      .status(200).json(serviceProviderList);
+  } catch (error) {
+    res
+    .status(500)
+    .send({
+      status: 'Error with getting service provider',
+      error: error.message,
+    });
+  }
+
+ 
+  
+    
+};
+
 module.exports = {
     newServiceProvider,
     viewServiceProvider,
     updateServiceProvider,
     deleteServiceProvider,
-    viewSingleProvider
+    viewSingleProvider,
+    getServiceProviderNames
 };

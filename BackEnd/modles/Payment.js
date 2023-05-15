@@ -12,6 +12,9 @@ const paymentSchema = new Schema({
         type : String,
         require: true
     },
+    payee:{
+        type:String,
+    },
     amount:{
         type : String,
         require: true

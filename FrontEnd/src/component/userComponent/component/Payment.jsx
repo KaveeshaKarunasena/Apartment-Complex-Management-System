@@ -1,43 +1,21 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-//import Button from '@mui/joy/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-
-//import Link from '@mui/material/Link';
-//import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as Yup from "yup";
 import axios from "axios";
-//import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
-import { useState,  useContext} from 'react';
+import { useEffect,  useContext, useState} from 'react';
 import { AuthContext } from '../../AuthProvider';
 import jwt_decode from 'jwt-decode'
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
 import { FormControl,Select, MenuItem } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-//import { useNavigate } from 'react-router';
 import { Formik } from 'formik';
 
-// const validationSchema = Yup.object({
-  
-//     apartmentNo: Yup.string()
-//       .length(3)
-//       .matches( 
-//         /^[a-zA-Z]\d{2}$/,
-//         "use one letter and two number format \nex: 'A10' "
-//       )
-//       .required("Apartment number is required"),
-      
-//       amount: Yup.string().required("Amount is required"),
-    
-//   });
 
   const useStyles = makeStyles()((theme) => ({
     root: {
@@ -76,8 +54,9 @@ const theme = createTheme();
 export default function Payment() {
     let authPayload = useContext(AuthContext)
     const decoded = jwt_decode(authPayload.token);
+    const [serviceProviderList, setServiceProviderList] = useState([]);
     const Id = decoded.id;
-    console.log(Id)
+
 
     const { enqueueSnackbar } = useSnackbar();
     //const navigate = useNavigate();
@@ -95,6 +74,14 @@ export default function Payment() {
         enqueueSnackbar(err, { variant: 'error' });
       }
     }
+
+    useEffect(() => {
+      const fetchDetails = async () => {
+        const {data} = await axios.get('/service-provider/getServiceProviderNames');
+        setServiceProviderList(data);
+      };
+      fetchDetails();
+    }, []);
 
     const { classes } = useStyles();
      
@@ -118,6 +105,7 @@ export default function Payment() {
                 
                 apartmentNo: "",
                 category:"",
+                payee:"",
                 amount:0,
           
               }}
@@ -180,12 +168,31 @@ export default function Payment() {
               <MenuItem value="">
                 <Typography>Categories</Typography>
               </MenuItem>
-              <MenuItem value="Amenity Chargers">Amenities</MenuItem>
-              <MenuItem value="Bill Chargers">Bills</MenuItem>
-              <MenuItem value="Services Chargers">Services</MenuItem>
-              <MenuItem value="Others Chargers">Other</MenuItem>
+              <MenuItem value="Amenity">Amenities</MenuItem>
+              <MenuItem value="Bill">Bills</MenuItem>
+              <MenuItem value="Services">Services</MenuItem>
+              <MenuItem value="Others">Other</MenuItem>
             </Select>
           </FormControl>
+
+          {values.category === "Services" && <><FormControl fullWidth>
+            <Select
+              name='payee'
+              value={values.payee}
+              onChange={handleChange}
+              displayEmpty
+              variant="outlined"
+              
+            >
+              {
+              serviceProviderList.map((sp) => (
+                      <MenuItem key={sp._id} value={sp.companyName}>
+                        {sp.companyName}
+                      </MenuItem>
+                       ))}
+      
+            </Select>
+          </FormControl></>}
 
           <FormControl className={classes.formControl} fullWidth>
             <TextField

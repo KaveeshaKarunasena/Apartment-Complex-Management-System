@@ -4,12 +4,14 @@ const addPayment = async (req,res) =>{
 
     const apartmentNo = req.body.apartmentNo;
     const category = req.body.category;
+    const payee = req.body.payee;
     const amount = req.body.amount;
 
     const newPayment = new Payment({
         apartmentNo,
         category,
-        amount,
+        payee,
+        amount
     });
 
     newPayment
