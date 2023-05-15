@@ -29,9 +29,9 @@ const View_complain = () => {
 
     const columns = [
         // { field: "_id", headerName: " _id", width: 150 },
-        { field: "Complain_No", headerName: "Complain_No", width: 150 },
-        { field: "complain", headerName: "complain", width: 150 },
-        { field: "Status", headerName: "Status", width: 150 },
+        { field: "Complain_No", headerName: "Complain_No", width: 250 },
+        { field: "complain", headerName: "complain", width: 650 },
+        { field: "Status", headerName: "Status", width: 200 },
 
     ];
     console.log(columns)
