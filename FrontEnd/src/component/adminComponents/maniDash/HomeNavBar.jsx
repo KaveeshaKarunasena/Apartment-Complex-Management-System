@@ -244,7 +244,7 @@ export default function PrimarySearchAppBar() {
             WESCCOT
           </Typography>
           <NavLink
-            to="/manager"
+            to="/admin"
             style={({ isActive }) => {
               return {
                 frontWeight: isActive ? 'bold' : 'normal',
