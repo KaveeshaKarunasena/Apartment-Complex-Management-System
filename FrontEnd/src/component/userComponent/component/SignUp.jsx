@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -17,7 +16,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useFormik } from 'formik';
 import { makeStyles } from 'tss-react/mui';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -70,6 +69,10 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
+// const imageUpload = (event)=>{
+//   console.log(event.target.files[0])
+// }
+
 export default function SignUp() {
   const navigate = useNavigate();
   const { classes } = useStyles();
@@ -81,12 +84,14 @@ export default function SignUp() {
       email: '',
       phoneNo: '',
       nicNo: '',
+      photo:'',
       confPassword: '',
       password: '',
     },
     validationSchema: validationSchema,
     validateOnChange: true,
     onSubmit: values => {
+      console.log(values)
       if (values.confPassword === values.password) {
         axios({
           method: 'POST',
@@ -122,6 +127,7 @@ export default function SignUp() {
                   apartmentNo: values.apartmentNo,
                   email: values.email,
                   phoneNo: values.phoneNo,
+                  photo: values.photo,
                   nicNo: values.nicNo,
                   password: values.password,
                 },
@@ -284,6 +290,7 @@ export default function SignUp() {
                   }
                 />
               </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -324,10 +331,11 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} marginTop="10px">
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
+                    
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
@@ -336,18 +344,22 @@ export default function SignUp() {
             <Button
               type="submit"
               fullWidth
+              marginTop="16px"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{
+                backgroundColor: '#006ee6',
+              }}
             >
               Get OTP
             </Button>
           </Box>
           <br></br>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link component="button" variant="body2" to="/login">
+            <Grid item marginTop="16px">
+              <NavLink to="/login">
                 Already have an account? Sign in
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Box>

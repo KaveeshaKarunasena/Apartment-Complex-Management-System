@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const fileUpload = require('express-fileupload')
+//const fileUpload = require('express-fileupload')
 const cors = require('cors');
 
 const sessoin = require('express-session');
@@ -58,9 +58,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileUpload({
-  useTempFiles: true
-}))
+// app.use(fileUpload({
+//   useTempFiles: true
+// }))
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);

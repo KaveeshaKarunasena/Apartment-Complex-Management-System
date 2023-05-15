@@ -143,8 +143,8 @@ function GuestRoutes() {
     <GuestGuard>
       <Routes>
         <Route path="login" element={<SignIn />} />
-        <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
+        {/* /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} /> */}
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>

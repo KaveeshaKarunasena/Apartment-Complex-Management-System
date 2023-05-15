@@ -118,10 +118,10 @@ export function GuestGuard({ children }) {
       const decodedEmail = decoded.email;
       let adminString = decodedEmail.substring(0, 5);
 
-      if (adminString == 'super') {
+      if (adminString === 'super') {
         navigate('/admin');
       }
-      if (adminString == 'admin') {
+      if (adminString === 'admin') {
         navigate('/manager');
       } else {
         navigate('/app');
