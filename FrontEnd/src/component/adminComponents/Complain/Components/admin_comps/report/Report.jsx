@@ -1,10 +1,10 @@
-import React from 'react'
+
 import "./Report.scss"
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-
+import Calander from "../../../../rightSide/CalenderComp"
+//import Chart from "../../Complain_chart/Complain_chart"
 
 const Report = () => {
 
@@ -38,7 +38,7 @@ const Report = () => {
                 setRejectedCount(rows.filter((item) => item.Status === "Rejected").length);
                 setNotCheck(rows.filter((item) => item.Status === "Not Checked").length);
             } catch (err) {
-                alert(err.message);
+                console.log(err.message);
             }
         };
         fetchData();
@@ -52,7 +52,6 @@ const Report = () => {
         }
     }, [dataCount, acceptedCount, notCheck, rejectedCount]);
     
-
 
 
     console.log(nc_percentage)
@@ -101,7 +100,11 @@ const Report = () => {
             </div>
 
             <div className="calender">
-                calender
+                <Calander/>
+            </div>
+
+            <div className="charts">
+                {/* <Chart/> */}
             </div>
         </div>
     )

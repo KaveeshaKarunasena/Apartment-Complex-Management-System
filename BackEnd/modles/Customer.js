@@ -27,11 +27,11 @@ const customerSchema = new Schema({
     password:{
         type : String,
         require: true
+    },
+    photo:{
+        type: String,
+        default: '../public/assert/profile.png'
     }
-    // image:{
-    //     data:Buffer,
-    //     contentType:String
-    // }
 
 })
 

@@ -59,7 +59,7 @@ const EditEmployee = props => {
   useEffect(() => {
     const { id } = props;
     const getData = async () => {
-      console.log(id);
+      
 
       await axios.get(`/employee/getById/${id}`).then(res => {
         if (res.data.success) {
@@ -81,7 +81,7 @@ const EditEmployee = props => {
     };
 
     getData();
-  }, [props]);
+  }, []);
 
   const updateEmployee = async e => {
     const {
@@ -115,25 +115,6 @@ const EditEmployee = props => {
     setOpenPopup(false);
     try {  
       await axios.put(`/employee/update/${id}`, data).then(res => {
-        const employeeCopy = [...employee];
-
-        employeeCopy.map(item => {
-          if (item._id === id) {
-            item.name = data.name;
-            item.nic = data.nic;
-            item.address = data.address;
-            item.dob = data.dob;
-            item.jobTitle = data.jobTitle;
-            item.department = data.department;
-            item.contactNumber = data.contactNumber;
-            item.basicSalary = data.basicSalary;
-            item.allowance = data.allowance;
-            item.overtime = data.overtime;
-          }
-        });
-
-        setemployee(employeeCopy);
-
         enqueueSnackbar('Succesfully Updated', { variant: 'success' });
 
         if (res.data.success) {
@@ -160,19 +141,17 @@ const EditEmployee = props => {
   return (
     <Box className={classes.root}>
       <Formik
-      // validationSchema={Yup.object().shape({
-      //   apartmentno: Yup.string()
-      //     .max(3, 'must have maximum 3 Numbers')
-      //     .required('Required*'),
-      //   floor: Yup.string()
-      //     .max(2, 'must have maximum 2 Numbers')
-      //     .required('Required'),
-      //   buildingNo: Yup.string().required('Required'),
-      //   type: Yup.string().required('Required'),
-      //   ownersName: Yup.string().required('Required'),
-      //   status: Yup.string().required('Required'),
-      //   email: Yup.string().required('Required'),
-      // })}
+      validationSchema={Yup.object().shape({
+        nic: Yup.string()
+          .max(12, 'must have maximum 12 Numbers')
+          .required('Required*'),
+        jobTitle: Yup.string().required('Required'),
+        department: Yup.string().required('Required'),
+        basicSalary: Yup.string().min(12500).required('Required'),
+        allowance: Yup.string().required('Required'),
+        contactNumber: Yup.string().length(10).required('Required'),
+        address: Yup.string().required('Required'),
+      })}
       >
         {({ errors }) => {
           return (
@@ -186,6 +165,7 @@ const EditEmployee = props => {
                   label="name"
                   type="text"
                   size="small"
+                  disabled = {true}
                   error={errors.name && errors.name?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
@@ -200,6 +180,7 @@ const EditEmployee = props => {
                   label="NIC"
                   type="text"
                   size="small"
+                  disabled = {true}
                   error={errors.nic && errors.nic?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
@@ -212,8 +193,9 @@ const EditEmployee = props => {
                   onChange={onInputChange}
                   name="dob"
                   label="Date of birth"
-                  type="text"
+                  type="date"
                   size="small"
+                  disabled = {true}
                   error={errors.dob && errors.dob?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
@@ -244,6 +226,7 @@ const EditEmployee = props => {
                   label="jobTitle"
                   type="text"
                   size="small"
+                  
                   error={
                     errors.jobTitle && errors.jobTitle?.length ? true : false
                   }
@@ -260,6 +243,7 @@ const EditEmployee = props => {
                   label="department"
                   type="text"
                   size="small"
+                  disabled = {true}
                   error={
                     errors.department && errors.department?.length
                       ? true
@@ -287,13 +271,29 @@ const EditEmployee = props => {
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.contactNumber}
                 </FormHelperText>
+                  </FormControl>
+              <FormControl className={classes.formControl} variant="outlined">
+                <TextField
+                  value={state.basicSalary}
+                  onChange={onInputChange}
+                  name="basicSalary"
+                  label="basic Salary"
+                  type="number"
+                  size="small"
+                  error={
+                    errors.basicSalary && errors.basicSalary?.length ? true : false
+                  }
+                />
+                <FormHelperText stylr={{ color: 'red' }}>
+                  {errors.allowancee}
+                </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
                 <TextField
                   value={state.allowance}
                   onChange={onInputChange}
-                  name="allowance"
-                  label="Allowance"
+                  name="Over Time -Rate"
+                  label="Over Time -Rate"
                   type="number"
                   size="small"
                   error={
@@ -301,7 +301,26 @@ const EditEmployee = props => {
                   }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
-                  {errors.allowance}
+                  {errors.allowancee}
+                </FormHelperText>
+              </FormControl>
+              <FormControl className={classes.formControl} variant="outlined">
+                <TextField
+                  value={state.overtime}
+                  onChange={onInputChange}
+                  name="overtime"
+                  label="Overtime"
+                  type="number"
+                  size="small"
+                  error={
+                    errors.overtime &&
+                    errors.overtime?.length
+                      ? true
+                      : false
+                  }
+                />
+                <FormHelperText stylr={{ color: 'red' }}>
+                  {errors.overtime}
                 </FormHelperText>
               </FormControl>
               <Button

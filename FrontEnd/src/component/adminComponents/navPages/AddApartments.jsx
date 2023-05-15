@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   alpha,
   Box,
@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
+import { AuthContext } from '../../AuthProvider';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -45,14 +46,21 @@ const useStyles = makeStyles()(theme => ({
 
 function AddApartments() {
   const { classes } = useStyles();
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  let authPayload = useContext(AuthContext);
+  const ctx = authPayload.token;
+  const headers = { Authorization: 'Bearer ' + ctx };
 
   const addApartment = async formData => {
     try {
-      const res = await axios.post('/apartment/add', {
-        ...formData,
-      });
+      const res = await axios.post(
+        '/apartment/add',
+        {
+          ...formData,
+        },
+        { headers }
+      );
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
       navigate('/admin/view');
     } catch (err) {
@@ -74,16 +82,14 @@ function AddApartments() {
           status: '',
         }}
         validationSchema={Yup.object().shape({
-         apartmentno: Yup.string()
+          apartmentno: Yup.string()
             .matches(/^[A-Z][0-9][0-9]/, 'Enter a valid Apartment')
             .length(3, 'Must have 3 Characters')
             .required('Required*'),
-          floor: Yup.number("Must be a Number")
-            .max(15)
-            .required('Required'),
+          floor: Yup.number('Must be a Number').max(15).required('Required'),
           buildingNo: Yup.string()
             .matches(/^[A-Z]/, 'Enter a valid Building')
-            .length(1,'Must have 1 Characters')
+            .length(1, 'Must have 1 Characters')
             .required('Required'),
           type: Yup.string().required('Required'),
           ownersName: Yup.string().required('Required'),
@@ -92,7 +98,7 @@ function AddApartments() {
         })}
         onSubmit={addApartment}
       >
-        {({ values, errors, handleChange, handleSubmit,resetForm }) => {
+        {({ values, errors, handleChange, handleSubmit, resetForm }) => {
           return (
             <>
               <Typography variant="h3">Add Apartment</Typography>
@@ -130,13 +136,15 @@ function AddApartments() {
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
                 <TextField
-                  value={values.buildingNo = values.apartmentno.substring(0, 1)}
+                  value={
+                    (values.buildingNo = values.apartmentno.substring(0, 1))
+                  }
                   onChange={handleChange}
                   name="buildingNo"
                   label="Building No"
                   type="text"
                   size="small"
-                  disabled ={true}
+                  disabled={true}
                   error={
                     errors.buildingNo && errors.buildingNo?.length
                       ? true
@@ -148,18 +156,18 @@ function AddApartments() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-              <InputLabel>Type</InputLabel>
-                 <Select
-                    value={values.type}
-                    onChange={handleChange}
-                    name="type"
-                    label="Type"
-                    size="small"
-                    error={errors.type && errors.type?.length ? true : false}
-                  >
-                    <MenuItem value={'Luxury'}>Luxury</MenuItem>
-                    <MenuItem value={'Semi Luxury'}>Semi Luxury</MenuItem>
-                  </Select> 
+                <InputLabel>Type</InputLabel>
+                <Select
+                  value={values.type}
+                  onChange={handleChange}
+                  name="type"
+                  label="Type"
+                  size="small"
+                  error={errors.type && errors.type?.length ? true : false}
+                >
+                  <MenuItem value={'Luxury'}>Luxury</MenuItem>
+                  <MenuItem value={'Semi Luxury'}>Semi Luxury</MenuItem>
+                </Select>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.type}
                 </FormHelperText>
@@ -197,19 +205,19 @@ function AddApartments() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                 <InputLabel>Status</InputLabel>
-                 <Select
-                    value={values.status}
-                    onChange={handleChange}
-                    name="status"
-                    label="Status"
-                    size="small"
-                    error={errors.status && errors.status?.length ? true : false}
-                  >
-                    <MenuItem value={'Owned'}>Owned</MenuItem>
-                    <MenuItem value={'Free'}>Free</MenuItem>
-                    <MenuItem value={'Pending'}>Pending</MenuItem>
-                  </Select> 
+                <InputLabel>Status</InputLabel>
+                <Select
+                  value={values.status}
+                  onChange={handleChange}
+                  name="status"
+                  label="Status"
+                  size="small"
+                  error={errors.status && errors.status?.length ? true : false}
+                >
+                  <MenuItem value={'Owned'}>Owned</MenuItem>
+                  <MenuItem value={'Free'}>Free</MenuItem>
+                  <MenuItem value={'Pending'}>Pending</MenuItem>
+                </Select>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.status}
                 </FormHelperText>

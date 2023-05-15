@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+
+import{ Menu,MenuItem }from '@material-ui/core';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -20,6 +20,9 @@ import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 import AppointmentHandler from './AppointmentHandler';
+import { useNavigate } from "react-router-dom";
+import { Dispatch } from 'react';
+import { AuthContext } from '../../AuthProvider';
 
 const DUMMY_DATA = [
   {
@@ -109,6 +112,8 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
+  const navigate = useNavigate()
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -126,6 +131,16 @@ export default function PrimarySearchAppBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleLogOut = async () => {
+    localStorage.removeItem('token');
+    
+    navigate('/login')
+  };
+
+  const handleProfile = async () => {
+    navigate('/app/profile')
   };
 
   const handleMobileMenuOpen = event => {
@@ -153,8 +168,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
     </Menu>
   );
 

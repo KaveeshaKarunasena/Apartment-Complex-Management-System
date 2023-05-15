@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import "./Update_Complain.scss"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Update_Complain = () => {
 
@@ -12,7 +14,6 @@ const Update_Complain = () => {
         complain: '',
         Email: '',
         Status: 'Not Checked',
-        Complain_No: '',
         Contact_No: '',
     };
 
@@ -25,12 +26,37 @@ const Update_Complain = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (!selectId) {
+            toast.warn('select a complain No!')
+            //alert("Enter a Number for Complain Number");
+            return;
+        }
+        if (isNaN(formdata.Contact_No)) {
+            toast.warn('Enter a Number for Contact Number!')
+            //alert("Enter a Number for Contact Number");
+            return;
+        }
+        const checkbox = document.getElementsByName("myCheckbox")[0];
+        if (!checkbox.checked) {
+            toast.warn("Please check the 'I am Not A Robot' checkbox")
+            //alert("Please check the 'I am Not A Robot' checkbox");
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(formdata.Email)) {
+            toast.warn('Email address is invalid!')
+            //alert("Email address is invalid");
+            return;
+        }
+
+        event.preventDefault();
         try {
-            const response = await axios.put(
-                `/update/${selectId}`,
-                formdata
-            );
-            // console.log(response.data); // if you want to log the response data
+            console.log(selectId);
+            const response = await axios.put(`/complain/update/${selectId}`, formdata);
+
+            console.log("end");
+            console.log(response.data); // if you want to log the response data
             setFormData(initialData); // reset the form data after successful submission
         } catch (error) {
             console.error(error);
@@ -54,7 +80,7 @@ const Update_Complain = () => {
                 //console.log(rows)
             })
             .catch((err) => {
-                alert(err.message);
+                console.log(err.message);
             });
     }, []);
 
@@ -71,108 +97,122 @@ const Update_Complain = () => {
     return (
         <div className='Up_com'>
 
-            <div className='Add_Complain_Containner'>
 
-                <div className="select_Type">Update Complain</div>
-                <div className="form_Contanner">
-                    <div className="form">
-                        <form onSubmit={handleSubmit}>
 
-                            <div className="heder">
-                                <span>Update Complain</span>
-                            </div>
+            <div className="select_Type">
+                <h1> Update Complain  </h1>
 
-                            {/* //-------------------------------------------- */}
+            </div>
+            <div className="container">
+                <div className="contactForm">
+                    <form onSubmit={handleSubmit}>
+
+                        <div className="heder">
+                            <h2>Update Complain</h2>
+                        </div>
+
+                        {/* //-------------------------------------------- */}
+                        <div className="Form_name">
                             <div className="Form_name">
-                                <div className="Form_name">
-                                    <label htmlFor="complain">Select a Complain No:</label>
-                                    <select id="complain" name="complain" value={selectId} onChange={handleSelectChange}>
-                                        {c_id.map((complain, index) => (
-                                            <option key={index} value={complain._id}>
-                                                {complain.Complain_No}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                                <label htmlFor="complain">Select a Complain No:</label>
+                                <select id="complain" name="complain" value={selectId} onChange={handleSelectChange}>
+                                    <option value=""> </option>
+                                    {c_id.map((complain, index) => (
+                                        //  <option key={index} value="{complain._id}"></option>
+                                        <option key={index} value={complain._id}>
+                                            {complain.Complain_No}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
+                        </div>
 
 
-                            <div className="Form_name">
-                                <span> Complain No </span>
-                                <input type="text"
-                                    name="Complain_No"
-                                    value={formdata.Complain_No}
-                                    onChange={handleInputChange} />
-                            </div>
+                        {/* //-------------------------------------------- */}
 
 
-                           
-                           
-                            {/* //-------------------------------------------- */}
+                        <div className="inputbox">
+                            <input type="text"
+                                required
+                                name="owner_name"
+                                value={formdata.owner_name}
+                                onChange={handleInputChange} />
 
+                            <span> Owner Name </span>
+                        </div>
 
+                        <div className="inputbox">
+                            <input type="text"
+                                required
+                                name="Select_Cat"
+                                value={formdata.Select_Cat}
+                                onChange={handleInputChange} />
 
-                            <div className="Form_name">
-                                <span> Owner Name </span>
-                                <input type="text"
-                                    name="owner_name"
-                                    value={formdata.owner_name}
-                                    onChange={handleInputChange} />
-                            </div>
-                            <div className="Form_comcat">
-                                <span> Complain Category </span>
-                                <input type="text"
-                                    name="Select_Cat"
-                                    value={formdata.Select_Cat}
-                                    onChange={handleInputChange} />
-                            </div>
-                            <div className="Form_complain">
-                                <span> Complain </span>
-                                <input type="text"
-                                    name="complain"
-                                    value={formdata.complain}
-                                    onChange={handleInputChange} />
-                            </div>
+                            <span> Complain Category </span>
+                        </div>
 
-                            <div className="Form_complain">
-                                <span> Contact Number </span>
-                                <input type="text"
-                                    name="Contact_No"
-                                    value={formdata.Contact_No}
-                                    onChange={handleInputChange} />
-                            </div>
+                        <div className="inputbox">
+                            <input type="text"
+                                required
+                                name="complain"
+                                value={formdata.complain}
+                                onChange={handleInputChange} />
 
+                            <span> Complain </span>
+                        </div>
 
+                        <div className="inputbox">
+                            <input type="text"
+                                required
+                                name="Contact_No"
+                                value={formdata.Contact_No}
+                                onChange={handleInputChange} />
 
-                            <div className="email">
-                                <span> Email </span>
-                                <input type="text"
-                                    name="Email"
-                                    value={formdata.Email}
-                                    onChange={handleInputChange} />
-                            </div>
-                            <div className="im_not_check">
+                            <span> Contact Number </span>
+                        </div>
 
-                                <input type="checkbox" name="myCheckbox" value="isChecked" /> I am Not A Robot
+                        <div className="inputbox">
+                            <input type="text"
+                                required
+                                name="Email"
+                                value={formdata.Email}
+                                onChange={handleInputChange} />
 
-                            </div>
-                            <div className="submitBttn">
-                                <button type='submit'>Enter</button>
-                            </div>
+                            <span> Email </span>
+                        </div>
 
-                        </form>
-                    </div>
+                        <div className="im_not_check">
+                            <input type="checkbox" name="myCheckbox" value="isChecked" /> I am Not A Robot
+                        </div>
+                        
+                        <div className="submitBttn">
+                            <button type='submit'>Enter</button>
+                        </div>
 
-
-
-
+                    </form>
                 </div>
 
 
-            </div>
 
+
+            </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
 
         </div>
+
+
+
     )
 }
 

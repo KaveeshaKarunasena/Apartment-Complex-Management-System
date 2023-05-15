@@ -4,8 +4,7 @@ const OTP = require("../modles/otp");
 const sendOTP = async (req, res) => {
     const email = req.body.email;
       let generatedOTP = Math.floor(Math.random() * 10000);
-      console.log(generatedOTP);
-    
+          
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {

@@ -34,7 +34,11 @@ const useStyles = makeStyles((theme) => ({
     placeItems: 'center',
     
   },
+
+  
+
   slide: {
+
     height: '600px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -295,7 +299,7 @@ function VisitorHomePage() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} container justify="flex-end">
-            <img src="../assets/logo.png" alt="Logo" className={classes.logo} />
+            <img src="../assets/logo.png " alt="Logo" className={classes.logo} />
             
           </Grid>
         </Grid>

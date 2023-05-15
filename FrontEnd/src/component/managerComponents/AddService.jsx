@@ -102,15 +102,15 @@ const AddService = props => {
     try {
      
 
-      const formData1 = new FormData();
-      formData1.append("companyName", formData.companyName);
-      formData1.append("location", formData.location);
-      formData1.append("serviceType", formData.serviceType);
-      formData1.append("contactNumber", formData.contactNumber);
-      formData1.append('photo', selectedFile);
+      // const formData1 = new FormData();
+      // formData1.append("companyName", formData.companyName);
+      // formData1.append("location", formData.location);
+      // formData1.append("serviceType", formData.serviceType);
+      // formData1.append("contactNumber", formData.contactNumber);
+      // formData1.append('photo', selectedFile);
 
       const res1 = await axios
-        .post('/service-provider/add', formData1)
+        .post('/service-provider/add', formData)
         .then(res => {
           console.log(res.data);
         })

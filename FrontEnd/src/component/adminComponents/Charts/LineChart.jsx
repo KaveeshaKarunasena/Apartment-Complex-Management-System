@@ -44,7 +44,7 @@ const LineChart = () => {
     const fetchData = async () => {
       const { data } = await axios.get('/maintenance/getCost');
 
-      console.log(data);
+     
       setChartData({
         labels:
           data &&

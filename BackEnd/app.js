@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const fileUpload = require('express-fileupload')
+//const fileUpload = require('express-fileupload')
 const cors = require('cors');
 
 const sessoin = require('express-session');
@@ -30,7 +30,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/apartment');
 //         .createIndex({ "createdAt": 1 }, { expireAfterSeconds: 30 },
 //             (err, dbResult) => {
 //                 if (err) throw err;
-//                 console.log("Index Created");
+//                 
 //                 db.close();
 //             });
 
@@ -43,6 +43,7 @@ const complain_Routes = require("./routes/Complain_Route");
 const appointmentRouter = require ('./routes/appointment')
 const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
+const paymentRouter = require('./routes/payment')
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
 const imageRouter2 = require('./routes/UploadAmenityImage');
@@ -57,9 +58,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileUpload({
-  useTempFiles: true
-}))
+// app.use(fileUpload({
+//   useTempFiles: true
+// }))
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
@@ -73,7 +74,8 @@ app.use("/complain",complain_Routes);
 app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
-app.use("/sendOTP",otpRouter)
+app.use("/addPayment",paymentRouter)
+//app.use("/sendOTP",otpRouter)
 app.use('/employee',EmployeeRouter);
 app.use('/service-provider', serviceProviderRouter);
 app.use('/otp', otpRouter);

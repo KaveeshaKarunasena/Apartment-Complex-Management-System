@@ -14,7 +14,7 @@ const ctx = authPayload.token
     console.log("auths",authPayload.token);
     <Profile token= {{ctx}}></Profile>
     // setToken(authPayload.token)
-    // console.log("auth",token);
+   
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
 
@@ -29,12 +29,12 @@ const ctx = authPayload.token
 
     if (!authPayload || !authPayload.token) {
       //  navigate("/login")
-      console.log("no payloard");
+      // alert("no payloard");
        return <Navigate to="/login" />;
     }
     return <>{children}</>;
   } catch (error) {
-    console.log(error);
+ 
   }
 };
 
@@ -49,14 +49,14 @@ export const SuperAdminAuthGuard = ({ children }) => {
     const decodedEmail = decoded.email;
     
     let adminString = decodedEmail.substring(0, 5);
-    console.log(adminString);
+    // alert(adminString);
     if (adminString === 'admin') {
       // navigate('/manager')
       return <Navigate to="/manager" />;
     }
 
     if (decodedEmail !== 'superAdmin@gmail.com') {
-      console.log("admin not super")
+ 
       return <Navigate to="/login" />;
     }
 
@@ -71,7 +71,7 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
     return <>{children}</>;
   } catch (error) {
-    console.log(error);
+    // alert(error);
   }
 };
 
@@ -93,7 +93,7 @@ export const AdminAuthGuard = ({ children }) => {
     if (adminString !== 'admin') {
       return <Navigate to="/login" />;
     }
-    console.log("Manager")
+    // alert("Manager")
 
     if (!authPayload || !authPayload.token) {
       
@@ -102,7 +102,7 @@ export const AdminAuthGuard = ({ children }) => {
 
     return <>{children}</>;
   } catch (error) {
-    console.log(error);
+    // alert(error);
   }
 };
 
@@ -118,10 +118,10 @@ export function GuestGuard({ children }) {
       const decodedEmail = decoded.email;
       let adminString = decodedEmail.substring(0, 5);
 
-      if (adminString == 'super') {
+      if (adminString === 'super') {
         navigate('/admin');
       }
-      if (adminString == 'admin') {
+      if (adminString === 'admin') {
         navigate('/manager');
       } else {
         navigate('/app');
@@ -129,6 +129,6 @@ export function GuestGuard({ children }) {
     }
     return <>{children}</>;
   } catch (error) {
-    console.log(error);
+  //  alert(error);
   }
 }

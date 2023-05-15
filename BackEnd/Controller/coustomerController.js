@@ -11,7 +11,7 @@ const newSignUp = async (req, res) => {
   const phoneNo = Number(req.body.phoneNo);
   const email = req.body.email;
   const password = req.body.password;
-  //const image = Buffer(req.body.image);
+  const photo = (req.file)?req.file.filename:null;
 
   const existingUser = await UserService.findUserByApartmentNo(apartmentNo);
 
@@ -30,7 +30,7 @@ const newSignUp = async (req, res) => {
     phoneNo,
     email,
     password: hash,
-    //image
+    photo
   });
 
   newCustomer
@@ -56,7 +56,7 @@ const login = async (req, res, session) => {
 
 const viewCustomer = async (req, res) => {
   let id = req.params.id;
-  console.log(id)
+  
   Customer.findById(id, (err, customerModle) => {
     if (err) {
       return res.status(400).json({ success: false, err });
@@ -71,14 +71,14 @@ const viewCustomer = async (req, res) => {
 
 const viewProfileById = async (req, res) => {
   const curntUser = req.user;
-  // console.log(curntUser);
+ 
   try {
     if (!curntUser) {
       return res.status(400).send({ err: 'User Not Logged In' });
     }
 
     const userDoc = await Customer.findById(curntUser.id)
-     console.log(userDoc)
+    
     const user = userDoc?.toJSON();
 
     delete user?.password;
@@ -92,7 +92,7 @@ const updateProfileById = async (req, res) => {
   let userID = req.params.id;
 
   //Dstructure
-  const { name, apartmentNo, nicNo, phoneNo, email, password } = req.body;
+  const { name, apartmentNo, nicNo, phoneNo, email} = req.body;
 
   const updateCustomer = {
     name,
@@ -100,15 +100,16 @@ const updateProfileById = async (req, res) => {
     nicNo,
     phoneNo,
     email,
-    password,
-    //image
+    
   };
 
   //Search the that id is available or not
-  const update = Customer.findByIdAndUpdate(userID, updateCustomer)
+  const update = await Customer.findByIdAndUpdate(userID,{name: name,apartmentNo: apartmentNo,nicNo: nicNo,phoneNo: phoneNo,email: email})
+    
     .then(customer => {
+   
       //status = 200 = updated
-      res.status(200).send({ status: 'User Updated', user: update });
+      res.status(200).send({ status: 'User Updated', user: customer });
     })
     .catch(err => {
       console.log(err);
@@ -118,20 +119,6 @@ const updateProfileById = async (req, res) => {
     });
 };
 
-const deleteProfile = async (req, res) => {
-  let userID = req.params.id;
-
-  Customer.findByIdAndDelete(userID)
-    .then(() => {
-      res.status(200).send({ status: 'User deleted' });
-    })
-    .catch(err => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: 'Error with delete user', error: err.message });
-    });
-};
 
 const viewProfiles = async (req, res) => {
   Customer.find()
@@ -142,7 +129,7 @@ const viewProfiles = async (req, res) => {
       console.log(err);
     });
 
-  console.log('Hello');
+  
 };
 
 const resetPassword = async (req, res) => {
@@ -180,13 +167,61 @@ const resetPassword = async (req, res) => {
     return res.status(401).send({ error });
   }
 };
+
+const upload = async (req,res) =>{
+
+  let userID = req.params.id;
+
+  //Dstructure
+  const  photo = req.file.filename;
+  console.log(photo)
+  //Search the that id is available or not
+  
+  const update = await Customer.updateOne({_id: userID},{$set:{photo: photo}})
+    
+    .then(customer => {
+   
+      //status = 200 = updated
+      res.status(200).send({ status: 'User Updated', user: customer });
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ status: 'Error with updating data', error: err.message });
+    });
+}
+
+const deleteProfilePic = async (req, res) => {
+  
+
+  try {
+    let userID = req.params.id;
+    // Find the customer by their ID
+    const customer = await Customer.findById({_id: userID});
+
+    // Delete the photo field in the customer document
+    customer.photo = null;
+    await customer.save();
+
+    return res.json({ message: 'Profile photo deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting profile photo:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
 module.exports = {
   newSignUp,
   login,
   viewProfileById,
   updateProfileById,
-  deleteProfile,
+  deleteProfilePic,
   viewProfiles,
   resetPassword,
-  viewCustomer
+  viewCustomer,
+  upload,
 };

@@ -89,6 +89,13 @@ function MainDash() {
         >
           <span>Maintenance Cost</span>
         </NavLink>
+        <NavLink
+          to="Comlpain/all"
+          className={clsx(classes.nav, classes.p1)}
+          style={navLinkStyle}
+        >
+          <span>Complains</span>
+        </NavLink>
 
         {/* <div><CalenderComp/></div> */}
         <Outlet />

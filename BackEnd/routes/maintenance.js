@@ -9,11 +9,13 @@ const {
   totalCostByType,
   costByDetails
 } = require('../Controller/maintenance-Controller');
+const authGuard = require('../Utils/authGuard');
 const router = express.Router();
 
 router.post(
   '/add',
   validator([body('amount').isCurrency(), body('date').isDate()]),
+  authGuard,
   addMaintenance
 );
 

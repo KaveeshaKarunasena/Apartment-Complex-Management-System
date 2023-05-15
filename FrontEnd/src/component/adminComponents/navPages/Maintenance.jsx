@@ -16,10 +16,11 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { AuthContext } from '../../AuthProvider';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -49,6 +50,9 @@ function Maintanence() {
   const { classes } = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const [dropDown, setDropDown] = useState([]);
+  let authPayload = useContext(AuthContext);
+  const ctx = authPayload.token;
+  const headers = { Authorization: 'Bearer ' + ctx };
   const [initialValues, setInitialValues] = useState({
     apartmentNo: '',
     amount: '',
@@ -58,7 +62,7 @@ function Maintanence() {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const { data } = await axios.get('/apartment/allApartment');
+      const { data } = await axios.get('/apartment/allApartment', { headers });
       const sortData = data.sort((a, b) => (a._id > b._id ? 1 : -1));
 
       setDropDown(sortData);
@@ -68,11 +72,13 @@ function Maintanence() {
 
   const addMaintenance = async formData => {
     try {
-      const res = await axios.post('/maintenance/add', {
-        ...formData,
-      });
-
-      console.log(formData);
+      const res = await axios.post(
+        '/maintenance/add',
+        {
+          ...formData,
+        },
+        { headers }
+      );
 
       enqueueSnackbar('Succesfully Added', { variant: 'success' });
     } catch (err) {
@@ -161,7 +167,6 @@ function Maintanence() {
                   name="date"
                   type="date"
                   size="small"
-                  maxDate={new Date()}
                   error={errors.date && errors.date?.length ? true : false}
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
