@@ -85,8 +85,7 @@ const LineChart = () => {
   }
 
   const handleSelect = (date) =>{
-    setStartDate(date.selection.startDate)
-    setStartDate(date.selection.endDate)
+    
     // console.log(date);
     let filtered = allData.filter((allData)=>{
 
@@ -95,28 +94,33 @@ const LineChart = () => {
       //  console.log(Chdate)
        if(Chdate >= date.selection.startDate && Chdate <= date.selection.endDate){
          const filterData = Chdate
+         console.log(filterData)
          return filterData
+         
        }
        
     })
     
-    console.log(filtered)
-    setChartData({
-      labels:
-        filtered &&
-        filtered.map(item => {
-          return moment(item.date).format('YYYY-MM-DD');
-        }),
-      datasets: [
-        {
-          label: 'Maintenance Cost',
-          data: filtered && filtered.map(item => item.amount),
-          fill: true,
-          borderColor: 'rgb(255,99,132)',
-          backgroundColor: 'rgb(255,99,132,0.3)',
-        },
-      ],
-    });
+    setStartDate(date.selection.startDate)
+    setStartDate(date.selection.endDate)
+    
+    // console.log(filtered)
+    // setChartData({
+    //   labels:
+    //     filtered &&
+    //     filtered.map(item => {
+    //       return moment(item.date).format('YYYY-MM-DD');
+    //     }),
+    //   datasets: [
+    //     {
+    //       label: 'Maintenance Cost',
+    //       data: filtered && filtered.map(item => item.amount),
+    //       fill: true,
+    //       borderColor: 'rgb(255,99,132)',
+    //       backgroundColor: 'rgb(255,99,132,0.3)',
+    //     },
+    //   ],
+    // });
     // console.log(startDate)
     // console.log(endDate)
 

@@ -25,6 +25,8 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 
+import Form from './component/adminComponents/navPages/Form'
+
 
 
 import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
@@ -58,6 +60,7 @@ import Report_complain from "./component/adminComponents/Complain/Components/adm
 import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
 import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import HomeBar from './component/userComponent/component/HomeBar';
+import EditApartments from './component/adminComponents/navPages/EditApartments';
 
 //complain - imports end
 
@@ -96,8 +99,8 @@ function SupserAdminRoute() {
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
-          <Route path="amenity" element={<AddApartments />} />
-          <Route path="Comlpain/reprot" element={<Report_complain />} />
+          <Route path="amenity" element={<Form/>} />
+          <Route path="Comlpain/reprot" element={<AddApartments />} />
         </Route>
       </Routes>
     </SuperAdminAuthGuard>
