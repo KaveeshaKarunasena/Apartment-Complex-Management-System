@@ -14,12 +14,12 @@ const Single_complain = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`/complain/get/${id}` );
+                const response = await axios.get(`/complain/get/${id}`);
                 setItem(response.data);
                 //console.log(response.data);
                 console.log(response.data);
             } catch (error) {
-                alert(error.message);
+                console.log(error.message);
             }
         }
         fetchData();
@@ -34,51 +34,61 @@ const Single_complain = () => {
 
     return (
         <div className="Single_complain">
-            <div className="title">
-                Detail about complain
-            </div>
-            <div className="details">
+            <div className="container">
+                <div className="contactForm">
 
-                <div className="items">
-                    <span className="spanx">owner name</span>
-                    <p>{item.fetchedItem.owner_name}</p>
 
-                </div>
+                    <div className="title">
+                        Detail about complain
+                    </div>
+                    <div className="center">
 
-                <div className="items">
-                    <span>complain</span>
-                    <p>{item.fetchedItem.complain}</p>
 
-                </div>
+                        <div className="details">
 
-                <div className="items">
-                    <span>Email</span>
-                    <p>{item.fetchedItem.Email}</p>
+                            <div className="items">
+                                <span >owner name</span>
+                                <p>{item.fetchedItem.owner_name}</p>
 
-                </div>
+                            </div>
 
-                <div className="items">
-                    <span>Select Cat</span>
-                    <p>{item.fetchedItem.Select_Cat}</p>
+                            <div className="items">
+                                <span>complain</span>
+                                <p>{item.fetchedItem.complain}</p>
 
-                </div>
+                            </div>
 
-                <div className="items">
-                    <span>Status</span>
-                    <p>{item.fetchedItem.Status}</p>
+                            <div className="items">
+                                <span>Email</span>
+                                <p>{item.fetchedItem.Email}</p>
 
-                </div>
+                            </div>
 
-                <div className="items">
-                    <span>Complain No</span>
-                    <p>{item.fetchedItem.Complain_No}</p>
+                            <div className="items">
+                                <span>Select Cat</span>
+                                <p>{item.fetchedItem.Select_Cat}</p>
 
-                </div>
+                            </div>
 
-                <div className="items">
-                    <span>Contact No</span>
-                    <p>{item.fetchedItem.Contact_No}</p>
+                            <div className="items">
+                                <span>Status</span>
+                                <p>{item.fetchedItem.Status}</p>
 
+                            </div>
+
+                            <div className="items">
+                                <span>Complain No</span>
+                                <p>{item.fetchedItem.Complain_No}</p>
+
+                            </div>
+
+                            <div className="items">
+                                <span>Contact No</span>
+                                <p>{item.fetchedItem.Contact_No}</p>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

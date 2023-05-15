@@ -23,9 +23,9 @@ const sendOTP = async (req, res) => {
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          return alert(error);
+          return console.log(error);
         }
-        alert("Message sent: %s", info.messageId);
+        console.log("Message sent: %s", info.messageId);
     
         
         const createdAt = Date.now();
@@ -41,7 +41,7 @@ const sendOTP = async (req, res) => {
       newOTP.save().then(() => {
           res.json("OTP Added")
       }).catch((err) => {
-          alert(err);
+          console.log(err);
       })
         
   
@@ -57,13 +57,13 @@ const sendOTP = async (req, res) => {
         .then((otp) => {
           if (otp) {
             if (otp.expiredAt > Date.now()) {
-              OTP.deleteMany({ email: email }).then(alert("deleted")).catch(error =>{
-                alert(error)
+              OTP.deleteMany({ email: email }).then(console.log("deleted")).catch(error =>{
+                console.log(error)
               })
                 res.json("verified");
             } else {
-              OTP.deleteMany({ email: email }).then(alert("deleted")).catch(error =>{
-                alert(error)
+              OTP.deleteMany({ email: email }).then(console.log("deleted")).catch(error =>{
+                console.log(error)
               })
               res.json("expired");
             }
@@ -72,7 +72,7 @@ const sendOTP = async (req, res) => {
           }
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
     };
   

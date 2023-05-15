@@ -2,19 +2,19 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const authGuard  = require('../Utils/authGuard')
+const uploadMiddleware = require('../service/MulterMiddleware')
 
 const{
     newSignUp,
     login,
     viewProfileById,
     updateProfileById,
-    deleteProfile,
+    deleteProfilePic,
     viewProfiles,
     resetPassword,
-    viewCustomer
+    viewCustomer,
+    upload
 } = require('../Controller/coustomerController');
-
-
 
 router.post("/add",newSignUp);
 
@@ -26,7 +26,9 @@ router.get("/getCustomer/:id",viewCustomer);
 
 router.put("/update/:id",updateProfileById);
 
-router.delete("/delete/:id",deleteProfile);
+router.put("/upload/:id",uploadMiddleware.single("photo"),upload)
+
+router.delete("/delete/:id/photo",deleteProfilePic);
 
 router.get("/",viewProfiles);
 
