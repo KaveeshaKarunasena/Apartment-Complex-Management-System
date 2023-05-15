@@ -76,7 +76,7 @@ const EditEmployee = props => {
             allowance:res.data.EmployeeModel.allowance,
             overtime:res.data.EmployeeModel.overtime
           });
-        } else alert('Error ');
+        } else console.log('Error ');
       });
     };
 
@@ -133,7 +133,7 @@ const EditEmployee = props => {
         }
       });
     } catch (err) {
-      alert(err)
+      console.log(err)
       enqueueSnackbar("Not Updated", { variant: 'error' });
     }
   };

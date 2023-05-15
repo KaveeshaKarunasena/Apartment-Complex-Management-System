@@ -19,7 +19,7 @@ const Single_complain = () => {
                 //console.log(response.data);
                 console.log(response.data);
             } catch (error) {
-                alert(error.message);
+                console.log(error.message);
             }
         }
         fetchData();

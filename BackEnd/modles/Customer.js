@@ -27,11 +27,10 @@ const customerSchema = new Schema({
     password:{
         type : String,
         require: true
+    },
+    photo:{
+        type: String
     }
-    // image:{
-    //     data:Buffer,
-    //     contentType:String
-    // }
 
 })
 

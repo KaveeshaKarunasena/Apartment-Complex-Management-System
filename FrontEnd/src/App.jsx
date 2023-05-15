@@ -13,6 +13,7 @@ import { makeStyles } from 'tss-react/mui';
 import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
+import Payment from './component/userComponent/component/Payment';
 import Home from './component/userComponent/component/Home';
 import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
@@ -119,6 +120,7 @@ function ProtectedRoutes() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="payment" element={<Payment/>}/>
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
@@ -133,8 +135,8 @@ function GuestRoutes() {
       <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-        <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
+        {/* /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} /> */}
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>

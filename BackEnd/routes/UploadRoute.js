@@ -12,14 +12,14 @@ router.get('/api/get', async (req, res) => {
 router.post('/api/save', uploadMiddleware.single("photo"), (req, res) => {
 
   const photo = req.file.filename;
-  alert(req.body.companyName);
+  console.log(req.body.companyName);
 
   uploadModel
     .create({ photo })
     .then(data => {
       res.send(data);
     })
-    .catch(err => alert(err));
+    .catch(err => console.log(err));
 });
 
 module.exports = router;

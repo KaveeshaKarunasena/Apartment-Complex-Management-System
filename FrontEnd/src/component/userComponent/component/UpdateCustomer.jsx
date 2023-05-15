@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as Yup from "yup";
 import axios from "axios";
-//import Swal from 'sweetalert2'
+//import Swal from 'sweetconsole.log2'
 import { useFormik } from "formik";
 import { makeStyles } from "tss-react/mui";
 import {useNavigate} from 'react-router-dom'
@@ -110,7 +110,8 @@ export default function UpdateCustomer(props) {
         validateOnChange: true,
 
         handleChange : e => {
-          setCustomer({ ...state, [e.target.name]: e.target.value });
+          console.log(customer) 
+          setCustomer({ ...customer, [e.target.name]: e.target.value });
          
         },
         
@@ -162,7 +163,7 @@ export default function UpdateCustomer(props) {
                   type='text'
                   variant="filled"
                   autocomplete="off"
-                  value={customer.name}
+                  placeholder={customer.name}
                   className={classes.name}
                   onChange={handleChange}
                   error={formik.errors["name"] && formik.touched.name ? true : false}
@@ -184,7 +185,7 @@ export default function UpdateCustomer(props) {
                   type='text'
                   variant="filled"
                   autocomplete="off"
-                  value={customer.apartmentNo}
+                  placeholder={customer.apartmentNo}
                   className={classes.apartmentNo}
                   onChange={handleChange}
                   error={
@@ -212,7 +213,7 @@ export default function UpdateCustomer(props) {
                   label='NIC No'
                   type='text'
                   variant="filled"
-                  value={customer.nicNo}
+                  placeholder={customer.nicNo}
                   className={classes.nicNo}
                   error={formik.errors["nicNo"] && formik.touched.nicNo ? true : false}
                   onChange={handleChange}
@@ -232,7 +233,7 @@ export default function UpdateCustomer(props) {
                   type='text'
                   variant="filled"
                   className={classes.phoneNo}
-                  value={customer.phoneNo}
+                  placeholder={customer.phoneNo}
                   error={
                     formik.errors["phoneNo"] && formik.touched.phoneNo ? true : false
                   }
@@ -253,7 +254,7 @@ export default function UpdateCustomer(props) {
                   type='email'
                   variant="filled"
                   className={classes.email}
-                  value={customer.email}
+                  placeholder={customer.email}
                   error={formik.errors["email"] && formik.touched.email ? true : false}
                   onChange={handleChange}
                   helperText={
