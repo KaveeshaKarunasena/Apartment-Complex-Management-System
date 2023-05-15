@@ -26,8 +26,13 @@ const Add_Complain = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (isNaN(formdata.Complain_No)) {
+
             toast.warn('Enter a Number for Complain Number!')
             //alert("Enter a Number for Complain Number");
+
+            console.log("Enter a Number for Complain Number");
+
+
             return;
         }
 
