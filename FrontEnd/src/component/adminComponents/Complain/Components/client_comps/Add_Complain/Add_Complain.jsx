@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import "./Add_Complain.scss"
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Add_Complain = () => {
 
@@ -24,11 +26,14 @@ const Add_Complain = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (isNaN(formdata.Complain_No)) {
+
             console.log("Enter a Number for Complain Number");
+
             return;
         }
 
         if (isNaN(formdata.Contact_No)) {
+
             console.log("Enter a Number for Contact Number");
             return;
         }
@@ -37,9 +42,15 @@ const Add_Complain = () => {
         console.log("Please check the 'I am Not A Robot' checkbox");
         return;
     }
+
+          
         try {
             const response = await axios.post('/complain/add', formdata);
             console.log(response.data); // if you want to log the response data
+            
+            //nofify
+            toast.success('successfull')
+            
             setFormData(initialData); // reset the form data after successful submission
         } catch (error) {
             console.error(error);
@@ -47,86 +58,108 @@ const Add_Complain = () => {
     };
 
     return (
-        <div className='Add_Complain_Containner'>
+        <div className="apply_from_container">
+            <div className="top">
+                <h1> Add Complain </h1>
 
-            <div className="select_Type">Add Complain</div>
-            <div className="form_Contanner">
-                <div className="form">
+            </div>
+
+
+            <div className="container">
+
+                <div className="contactForm">
                     <form onSubmit={handleSubmit}>
+                        <h2> Add Complain </h2>
 
-                        <div className="heder">
-                            <span>Add Complain</span>
-                        </div>
-                        <div className="Form_name">
-                            <span> Complain No </span>
+                        <div className="inputbox">
                             <input type="text"
                                 required
                                 name="Complain_No"
                                 value={formdata.Complain_No}
                                 onChange={handleInputChange} />
+                            <span> Complain No  </span>
                         </div>
-                        <div className="Form_name">
-                            <span> Owner Name </span>
+                        <div className="inputbox">
                             <input type="text"
                                 required
                                 name="owner_name"
                                 value={formdata.owner_name}
                                 onChange={handleInputChange} />
+
+                            <span> Owner Name </span>
+
                         </div>
-                        <div className="Form_comcat">
-                            <span> Complain Category </span>
+                        <div className="inputbox">
+
                             <input type="text"
                                 required
                                 name="Select_Cat"
                                 value={formdata.Select_Cat}
                                 onChange={handleInputChange} />
+
+                            <span> Complain Category </span>
                         </div>
-                        <div className="Form_complain">
-                            <span> Complain </span>
+                        <div className="inputbox">
+
                             <input type="text"
                                 required
                                 name="complain"
                                 value={formdata.complain}
                                 onChange={handleInputChange} />
+
+                            <span> Complain </span>
                         </div>
 
-                        <div className="Form_complain">
-                            <span> Contact Number </span>
+                        <div className="inputbox">
+
                             <input type="text"
                                 required
                                 name="Contact_No"
                                 value={formdata.Contact_No}
                                 onChange={handleInputChange} />
+
+                            <span> Contact Number </span>
                         </div>
 
+                        <div className="inputbox">
 
-
-                        <div className="email">
-                            <span> Email </span>
                             <input type="text"
                                 required
                                 name="Email"
                                 value={formdata.Email}
                                 onChange={handleInputChange} />
-                        </div>
-                        <div className="im_not_check">
 
+                            <span> Email </span>
+                        </div>
+
+                        <div className="im_not_check">
                             <input type="checkbox" name="myCheckbox" value="isChecked" /> I am Not A Robot
 
                         </div>
-                        <div className="submitBttn">
+                        <div className="">
                             <button type='submit'>Enter</button>
                         </div>
+
+
 
                     </form>
                 </div>
 
 
-
-
             </div>
-
-
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+           
         </div>
     )
 }

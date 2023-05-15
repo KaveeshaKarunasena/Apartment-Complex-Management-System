@@ -119,20 +119,6 @@ const updateProfileById = async (req, res) => {
     });
 };
 
-const deleteProfile = async (req, res) => {
-  let userID = req.params.id;
-
-  Customer.findByIdAndDelete(userID)
-    .then(() => {
-      res.status(200).send({ status: 'User deleted' });
-    })
-    .catch(err => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: 'Error with delete user', error: err.message });
-    });
-};
 
 const viewProfiles = async (req, res) => {
   Customer.find()
@@ -206,12 +192,34 @@ const upload = async (req,res) =>{
     });
 }
 
+const deleteProfilePic = async (req, res) => {
+  
+
+  try {
+    let userID = req.params.id;
+    // Find the customer by their ID
+    const customer = await Customer.findById({_id: userID});
+
+    // Delete the photo field in the customer document
+    customer.photo = null;
+    await customer.save();
+
+    return res.json({ message: 'Profile photo deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting profile photo:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
 module.exports = {
   newSignUp,
   login,
   viewProfileById,
   updateProfileById,
-  deleteProfile,
+  deleteProfilePic,
   viewProfiles,
   resetPassword,
   viewCustomer,
