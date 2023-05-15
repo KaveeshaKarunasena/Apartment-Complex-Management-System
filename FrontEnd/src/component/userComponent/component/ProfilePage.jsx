@@ -98,6 +98,9 @@ export default function MediaCard(props) {
       style={{ marginTop: '8%' }}>
           {selectedFile && (
             <img  style={{ width: '50%' }} alt = {customer.photo}/>
+           
+            
+         
        )}
       </IconButton>
       <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }} />
