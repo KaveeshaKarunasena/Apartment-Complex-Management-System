@@ -75,7 +75,7 @@ app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
 app.use("/addPayment",paymentRouter)
-app.use("/sendOTP",otpRouter)
+//app.use("/sendOTP",otpRouter)
 app.use('/employee',EmployeeRouter);
 app.use('/service-provider', serviceProviderRouter);
 app.use('/otp', otpRouter);

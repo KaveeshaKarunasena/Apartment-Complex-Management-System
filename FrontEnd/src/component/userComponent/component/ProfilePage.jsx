@@ -16,7 +16,8 @@ import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import UpdateCustomer from './UpdateCustomer';
 import { IconButton } from '@material-ui/core';
-
+import Swal from 'sweetalert2';
+import CustomerReport from './CustomerReport';
 //import Popup from './Popup';
 
 //import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
@@ -35,7 +36,7 @@ import { IconButton } from '@material-ui/core';
 //   })
 // }
 
-export default function MediaCard(props) {
+export default function ProfilePage(props) {
   let authPayload = useContext(AuthContext);
   const [customer, setCustomer] = useState([]);
   const decoded = jwt_decode(authPayload.token);
@@ -43,15 +44,24 @@ export default function MediaCard(props) {
   const [getId, setGetId] = useState(0);
   const [openPopup, setOpenPopup] = useState(false);
   const navigate = useNavigate();
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(`/customer/getCustomer/${Id}`);
 
-      const cus = data.customerModle;
-      //const val =Object.values(cus)
-      setCustomer(cus);
+    const fetchData = async () => {
+    try{
+     
+        const { data } = await axios.get(`/customer/getCustomer/${Id}`);
+
+        const cus = data.customerModle;
+        setPhotoUrl(cus.photo)
+        //const val =Object.values(cus)
+        setCustomer(cus);
+      }catch (error){
+        console.log('Error fetching customer data:', error);
     };
+  }
     fetchData();
   }, []);
 
@@ -60,6 +70,9 @@ export default function MediaCard(props) {
 
     <UpdateCustomer id={id}></UpdateCustomer>;
     navigate(`/app/updateCustomer/${id}`);
+
+    <CustomerReport id={id}></CustomerReport>
+    navigate(`/app/customerReport/${id}`)
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -81,6 +94,39 @@ export default function MediaCard(props) {
       });
   };
 
+  const handleDeletePhoto = async (photoUrl) => {
+    try {
+      setDeleteLoading(true);
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      });
+  
+      if (result.isConfirmed) {
+        await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        await axios.delete(`/customer/delete/${Id}/photo`);
+      } else {
+        setDeleteLoading(false); // Set loading state to false if deletion is canceled
+        return; // Return early without clearing the photo state and logging success message
+      }
+  
+      // Clear the photo state
+      // You may need to update the logic depending on how you manage state in your app
+      setPhotoUrl(null);
+      console.log('Profile photo deleted successfully');
+    } catch (error) {
+      console.error('Error deleting profile photo:', error);
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+  
+
   return (
     <Box
       sx={{
@@ -90,22 +136,28 @@ export default function MediaCard(props) {
         alignItems: 'center',
       }}
     >
-      <IconButton
-      
-      color="primary"
-      aria-label="upload picture"
-      component="span"
-      style={{ marginTop: '8%' }}>
-          {selectedFile && (
-            <img  style={{ width: '50%' }} alt = {customer.photo}/>
-           
+      <Card>
+        <CardMedia
+            sx={{ height: 30 }}
             
-         
-       )}
-      </IconButton>
-      <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }} />
+        />
+        <CardContent>
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="children"
+            style={{ marginTop: '-10%' }}
+          >
+            {photoUrl && (
+              <img src={photoUrl} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+            )}
+            
+          </IconButton>
+        </CardContent>
+      </Card>
+      {/* <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }} /> */}
       <Typography gutterBottom variant="h5" component="div">
-        Name
+        {customer.name}
       </Typography>
       <Box component="form" noValidate sx={{ mt: 1 }}>
         <Card sx={{ maxWidth: 600, height: 550 }}>
@@ -147,6 +199,7 @@ export default function MediaCard(props) {
                   style={{
                     backgroundColor: '#006ee6',
                   }}
+                  onClick={handleDeletePhoto}
                 >
                   Delete
                 </Button>
@@ -218,7 +271,7 @@ export default function MediaCard(props) {
                   style={{
                     backgroundColor: '#006ee6',
                   }}
-                  // onClick={enableDialogHandler}
+                  onClick={() => handleProps(customer._id)}
                 >
                   Report
                 </Button>

@@ -17,6 +17,7 @@ import Home from './component/userComponent/component/Home';
 import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
 import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
+import CustomerReport from './component/userComponent/component/CustomerReport'
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -133,6 +134,7 @@ function ProtectedRoutes() {
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
+        <Route path="customerReport/:id" element={<CustomerReport/>} />
       </Routes>
     </AuthGuard>
   );

@@ -23,19 +23,22 @@ const addPayment = async (req,res) =>{
 };
 
 const viewPayment = async (req, res) => {
-    let apartmentNo = req.params.apartmentNo;
-    
-    Customer.findById(apartmentNo, (err, paymentModle) => {
-      if (err) {
-        return res.status(400).json({ success: false, err });
-      }
-  
-      return res.status(200).json({
-        success: true,
-        paymentModle,
-      });
-    });
-  };
+  const { apartmentNo } = req.params; 
+
+  try {
+    const apartment = await Payment.find({ apartmentNo });
+
+    if (!apartment) {
+      return res.status(404).json({ message: 'Apartment not found' });
+    }
+
+    res.json(apartment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 
 module.exports = {
     addPayment,
