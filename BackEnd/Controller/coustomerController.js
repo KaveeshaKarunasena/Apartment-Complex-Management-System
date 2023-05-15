@@ -11,7 +11,7 @@ const newSignUp = async (req, res) => {
   const phoneNo = Number(req.body.phoneNo);
   const email = req.body.email;
   const password = req.body.password;
-  //const image = Buffer(req.body.image);
+  const photo = (req.file)?req.file.filename:null;
 
   const existingUser = await UserService.findUserByApartmentNo(apartmentNo);
 
@@ -30,7 +30,7 @@ const newSignUp = async (req, res) => {
     phoneNo,
     email,
     password: hash,
-    //image
+    photo
   });
 
   newCustomer
@@ -39,7 +39,7 @@ const newSignUp = async (req, res) => {
       res.json('Customer Added');
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 };
 
@@ -112,7 +112,7 @@ const updateProfileById = async (req, res) => {
       res.status(200).send({ status: 'User Updated', user: customer });
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
       res
         .status(500)
         .send({ status: 'Error with updating data', error: err.message });
@@ -127,7 +127,7 @@ const deleteProfile = async (req, res) => {
       res.status(200).send({ status: 'User deleted' });
     })
     .catch(err => {
-      alert(err.message);
+      console.log(err.message);
       res
         .status(500)
         .send({ status: 'Error with delete user', error: err.message });
@@ -140,7 +140,7 @@ const viewProfiles = async (req, res) => {
       res.json(customers);
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 
   
@@ -182,6 +182,29 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const upload = async (req,res) =>{
+
+  let userID = req.params.id;
+
+  //Dstructure
+  const  photo = req.file.filename;
+  console.log(photo)
+  //Search the that id is available or not
+  
+  const update = await Customer.updateOne({_id: userID},{$set:{photo: photo}})
+    
+    .then(customer => {
+   
+      //status = 200 = updated
+      res.status(200).send({ status: 'User Updated', user: customer });
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ status: 'Error with updating data', error: err.message });
+    });
+}
 
 module.exports = {
   newSignUp,
@@ -191,5 +214,6 @@ module.exports = {
   deleteProfile,
   viewProfiles,
   resetPassword,
-  viewCustomer
+  viewCustomer,
+  upload,
 };

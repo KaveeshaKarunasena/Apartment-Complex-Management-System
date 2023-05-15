@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -116,6 +115,7 @@ export default function SignIn() {
 
         navigate('/');
       } catch (err) {
+        
         console.log(err);
       }
     },
@@ -192,24 +192,29 @@ export default function SignIn() {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
+              marginTop="16px"
               label="Remember me"
             />
             <Button
               type="submit"
               fullWidth
+              marginTop="16px"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{
+                backgroundColor: '#006ee6',
+              }}
             >
               Sign In
             </Button>
           </Box>
           <Grid container>
-            <Grid item xs>
+            <Grid item xs marginTop="12px">
               <NavLink to="/recoveryPassword">
                 {"Forgot password?"}
               </NavLink>
             </Grid>
-            <Grid item>
+            <Grid item marginTop="12px">
               <NavLink to="/signup">
                 {' '}
                 {"Don't have an account? Sign Up"}

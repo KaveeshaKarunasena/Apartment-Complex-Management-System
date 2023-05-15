@@ -38,7 +38,7 @@ const newServiceProvider = async (req, res) => {
     })
     
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 };
 
@@ -49,7 +49,7 @@ const viewServiceProvider = async (req, res) => {
       res.json(serviceProviders);
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 }
 
