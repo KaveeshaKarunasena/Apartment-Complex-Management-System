@@ -26,12 +26,18 @@ const Add_Complain = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (isNaN(formdata.Complain_No)) {
+
             toast.warn('Enter a Number for Complain Number!')
             //alert("Enter a Number for Complain Number");
+
+            console.log("Enter a Number for Complain Number");
+
+
             return;
         }
 
         if (isNaN(formdata.Contact_No)) {
+
             toast.warn('Enter a Number for Contact Number!')
             //alert("Enter a Number for Contact Number");
             return;
@@ -48,6 +54,19 @@ const Add_Complain = () => {
             //alert("Email address is invalid");
             return;
         }
+
+=======
+
+            console.log("Enter a Number for Contact Number");
+            return;
+        }
+        const checkbox = document.getElementsByName("myCheckbox")[0];
+    if (!checkbox.checked) {
+        console.log("Please check the 'I am Not A Robot' checkbox");
+        return;
+    }
+
+          
 
         try {
             const response = await axios.post('/complain/add', formdata);

@@ -29,7 +29,8 @@ const customerSchema = new Schema({
         require: true
     },
     photo:{
-        type: String
+        type: String,
+        default: '../public/assert/profile.png'
     }
 
 })
