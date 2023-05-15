@@ -15,6 +15,7 @@ import { AuthContext } from '../../AuthProvider';
 import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import UpdateCustomer from './UpdateCustomer';
+import { IconButton } from '@material-ui/core';
 
 //import Popup from './Popup';
 
@@ -89,6 +90,16 @@ export default function MediaCard(props) {
         alignItems: 'center',
       }}
     >
+      <IconButton
+      
+      color="primary"
+      aria-label="upload picture"
+      component="span"
+      style={{ marginTop: '8%' }}>
+          {selectedFile && (
+            <img  style={{ width: '50%' }} alt = {customer.photo}/>
+       )}
+      </IconButton>
       <Avatar alt="Remy Sharp" src={avatar} sx={{ width: 90, height: 90 }} />
       <Typography gutterBottom variant="h5" component="div">
         Name
