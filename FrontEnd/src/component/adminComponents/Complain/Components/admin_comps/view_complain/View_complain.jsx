@@ -9,9 +9,6 @@ import "./View_complain.scss";
 
 const View_complain = () => {
 
-
-
-
     const [data, setData] = useState([]);
 
     useEffect(() => {
