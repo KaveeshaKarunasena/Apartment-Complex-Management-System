@@ -13,9 +13,9 @@ import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
 import Home from './component/userComponent/component/Home';
-import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
-import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
-import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
+import UpdateCustomer from './component/userComponent/component/UpdateCustomer';
+import RecoveryPassword from './component/userComponent/component/RecoveryPassword';
+import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -24,8 +24,7 @@ import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRep
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
-
-
+import Amenity from './component/userComponent/amenitiesComponent/amenity';
 
 import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import {
@@ -36,10 +35,9 @@ import {
 } from './component/AuthGuard';
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
+//complain - imports start
 
- //complain - imports start
-
- //test
+//test
 // import Compage_Home from './component/adminComponents/Complains/Pages/Admin_complain_pg';
 // //import Compage_Home from './component/adminComponents/Complains/Pages/client_complain_pg'; // client home
 // import All_complain from './component/adminComponents/Complains/Pages/Admin_complain_pg';
@@ -48,19 +46,17 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 // import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
 
 //---admin
-import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
-import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
-import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
-import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
-
+import Compage_Home from './component/adminComponents/Complain/Pages/Complain_navigation';
+import Single_complain from './component/adminComponents/Complain/Components/admin_comps/single/Single_complain';
+import All_complain from './component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain';
+import Report_complain from './component/adminComponents/Complain/Components/admin_comps/report/Report';
 
 //---client
-import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
+import Compage_client_update from './component/adminComponents/Complain/Pages/Client_Complain';
 import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import HomeBar from './component/userComponent/component/HomeBar';
 
 //complain - imports end
-
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -114,7 +110,7 @@ function AdminRoute() {
           <Route path="Employee_view" element={<ViewEmployee />} />
           <Route path="staff" element={<Cards />} />
           <Route path="serviceProvider" element={<ServiceProvider />} />
-          <Route path="notices" element={<Cards />} /> 
+          <Route path="notices" element={<Cards />} />
         </Route>
       </Routes>
     </AdminAuthGuard>
@@ -131,6 +127,9 @@ function ProtectedRoutes() {
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
+        <Route path="" element={<Home />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="amenities" element={<Amenity />} />
       </Routes>
     </AuthGuard>
   );
@@ -142,7 +141,10 @@ function GuestRoutes() {
       <Routes>
         <Route path="login" element={<SignIn />} />
         <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
+        <Route
+          path="recoveryPasswordSet/:email"
+          element={<RecoveryPasswordSetPage />}
+        />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
@@ -162,8 +164,8 @@ function App() {
         <Route path="admin/*" element={<SupserAdminRoute />} />
         <Route path="manager/*" element={<AdminRoute />} />
         <Route path="*" element={<GuestRoutes />} />
+        <Route path="amenity" element={<AddApartments />} />
       </Routes>
-
     </div>
   );
 }

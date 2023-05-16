@@ -82,3 +82,26 @@
     width: 25px;
     height: 30px;
 }
+.quantity{
+    display: flex;
+    justify-content: left;
+}
+.quantity button{
+    width: 45px;
+    height: 45px;
+    border: 1px solid #000;
+    color: #000;
+    border-radius: 0;
+    background: #fff;
+}
+.quantity input{
+    border: none;
+    border-top: 1px solid #000;
+    border-bottom:1px solid  #000;
+    text-align: center;
+    width: 100px;
+    font-size: 20px;
+    color: #000;
+    font-weight: 300;
+
+}
