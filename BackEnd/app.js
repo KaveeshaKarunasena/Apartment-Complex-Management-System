@@ -7,34 +7,10 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 const fileUpload = require('express-fileupload')
-const cors = require('cors');
-
-const sessoin = require('express-session');
 
 mongoose.connect('mongodb://127.0.0.1:27017/apartment');
 
-//Connect to your database
-// MongoClient.connect(url, (err, db) => {
-//     if (err) throw err;
 
-//     //Retrieve your chosen database
-//     let dbo = db.db("apartment");
-
-//     //Set your collection
-//     let myCollection = "appointments";
-
-//     /*  Create a mongodb index to remove any document with 'createdAt'
-//        field every 30 seconds.
-//    */
-//     dbo.collection(myCollection)
-//         .createIndex({ "createdAt": 1 }, { expireAfterSeconds: 30 },
-//             (err, dbResult) => {
-//                 if (err) throw err;
-//                 
-//                 db.close();
-//             });
-
-//   })
 
 const apartmentRouter = require('./routes/apartment');
 const maintenanceRouter = require('./routes/maintenance');

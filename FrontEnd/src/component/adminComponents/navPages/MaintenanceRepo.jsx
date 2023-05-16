@@ -6,12 +6,17 @@ import PieChart from '../Charts/PieChart';
 import CostTable from '../Charts/CostTable';
 import './Repos.css'
 
+import DateRange from './DateRangePicker';
+
 const MaintenanceRepo = () =>{
  
     return(
         <div className='App'>
         < div className='repo'>
-           <div className='lineChart'> <LineChart></LineChart></div>
+           <div className='lineChart'>
+            <DateRange></DateRange>
+             {/* <LineChart></LineChart> */}
+             </div>
           {/* <BarChart2></BarChart2> */}
           
         </div> 

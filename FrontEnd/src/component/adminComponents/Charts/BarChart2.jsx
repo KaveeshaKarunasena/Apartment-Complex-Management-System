@@ -11,9 +11,15 @@ import {
   Legend,
 } from 'chart.js';
 import { padding } from '@mui/system';
+import { Button } from '@mui/material';
+import { saveAs } from 'file-saver';
+import moment from 'moment';
+import Controls from "../controls/Controls"
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const BarChart2 = () => {
+const BarChart2 = props => {
+  const { startDate, endDate, comand } = props;
+  const [allData, setAllData] = useState([]);
   const [data, setData] = useState({
     labels: ['Red', 'Yellow', 'Blue'],
     datasets: [
@@ -48,7 +54,7 @@ const BarChart2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get('/maintenance/getTotalByType');
-      // alert('resss', data);
+      console.log('resss', data.total);
 
       setData({
         labels: data.total && data.total.map(item => item._id),
@@ -66,9 +72,55 @@ const BarChart2 = () => {
           },
         ],
       });
+      setAllData(data.total);
+      console.log(allData);
     };
     fetchData();
   }, []);
+
+  const handleSubmit = () => {
+    let filtered = allData.filter(allData => {
+      // let date2 = moment(allData.date).format('YYYY-MM-DD')
+      let Chdate = new Date(allData.date);
+      //  console.log(Chdate)
+      if (Chdate >= startDate && Chdate <= endDate) {
+        const filterData = Chdate;
+        console.log(filterData);
+
+        return filterData;
+      }
+    });
+
+    console.log(filtered);
+    setData({
+      labels: filtered.total && filtered.total.map(item => item._id),
+      datasets: [
+        {
+          data: filtered.total && filtered.total.map(item => item.total),
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+          ],
+          // borderWidth :1,
+          // barPercentage: 0.9,
+          // categoryPercentage: 1,
+        },
+      ],
+    });
+    console.log(startDate);
+    console.log(endDate);
+
+    console.log(filtered);
+  };
+
+  const saveCanvas = () => {
+    //save to png
+    const canvasSave = document.getElementById('stackD');
+    canvasSave.toBlob(function (blob) {
+      saveAs(blob, 'LineChart.png');
+    });
+  };
 
   return (
     <div
@@ -79,6 +131,15 @@ const BarChart2 = () => {
       }}
     >
       <Bar data={data} options={options}></Bar>
+      <Controls.Button
+        text="Download"
+        color="secondary"
+        onClick={() => saveCanvas()} />
+
+      <Controls.Button
+        text="Filter"
+        color="primary"
+        onClick={handleSubmit} />
     </div>
   );
 };

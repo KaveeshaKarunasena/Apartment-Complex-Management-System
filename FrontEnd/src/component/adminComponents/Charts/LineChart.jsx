@@ -14,9 +14,11 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
-import { DateRangePicker } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import {
+  Button,
+} from '@mui/material';
+import { saveAs } from 'file-saver';
+import Controls from "../controls/Controls"
 ChartJS.register(
   ArcElement,
   CategoryScale,
@@ -30,9 +32,8 @@ ChartJS.register(
 );
 
 
-const LineChart = () => {
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+const LineChart = (props) => {
+  const {startDate,endDate,comand} = props
   const [allData, setAllData] = useState([])
   const [chartData, setChartData] = useState({
     labels: ['2023-03-05', '2023-04-15', '2023-06-22'],
@@ -46,6 +47,9 @@ const LineChart = () => {
       },
     ],
   });
+
+  // console.log(comand)
+  // console.log(filterData)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,74 +74,79 @@ const LineChart = () => {
       });
 
       setAllData(data)
-      console.log(chartData)
+      
 
+      console.log(comand)
+      console.log(startDate)
+      console.log(endDate)
 
-      // alert(setChartData.labels);
+     
+      console.log("Line Chart :",data)
+
     };
     fetchData();
   }, []);
 
-  const selectionRange = {
-    startDate: startDate,
-    endDate: endDate,
-    key: 'selection',
-  }
-
-  const handleSelect = (date) =>{
+  const handleSubmit = () =>{
     
-    // console.log(date);
-    let filtered = allData.filter((allData)=>{
-
-      // let date2 = moment(allData.date).format('YYYY-MM-DD')
-      let Chdate = new Date(allData.date)
-      //  console.log(Chdate)
-       if(Chdate >= date.selection.startDate && Chdate <= date.selection.endDate){
-         const filterData = Chdate
-         console.log(filterData)
-         return filterData
-         
-       }
-       
-    })
-    
-    setStartDate(date.selection.startDate)
-    setStartDate(date.selection.endDate)
-    
-    // console.log(filtered)
-    // setChartData({
-    //   labels:
-    //     filtered &&
-    //     filtered.map(item => {
-    //       return moment(item.date).format('YYYY-MM-DD');
-    //     }),
-    //   datasets: [
-    //     {
-    //       label: 'Maintenance Cost',
-    //       data: filtered && filtered.map(item => item.amount),
-    //       fill: true,
-    //       borderColor: 'rgb(255,99,132)',
-    //       backgroundColor: 'rgb(255,99,132,0.3)',
-    //     },
-    //   ],
-    // });
-    // console.log(startDate)
-    // console.log(endDate)
-
-    // console.log(filtered)
-
    
-    
+
+      let filtered = allData.filter((allData)=>{
+  
+        // let date2 = moment(allData.date).format('YYYY-MM-DD')
+        let Chdate = new Date(allData.date)
+        //  console.log(Chdate)
+         if(Chdate >= startDate && Chdate <= endDate){
+           const filterData = Chdate
+           console.log(filterData)
+           
+            return filterData
+           
+         }
+         
+      })
+      
+      
+      console.log(filtered)
+      setChartData({
+        labels:
+          filtered &&
+          filtered.map(item => {
+            return moment(item.date).format('YYYY-MM-DD');
+          }),
+        datasets: [
+          {
+            label: 'Maintenance Cost',
+            data: filtered && filtered.map(item => item.amount),
+            fill: true,
+            borderColor: 'rgb(255,99,132)',
+            backgroundColor: 'rgb(255,99,132,0.3)',
+          },
+        ],
+      });
+      console.log(startDate)
+      console.log(endDate)
+  
+      console.log(filtered)
+
+ 
   }
+
+  const saveCanvas = ()  => {
+    //save to png
+    const canvasSave = document.getElementById('stackD');
+    canvasSave.toBlob(function (blob) {
+        saveAs(blob, "LineChart.pdf")
+    })
+}
+
+
 
   return (
     <div>
-      <DateRangePicker
-        ranges={[selectionRange]}
-        onChange={handleSelect}
-      />
       <div style={{ width: '700px' , height:'300px' }}>
         <Line
+          id="stackD"
           data={chartData}
           options={{
             responsive: true,
@@ -148,6 +157,17 @@ const LineChart = () => {
           }}
         />
       </div> 
+      <Controls.Button
+        text="Download"
+        color="secondary"
+        onClick={() => saveCanvas()} />
+
+      <Controls.Button
+        text="Filter"
+        color="primary"
+        onClick={handleSubmit} />
+    
+       {/* <input type = "month" onChange={filterChart}></input> */}
     </div>
   );
 };

@@ -100,7 +100,7 @@ function SupserAdminRoute() {
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
           <Route path="amenity" element={<Form/>} />
-          <Route path="Comlpain/reprot" element={<AddApartments />} />
+          <Route path="Comlpain/reprot" element={<Form />} />
         </Route>
       </Routes>
     </SuperAdminAuthGuard>
