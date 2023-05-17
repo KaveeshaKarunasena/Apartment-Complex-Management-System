@@ -35,6 +35,7 @@ function Amenities() {
     url: `http://localhost:5000/customer/addcart`,
     data: values,
     });
+    alert('Now this amenity add your profile ');
     return newCart;
     }
     } else {
@@ -48,6 +49,7 @@ function Amenities() {
     url: `http://localhost:5000/customer/addcart`,
     data: values,
     });
+   
     return newCart;
     }
     });

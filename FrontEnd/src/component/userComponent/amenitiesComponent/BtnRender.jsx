@@ -45,6 +45,7 @@ function AmenitiyCard({ product, handleCart, inCart, handleClose }) {
     console.log(res);
     handleClose();
     window.location.reload();
+    alert('Do you want delete this amenity?');
   };
 
   const handleAddToCart = async () => {
