@@ -7,6 +7,6 @@ const{
     viewPayment} = require('../Controller/paymentController')
 
 router.post("/addPayment",addPayment)
-router.get('/getPayment',viewPayment)
+router.get('/getPayment/:apartmentNo',viewPayment)
 
 module.exports = router

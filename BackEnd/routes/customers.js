@@ -9,7 +9,7 @@ const{
     login,
     viewProfileById,
     updateProfileById,
-    deleteProfile,
+    deleteProfilePic,
     viewProfiles,
     resetPassword,
     viewCustomer,
@@ -33,7 +33,7 @@ router.delete('/delete/:id', deleteProfile);
 router.get('/', viewProfiles);
 router.put("/upload/:id",uploadMiddleware.single("photo"),upload)
 
-router.delete("/delete/:id",deleteProfile);
+router.delete("/delete/:id/photo",deleteProfilePic);
 
 router.put('/recoverypassword', resetPassword);
 
@@ -41,5 +41,7 @@ router.put('/recoverypassword', resetPassword);
 router.put('/addcart', addCart);
 router.get('/getCart', getCart);
 router.delete('/deleteItem/:id/:itemId', deleteCart);
+router.put("/recoverypassword/:email",resetPassword);
 
+router.put("/recoverypassword/:email",resetPassword);
 module.exports = router;

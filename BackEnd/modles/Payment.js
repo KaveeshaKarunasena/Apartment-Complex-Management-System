@@ -6,16 +6,24 @@ const paymentSchema = new Schema({
 
     apartmentNo:{
         type : String,
-        require: true
+        required: true
     },
     category:{
         type : String,
-        require: true
+        required: true
+    },
+    payeeId:{
+        type:String
     },
     amount:{
-        type : String,
-        require: true
+        type : Number,
+        required: true
+    },
+    createdAt:{
+        type: Date,
+        required: true
     }
+
 
 })
 

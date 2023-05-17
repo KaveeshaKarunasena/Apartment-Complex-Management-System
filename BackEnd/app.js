@@ -77,7 +77,7 @@ app.use('/appointment',appointmentRouter);
 app.use('/upload',imageRouter);
 app.use("/customer",customerRouter)
 app.use("/addPayment",paymentRouter)
-app.use("/sendOTP",otpRouter)
+//app.use("/sendOTP",otpRouter)
 app.use('/employee',EmployeeRouter);
 app.use('/service-provider', serviceProviderRouter);
 app.use('/otp', otpRouter);
@@ -102,6 +102,7 @@ app.use(function (err, req, res, next) {
 });
 
 var PORT = 5000;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 app.listen(PORT, function (err) {
   if (err) console.log('Error in server setup');

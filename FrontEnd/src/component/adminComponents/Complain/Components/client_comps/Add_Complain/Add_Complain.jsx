@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import "./Add_Complain.scss"
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +36,6 @@ const Add_Complain = async() => {
         }
 
         if (isNaN(formdata.Contact_No)) {
-
             toast.warn('Enter a Number for Contact Number!')
             //alert("Enter a Number for Contact Number");
             return;
@@ -72,8 +70,8 @@ const Add_Complain = async() => {
             const response = await axios.post('/complain/add', formdata);
             console.log(response.data); // if you want to log the response data
             
-            //nofify
-            toast.success('successfull')
+    //         //nofify
+    //         toast.success('successfull')
             
             setFormData(initialData); // reset the form data after successful submission
         } catch (error) {
@@ -173,16 +171,16 @@ const Add_Complain = async() => {
             </div>
             <ToastContainer
                 position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
+           autoClose={5000}
+        hideProgressBar={false}
+          newestOnTop={false}
+    closeOnClick
+     rtl={false}
+        pauseOnFocusLoss
+          draggable
+            pauseOnHover
+       theme="light"
+           />
            
         </div>
     )

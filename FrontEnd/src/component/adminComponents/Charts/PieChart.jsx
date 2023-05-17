@@ -47,7 +47,7 @@ const [total, setTotal] = useState({data:0});
           ],
           labels:data.totalCost && data.totalCost.map(item => {return moment(item._id).format('YYYY-MM-DD')}),
         }
-        )
+        ) 
     }
   fetchData();
 
