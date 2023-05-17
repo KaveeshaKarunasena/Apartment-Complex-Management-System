@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Add_Complain = () => {
+const Add_Complain = async() => {
 
     const initialData = {
         owner_name: '',
@@ -27,12 +27,35 @@ const Add_Complain = () => {
         event.preventDefault();
         if (isNaN(formdata.Complain_No)) {
 
+            toast.warn('Enter a Number for Complain Number!')
+            //alert("Enter a Number for Complain Number");
+
             console.log("Enter a Number for Complain Number");
+
 
             return;
         }
 
         if (isNaN(formdata.Contact_No)) {
+
+            toast.warn('Enter a Number for Contact Number!')
+            //alert("Enter a Number for Contact Number");
+            return;
+        }
+        const checkbox = document.getElementsByName("myCheckbox")[0];
+        if (!checkbox.checked) {
+            toast.warn("Please check the 'I am Not A Robot' checkbox")
+            //alert("Please check the 'I am Not A Robot' checkbox");
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(formdata.Email)) {
+            toast.warn('Email address is invalid!')
+            //alert("Email address is invalid");
+            return;
+        }
+
+
 
             console.log("Enter a Number for Contact Number");
             return;
@@ -44,6 +67,7 @@ const Add_Complain = () => {
     }
 
           
+
         try {
             const response = await axios.post('/complain/add', formdata);
             console.log(response.data); // if you want to log the response data
@@ -55,7 +79,7 @@ const Add_Complain = () => {
         } catch (error) {
             console.error(error);
         }
-    };
+    
 
     return (
         <div className="apply_from_container">
@@ -162,6 +186,6 @@ const Add_Complain = () => {
            
         </div>
     )
-}
+};
 
 export default Add_Complain
