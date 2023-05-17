@@ -1,4 +1,7 @@
+
 const Payment = require('../modles/Payment');
+
+
 
 const addPayment = async (req,res) =>{
 
@@ -44,5 +47,6 @@ module.exports = {
     addPayment,
     viewPayment,
 };
+
 
 

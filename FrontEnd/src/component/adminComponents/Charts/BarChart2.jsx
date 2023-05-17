@@ -48,7 +48,9 @@ const BarChart2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get('/maintenance/getTotalByType');
+
       console.log('resss', data);
+
 
       setData({
         labels: data.total && data.total.map(item => item._id),

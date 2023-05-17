@@ -32,7 +32,7 @@ const [total, setTotal] = useState({data:0});
   useEffect(()=> {
     const fetchData = async () =>  {
       const {data} = await axios.get('/maintenance/getTotalByDate')
-        // alert("resss", data.totalCost)
+        //alert("resss", data.totalCost)
 
         setData(
           {
@@ -47,13 +47,13 @@ const [total, setTotal] = useState({data:0});
           ],
           labels:data.totalCost && data.totalCost.map(item => {return moment(item._id).format('YYYY-MM-DD')}),
         }
-        )
+        ) 
     }
   fetchData();
 
   const fetchTotal = async () =>{
     const {data} = await axios.get('/maintenance/getTotalCost')
-        // alert("resss", data.total)
+        alert("resss", data.total)
         const data1 = data.total.map(item =>item.total)
         
         setTotal({

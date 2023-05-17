@@ -27,6 +27,7 @@ import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRep
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+ 
 
 
 
@@ -147,8 +148,8 @@ function GuestRoutes() {
     <GuestGuard>
       <Routes>
         <Route path="login" element={<SignIn />} />
-        <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
+        /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>

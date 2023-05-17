@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const fileUpload = require('express-fileupload')
+//const fileUpload = require('express-fileupload')
 const cors = require('cors');
 
 const sessoin = require('express-session');
@@ -43,6 +43,7 @@ const complain_Routes = require("./routes/Complain_Route");
 const appointmentRouter = require ('./routes/appointment')
 const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
+const paymentRouter = require('./routes/payment')
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
 const imageRouter2 = require('./routes/UploadAmenityImage');
