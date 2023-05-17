@@ -136,7 +136,7 @@ const LineChart = (props) => {
     //save to png
     const canvasSave = document.getElementById('stackD');
     canvasSave.toBlob(function (blob) {
-        saveAs(blob, "LineChart.pdf")
+        saveAs(blob, "LineChart.png")
     })
 }
 

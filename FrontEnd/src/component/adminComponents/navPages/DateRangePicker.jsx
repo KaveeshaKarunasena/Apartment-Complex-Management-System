@@ -32,10 +32,18 @@ const DateRange = (prpos) =>{
 
     return(
         <>
-            <DateRangePicker
+        <div style={{
+      
+       paddingLeft:'25%'
+      }}>
+
+        <DateRangePicker
             ranges={[selectionRange]}
             onChange={handleSelect}
             />
+
+        </div>
+            
             <div className='App'>
             <div div className='repo'>
            <div className='lineChart'>
@@ -58,10 +66,13 @@ const DateRange = (prpos) =>{
             startDate = {startDate}
             endDate={endDate}
             />
-            </div>
+            <div className='table'>
             <CostTable
             startDate = {startDate}
             endDate={endDate}></CostTable>
+            </div>
+            </div>
+            
             </div>
         </>
         

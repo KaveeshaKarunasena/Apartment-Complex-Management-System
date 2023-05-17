@@ -122,9 +122,9 @@ const [allData, setAllData] = useState([])
 
 const saveCanvas = ()  => {
   //save to png
-  const canvasSave = document.getElementById('stackD');
+  const canvasSave = document.getElementById('pieChart');
   canvasSave.toBlob(function (blob) {
-      saveAs(blob, "LineChart.pdf")
+      saveAs(blob, "PieChart.png")
   })
 }
 
@@ -149,11 +149,19 @@ const saveCanvas = ()  => {
   //   } 
   // }]
   return (
-    <div style={{width:'20%', height:'20%'}}>
-      <Doughnut data={chartData}
+    <div style={{width:'40%', height:'40%'}}>
+      <Doughnut 
+      id ="pieChart"
+      data={chartData}
       type="doughnut" 
       // plugins={plugins} 
       />
+      <div
+      style={{
+       paddingTop: '30px',
+       paddingLeft:'90px'
+      }}>
+
       <Controls.Button
         text="Download"
         color="secondary"
@@ -163,6 +171,8 @@ const saveCanvas = ()  => {
         text="Filter"
         color="primary"
         onClick={handleSubmit} />
+      </div >
+      
     </div>
   );
 }

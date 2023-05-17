@@ -29,7 +29,7 @@ import Form from './component/adminComponents/navPages/Form'
 
 
 
-import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+// import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -50,16 +50,16 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 // import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
 
 //---admin
-import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
-import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
-import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
-import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+// import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
+// import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+// import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+// import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
 
 //---client
-import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
-import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
-import HomeBar from './component/userComponent/component/HomeBar';
+// import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
+// import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+ import HomeBar from './component/userComponent/component/HomeBar';
 import EditApartments from './component/adminComponents/navPages/EditApartments';
 
 //complain - imports end
@@ -94,8 +94,8 @@ function SupserAdminRoute() {
           <Route path="add" element={<AddApartments />} />
           <Route path="view" element={<ViewApartments />} />
           <Route path="maintenance" element={<Maintenance />} />
-          <Route path="Comlpain/:id" element={<Single_complain />} />
-          <Route path="Comlpain/all" element={<All_complain />} />
+          {/* <Route path="Comlpain/:id" element={<Single_complain />} />
+          <Route path="Comlpain/all" element={<All_complain />} /> */}
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
@@ -131,8 +131,8 @@ function ProtectedRoutes() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="Comlpain/new" element={<Compage_client_new />} />
-        <Route path="Comlpain/update" element={<Compage_client_update />} />
+        {/* <Route path="Comlpain/new" element={<Compage_client_new />} />
+        <Route path="Comlpain/update" element={<Compage_client_update />} /> */}
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
       </Routes>
     </AuthGuard>

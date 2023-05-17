@@ -17,6 +17,7 @@ import {
   Button,
 } from '@mui/material';
 import Controls from "../controls/Controls"
+var tableExport = require('table-export');
 
 const CostTable = (props) => {
 
@@ -48,10 +49,11 @@ const CostTable = (props) => {
 
     const saveCanvas = ()  => {
       //save to png
-      const canvasSave = document.getElementById('stackD');
-      canvasSave.toBlob(function (blob) {
-          saveAs(blob, "LineChart.pdf")
-      })
+      // const canvasSave = document.getElementById('table');
+      // canvasSave.toBlob(function (blob) {
+      //     saveAs(blob, "CostTable.png")
+      // })
+      tableExport('table', 'myName', 'pdf')
   }
 
   const handleSubmit = () =>{
@@ -82,8 +84,8 @@ const CostTable = (props) => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+      <TableContainer  component={Paper}>
+        <Table id = "table" aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">Apartment No</TableCell>

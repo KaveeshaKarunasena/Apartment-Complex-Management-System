@@ -116,9 +116,9 @@ const BarChart2 = props => {
 
   const saveCanvas = () => {
     //save to png
-    const canvasSave = document.getElementById('stackD');
+    const canvasSave = document.getElementById('barChart');
     canvasSave.toBlob(function (blob) {
-      saveAs(blob, 'LineChart.png');
+      saveAs(blob, 'BarChart.png');
     });
   };
 
@@ -127,10 +127,10 @@ const BarChart2 = props => {
       style={{
         padding: '0px',
         width: '40%',
-        height: '70%',
+        height: '40%',
       }}
     >
-      <Bar data={data} options={options}></Bar>
+      <Bar id ="barChart" data={data} options={options}></Bar>
       <Controls.Button
         text="Download"
         color="secondary"
