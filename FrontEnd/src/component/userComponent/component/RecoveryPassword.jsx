@@ -8,8 +8,13 @@ import Swal from 'sweetalert2'
 import CryptoJs from 'crypto-js'
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
- 
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const theme = createTheme();
 
 const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email address").required("Required"),
@@ -98,43 +103,59 @@ export default function RecoveryPassword() {
   const { handleChange, handleSubmit } = formik;
 
     return (
+      <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
     <Box
       component='form'
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
+        
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
-      noValidate
-      autoComplete='off'
-      className={classes.root}
-      onSubmit={handleSubmit}>
-      <Typography variant='h4' className={classes.signup}>
+      
+      >
+
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' ,marginTop:'5%'}}>
+            <LockOutlinedIcon />
+          </Avatar>
+      <Typography component="h1" variant="h5" sx={{marginTop:'10%'}}>
         Recover Password
       </Typography>
 
-      <div>
-                                     
-        <TextField
-          id='email'
-          name='email'
-          label='Email'
-          type='email'
-          className={classes.email}
-          value={formik.values.email}
-          error={formik.errors["email"] && formik.touched.email ? true : false}
-          placeholder='Enter email'
-          onChange={handleChange}
-          helperText={
-            formik.errors["email"] && formik.touched.email
-              ? formik.errors["email"]
-              : null
-          }
-        />
-        
+      
+      <Grid container spacing={2} sx={{marginTop:'10%'}}>                               
+      <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="email"
+                  name="email"
+                  label="Email"
+                  type="email"
+                  className={classes.email}
+                  value={formik.values.email}
+                  error={
+                    formik.errors['email'] && formik.touched.email
+                      ? true
+                      : false
+                  }
+                  placeholder="Enter email"
+                  onChange={handleChange}
+                  helperText={
+                    formik.errors['email'] && formik.touched.email
+                      ? formik.errors['email']
+                      : null
+                  }
+                />
+              </Grid>
+        </Grid>
         <br />
-        <Button type='submit' className={classes.submitBtn} variant='contained'>
+        <Button type='submit'  variant='contained'>
           Get OTP
         </Button>
-      </div>
+      
     </Box>
+    </Container>
+    </ThemeProvider>
   );
 }
