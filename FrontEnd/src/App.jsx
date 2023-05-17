@@ -31,9 +31,11 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
  
 
+import Form from './component/adminComponents/navPages/Form'
 
 
-import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+
+// import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -43,15 +45,28 @@ import {
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
 
-import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
-import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
-import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+ //complain - imports start
+
+ //test
+// import Compage_Home from './component/adminComponents/Complains/Pages/Admin_complain_pg';
+// //import Compage_Home from './component/adminComponents/Complains/Pages/client_complain_pg'; // client home
+// import All_complain from './component/adminComponents/Complains/Pages/Admin_complain_pg';
+// import Report_complain from './component/adminComponents/Complains/Components/admin_comps/report/Report';
+// import Compage_client_update from './component/adminComponents/Complains/Components/client_comps/Update_Complain/Update_Complain';
+// import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
+
+//---admin
+// import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
+// import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+// import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+// import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
 
 //---client
-import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
-import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
-import HomeBar from './component/userComponent/component/HomeBar';
+// import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
+// import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+ import HomeBar from './component/userComponent/component/HomeBar';
+import EditApartments from './component/adminComponents/navPages/EditApartments';
 
 //complain - imports end
 
@@ -86,13 +101,13 @@ function SupserAdminRoute() {
           <Route path="add" element={<AddApartments />} />
           <Route path="view" element={<ViewApartments />} />
           <Route path="maintenance" element={<Maintenance />} />
-          <Route path="Comlpain/:id" element={<Single_complain />} />
-          <Route path="Comlpain/all" element={<All_complain />} />
+          {/* <Route path="Comlpain/:id" element={<Single_complain />} />
+          <Route path="Comlpain/all" element={<All_complain />} /> */}
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
-          <Route path="amenity" element={<AddApartments />} />
-          <Route path="Comlpain/reprot" element={<Report_complain />} />
+          <Route path="amenity" element={<Form/>} />
+          <Route path="Comlpain/reprot" element={<Form />} />
         </Route>
       </Routes>
     </SuperAdminAuthGuard>
@@ -131,8 +146,8 @@ function ProtectedRoutes() {
         <Route path="profile" element={<ProfilePage />} />
         <Route path="payment" element={<Payment/>}/>
         <Route path="viewPayment" element={<ViewPayment/>} />
-        <Route path="Comlpain/new" element={<Compage_client_new />} />
-        <Route path="Comlpain/update" element={<Compage_client_update />} />
+        {/* <Route path="Comlpain/new" element={<Compage_client_new />} />
+        <Route path="Comlpain/update" element={<Compage_client_update />} /> */}
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
         <Route path="customerReport/:id" element={<CustomerReport/>} />
       </Routes>

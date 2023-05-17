@@ -12,17 +12,26 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import axios from 'axios';
 import moment from 'moment';
+import { saveAs } from 'file-saver';
+import {
+  Button,
+} from '@mui/material';
+import Controls from "../controls/Controls"
+var tableExport = require('table-export');
 
-const CostTable = () => {
+const CostTable = (props) => {
 
+  const {startDate,endDate,comand} = props
+  const [allData, setAllData] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [apartmentCost, setApartmentCost] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get('/maintenance/costDetails');
-      setApartmentCost(data);
-      // console.log('resss', data);
+      setApartmentCost(data.details);
+      setAllData(data.details)
+      console.log('table', data);
     };
     fetchData();
   }, []);
@@ -38,10 +47,45 @@ const CostTable = () => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, apartmentCost.length - page * rowsPerPage);
 
+    const saveCanvas = ()  => {
+      //save to png
+      // const canvasSave = document.getElementById('table');
+      // canvasSave.toBlob(function (blob) {
+      //     saveAs(blob, "CostTable.png")
+      // })
+      tableExport('table', 'myName', 'pdf')
+  }
+
+  const handleSubmit = () =>{
+    console.log("filter",allData)
+    
+    let filtered = allData.filter((allData)=>{
+
+      // let date2 = moment(allData.date).format('YYYY-MM-DD')
+      let Chdate = new Date(allData.date)
+      //  console.log(Chdate)
+       if(Chdate >= startDate && Chdate <= endDate){
+         const filterData = Chdate
+         console.log(filterData)
+         
+          return filterData
+         
+       }
+       
+    })
+    
+    
+    console.log(filtered)
+    setApartmentCost(filtered)
+
+
+}
+  
+
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+      <TableContainer  component={Paper}>
+        <Table id = "table" aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">Apartment No</TableCell>
@@ -53,8 +97,8 @@ const CostTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {apartmentCost.details &&
-              apartmentCost.details
+            {apartmentCost &&
+              apartmentCost
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
                   <TableRow key={data._id}>
@@ -84,6 +128,16 @@ const CostTable = () => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </TableContainer>
+     
+      <Controls.Button
+        text="Download"
+        color="secondary"
+        onClick={() => saveCanvas()} />
+
+      <Controls.Button
+        text="Filter"
+        color="primary"
+        onClick={handleSubmit} />
     </div>
   );
 };
