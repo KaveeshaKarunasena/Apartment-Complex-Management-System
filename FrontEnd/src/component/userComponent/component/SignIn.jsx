@@ -19,6 +19,11 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useNavigate, NavLink } from 'react-router-dom';
 
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 const validationSchema = Yup.object({
   apartmentNo: Yup.string()
     .length(3)
@@ -121,6 +126,14 @@ export default function SignIn() {
     },
   });
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const { handleChange, handleSubmit } = formik;
 
   return (
@@ -168,7 +181,7 @@ export default function SignIn() {
                   : null
               }
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               fullWidth
               id="password"
@@ -189,7 +202,45 @@ export default function SignIn() {
                   ? formik.errors['password']
                   : null
               }
-            />
+            /> */}
+
+          <TextField
+            margin="normal"
+            fullWidth
+            id="password"
+            name="password"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            className={classes.password}
+            value={formik.values.password}
+            error={
+              formik.errors['password'] && formik.touched.password
+                ? true
+                : false
+            }
+            placeholder="Enter password"
+            onChange={handleChange}
+            helperText={
+              formik.errors['password'] && formik.touched.password
+                ? formik.errors['password']
+                : null
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               marginTop="16px"

@@ -264,17 +264,22 @@ export default function UpdateCustomer(props) {
                   }
                 />
               </Grid>
-                         
-              
+              <Grid item xs={12} >
+                <Button
+                  type="submit"
+                  fullWidth
+                  marginTop="25px"
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  style={{
+                    backgroundColor: '#006ee6',
+                  }}
+                >
+                  Update Details
+                </Button>
+              </Grid>  
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Update Details
-            </Button>
+              
           </Box>
                    
         </Box>

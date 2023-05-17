@@ -3,6 +3,9 @@ import { Typography, Card, CardContent } from '@material-ui/core';
 
 
 function HomePage() {
+
+
+
   const styles = `
     .app-bar {
       background-color: #333;
@@ -59,7 +62,7 @@ function HomePage() {
         <Card className="card">
           <CardContent>
             <Typography variant="h5" component="h2" className="card-title">
-              Welcome to My App!
+              Welcome to Wescott Apartment Web Site
             </Typography>
             
           </CardContent>

@@ -131,7 +131,7 @@ export default function CustomerReport(props) {
         alignItems: 'center',
       }}
     >
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h5" style={{paddingLeft:'40%',marginTop:'10'}}>
         Customer Report
       </Typography>
       <div className={classes.root}>
@@ -188,7 +188,7 @@ export default function CustomerReport(props) {
           </Grid>
         </Grid>
       </div>
-      <div style={{width:'30%', height:'30%',alignContent:'center'}}>
+      <div style={{width:'30%', height:'30%',paddingLeft:'33%'}}>
           <Doughnut data={chart} />
       </div>
       

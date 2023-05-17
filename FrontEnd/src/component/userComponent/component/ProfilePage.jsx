@@ -6,8 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import avatar from '../assets/profile.png';
-import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
@@ -95,7 +93,7 @@ export default function ProfilePage(props) {
 
   try {
     const response = await axios.put(`/customer/upload/${Id}`, formData);
-    console.log(response);
+    //console.log(response);
     setPhotoUrl(response.data.photo);
     console.log('Profile photo uploaded successfully');
   } catch (error) {
@@ -260,19 +258,6 @@ export default function ProfilePage(props) {
                   onClick={() => handleProps(customer._id)}
                 >
                   Update Profile
-                </Button>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  style={{
-                    backgroundColor: '#006ee6',
-                  }}
-                  // onClick={enableDialogHandler}
-                >
-                  Generate QR Coode
                 </Button>
               </Grid>
               <Grid item xs={12} md={12}>
