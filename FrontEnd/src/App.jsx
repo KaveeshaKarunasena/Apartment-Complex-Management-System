@@ -12,10 +12,13 @@ import { makeStyles } from 'tss-react/mui';
 import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
+import Payment from './component/userComponent/component/Payment';
 import Home from './component/userComponent/component/Home';
 import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
 import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
+import CustomerReport from './component/userComponent/component/CustomerReport'
+import ViewPayment from './component/userComponent/component/ViewPayment'
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
@@ -128,9 +131,12 @@ function ProtectedRoutes() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="payment" element={<Payment/>}/>
+        <Route path="viewPayment" element={<ViewPayment/>} />
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
+        <Route path="customerReport/:id" element={<CustomerReport/>} />
       </Routes>
     </AuthGuard>
   );

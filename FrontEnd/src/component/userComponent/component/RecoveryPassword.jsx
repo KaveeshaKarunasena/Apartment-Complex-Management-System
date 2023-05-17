@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import CryptoJs from 'crypto-js'
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
+ 
 
 
 const validationSchema = Yup.object({
@@ -64,7 +65,7 @@ export default function RecoveryPassword() {
     onSubmit: (values) => {
         setEmail(values.email)
         
-        //alert(JSON.stringify(values, null, 2));
+        //console.log(JSON.stringify(values, null, 2));
         axios({ method: "POST", url: "/otp/sendOTP", data: { email: values.email } });
         Swal.fire({
           title: "Enter OTP",
@@ -77,7 +78,7 @@ export default function RecoveryPassword() {
             return axios
               .post("/otp/verifyOTP", { values,otp })
               .then((response) => {
-                navigate(`/recoveryPasswordSet/${ciphertext}`)
+                navigate(`/recoveryPasswordSet`, { state: { email: values.email } })
                 return response.data;
               })
               .catch((error) => {
@@ -88,7 +89,7 @@ export default function RecoveryPassword() {
          
         })
         .catch((err)=>{
-          alert(err)
+          console.log(err)
         });
       
     },

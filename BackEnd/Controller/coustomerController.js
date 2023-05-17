@@ -11,7 +11,7 @@ const newSignUp = async (req, res) => {
   const phoneNo = Number(req.body.phoneNo);
   const email = req.body.email;
   const password = req.body.password;
-  //const image = Buffer(req.body.image);
+  const photo = (req.file)?req.file.filename:null;
 
   const existingUser = await UserService.findUserByApartmentNo(apartmentNo);
 
@@ -30,7 +30,7 @@ const newSignUp = async (req, res) => {
     phoneNo,
     email,
     password: hash,
-    //image
+    photo
   });
 
   newCustomer
@@ -39,7 +39,7 @@ const newSignUp = async (req, res) => {
       res.json('Customer Added');
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 };
 
@@ -112,27 +112,13 @@ const updateProfileById = async (req, res) => {
       res.status(200).send({ status: 'User Updated', user: customer });
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
       res
         .status(500)
         .send({ status: 'Error with updating data', error: err.message });
     });
 };
 
-const deleteProfile = async (req, res) => {
-  let userID = req.params.id;
-
-  Customer.findByIdAndDelete(userID)
-    .then(() => {
-      res.status(200).send({ status: 'User deleted' });
-    })
-    .catch(err => {
-      alert(err.message);
-      res
-        .status(500)
-        .send({ status: 'Error with delete user', error: err.message });
-    });
-};
 
 const viewProfiles = async (req, res) => {
   Customer.find()
@@ -140,7 +126,7 @@ const viewProfiles = async (req, res) => {
       res.json(customers);
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 
   
@@ -150,37 +136,67 @@ const resetPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    try {
-      Customer.findOne({ email })
-        .then(customer => {
-          bcrypt
-            .hash(password, 10)
-            .then(hash => {
-              Customer.updateOne(
-                { email: customer.email },
-                { password: hash },
-                function (err, data) {
-                  if (err) throw err;
-                  return res.status(201).send({ msg: 'Record Updated...!' });
-                }
-              );
-            })
-            .catch(e => {
-              return res.status(500).send({
-                error: 'Enable to hashed password',
-              });
-            });
-        })
-        .catch(error => {
-          return res.status(404).send({ error: 'Customer not Found' });
-        });
-    } catch (error) {
-      return res.status(500).send({ error });
+    const customer = await Customer.findOne({ email });
+    if (!customer) {
+      return res.status(404).send({ error: 'Customer not found' });
     }
+
+    const hash = await bcrypt.hash(password, 10);
+
+    await Customer.updateOne({ email: customer.email }, { password: hash });
+
+    return res.status(201).send({ msg: 'Record updated' });
   } catch (error) {
-    return res.status(401).send({ error });
+    console.error(error);
+    return res.status(500).send({ error: 'Internal server error' });
   }
 };
+
+
+const upload = async (req,res) =>{
+
+  let userID = req.params.id;
+
+  //Dstructure
+  const  photo = req.file.filename;
+  console.log(photo)
+  //Search the that id is available or not
+  
+  const update = await Customer.updateOne({_id: userID},{$set:{photo: photo}})
+    
+    .then(customer => {
+   
+      //status = 200 = updated
+      res.status(200).send({ status: 'User Updated', user: customer });
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ status: 'Error with updating data', error: err.message });
+    });
+}
+
+const deleteProfilePic = async (req, res) => {
+  
+
+  try {
+    let userID = req.params.id;
+    // Find the customer by their ID
+    const customer = await Customer.findById({_id: userID});
+
+    // Delete the photo field in the customer document
+    customer.photo = null;
+    await customer.save();
+
+    return res.json({ message: 'Profile photo deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting profile photo:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 
 module.exports = {
@@ -188,8 +204,9 @@ module.exports = {
   login,
   viewProfileById,
   updateProfileById,
-  deleteProfile,
+  deleteProfilePic,
   viewProfiles,
   resetPassword,
-  viewCustomer
+  viewCustomer,
+  upload,
 };

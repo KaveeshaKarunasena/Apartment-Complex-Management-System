@@ -16,32 +16,22 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useFormik } from 'formik';
-import { makeStyles } from 'tss-react/mui';
-import { useNavigate, useParams } from 'react-router-dom';
-import CryptoJs from 'crypto-js'
+import { makeStyles } from '@mui/styles';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const theme = createTheme();
 
 const validationSchema = Yup.object({
-  name: Yup.string().min(2).required('name is required'),
-  apartmentNo: Yup.string()
-    .length(3)
-    .matches(
-      /^[A-Z]\d{2}$/,
-      "use one letter and two number format \nex: 'A10' "
-    )
-    .required('apartment number is required'),
-  phoneNo: Yup.number().required('phone number is required'),
-  nicNo: Yup.string().required('nic is required'),
-  password: Yup.string().min(5).required('Password is required'),
-  confPassword: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    'Passwords must match'
-  ),
   email: Yup.string().email('Invalid email address').required('Required'),
+  password: Yup.string()
+    .min(5, 'Password must be at least 5 characters')
+    .required('Password is required'),
+  confPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Password confirmation is required'),
 });
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
       width: '30%',
@@ -73,38 +63,31 @@ const useStyles = makeStyles()(theme => ({
 
 export default function RecoveryPasswordSetPage() {
   const navigate = useNavigate();
-  const { classes } = useStyles();
-  const {ciphertext} = useParams()
-
-    const bytes = CryptoJs.AES.decrypt(ciphertext, 'my-secret-key@123');
-    const decryptedData = bytes.toString(CryptoJs.enc.Utf8);
-    
+  //const classes = useStyles();
+  const location = useLocation();
+  const { email } = location.state;
 
   const formik = useFormik({
     initialValues: {
-      
-      email: '',
-        
-      confPassword: '',
+      email: email,
       password: '',
+      confPassword: '',
     },
     validationSchema: validationSchema,
-    validateOnChange: true,
     onSubmit: values => {
       if (values.confPassword === values.password) {
         axios({
           method: 'PUT',
-          url: '/customer/recoverypassword',
-          data: { email: values.email,password: values.password },
+          url: `/customer/recoverypassword/${email}`,
+          data: { email: email, password: values.password },
         })
-         .then(() => {
-            alert('Password Updated');
+          .then(() => {
+            console.log('Password Updated');
             navigate('/login');
-         })
-            .catch(err => {
-              alert(err);
-            });
-
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
   });
@@ -118,6 +101,7 @@ export default function RecoveryPasswordSetPage() {
         <Box
           sx={{
             marginTop: 8,
+
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -127,7 +111,7 @@ export default function RecoveryPasswordSetPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Type your Passwords
+            Type Your Passwords
           </Typography>
           <Box
             component="form"
@@ -136,7 +120,6 @@ export default function RecoveryPasswordSetPage() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -144,37 +127,31 @@ export default function RecoveryPasswordSetPage() {
                   name="password"
                   label="Password"
                   type="password"
-                  className={classes.password}
                   value={formik.values.password}
                   error={
-                    formik.errors['password'] && formik.touched.password
-                      ? true
-                      : false
+                    formik.touched.password && Boolean(formik.errors.password)
                   }
+                  helperText={formik.touched.password && formik.errors.password}
                   placeholder="Enter password"
                   onChange={handleChange}
-                  helperText={
-                    formik.errors['password'] && formik.touched.password
-                      ? formik.errors['password']
-                      : null
-                  }
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   name="confPassword"
-                  label="Conform Password"
+                  label="Confirm Password"
                   type="password"
                   autoComplete="current-password"
                   value={formik.values.confPassword}
-                  error={formik.errors['confPassword'] ? true : false}
-                  onChange={handleChange}
-                  helperText={
-                    formik.errors['confPassword']
-                      ? formik.errors['confPassword']
-                      : null
+                  error={
+                    formik.touched.confPassword &&
+                    Boolean(formik.errors.confPassword)
                   }
+                  helperText={
+                    formik.touched.confPassword && formik.errors.confPassword
+                  }
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
@@ -187,8 +164,7 @@ export default function RecoveryPasswordSetPage() {
               Submit
             </Button>
           </Box>
-          <br></br>
-          
+          <br />
         </Box>
       </Container>
     </ThemeProvider>

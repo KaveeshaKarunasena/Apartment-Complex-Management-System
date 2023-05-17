@@ -38,7 +38,7 @@ const Report = () => {
                 setRejectedCount(rows.filter((item) => item.Status === "Rejected").length);
                 setNotCheck(rows.filter((item) => item.Status === "Not Checked").length);
             } catch (err) {
-                alert(err.message);
+                console.log(err.message);
             }
         };
         fetchData();
