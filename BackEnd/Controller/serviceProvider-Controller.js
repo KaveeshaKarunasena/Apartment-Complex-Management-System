@@ -1,34 +1,29 @@
 const router = require('express').Router();
 let ServiceProvider = require('../modles/service-provider');
+const Payment = require('../modles/payment');
 const uploadModel = require('../modles/uploadModel');
 
 // Route for adding a new Service Provider
 const newServiceProvider = async (req, res) => {
+  var photo = '';
 
-  var photo =  ""; 
-
-  if (req.file)
-  {
+  if (req.file) {
     photo = req.file.filename;
+  } else {
+    photo = 'default.jpeg';
   }
-  else
-  {
-    photo = "default.jpeg"
-  }
-
 
   const companyName = req.body.companyName;
   const serviceType = req.body.serviceType;
   const location = req.body.location;
   const contactNumber = req.body.contactNumber;
 
-
   const newServiceProviderData = new ServiceProvider({
     companyName,
     serviceType,
     location,
     contactNumber,
-    photo
+    photo,
   });
 
   newServiceProviderData
@@ -36,7 +31,7 @@ const newServiceProvider = async (req, res) => {
     .then(() => {
       res.json('New Service Provider Added');
     })
-    
+
     .catch(err => {
       console.log(err);
     });
@@ -51,7 +46,7 @@ const viewServiceProvider = async (req, res) => {
     .catch(err => {
       console.log(err);
     });
-}
+};
 
 // Route for updating a service provider
 const updateServiceProvider = async (req, res) => {
@@ -101,27 +96,113 @@ const viewSingleProvider = async (req, res) => {
 
   await ServiceProvider.findById(serviceProviderId)
     .then(serviceProvider => {
-      res
-        .status(200)
-        .send({
-          status: 'Service Provider fetched',
-          serviceProvider: serviceProvider,
-        });
+      res.status(200).send({
+        status: 'Service Provider fetched',
+        serviceProvider: serviceProvider,
+      });
     })
     .catch(error => {
-      res
-        .status(500)
-        .send({
-          status: 'Error with getting service provider',
-          error: error.message,
-        });
+      res.status(500).send({
+        status: 'Error with getting service provider',
+        error: error.message,
+      });
     });
 };
 
+const getServiceProviderNames = async (req, res) => {
+  try {
+    const serviceProviderList = await ServiceProvider.find(
+      {},
+      { companyName: 1 }
+    );
+
+    res.status(200).json(serviceProviderList);
+  } catch (error) {
+    res.status(500).send({
+      status: 'Error with getting service provider',
+      error: error.message,
+    });
+  }
+};
+
+const getCommissionByCategory = async (req, res) => {
+  // const monthWords = [
+  //   'Jan',
+  //   'Feb',
+  //   'Mar',
+  //   'Apr',
+  //   'May',
+  //   'June',
+  //   'July',
+  //   'Aug',
+  //   'Sep',
+  //   'Oct',
+  //   'Nov',
+  //   'Dec',
+  // ];
+
+  await Payment.aggregate([
+    {
+      $addFields: {
+        payee: {
+          $toObjectId: "$payeeId"
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: 'service-providers',
+        localField: 'payee',
+        foreignField: "_id",
+        as: 'services',
+      },
+    },
+    {
+        $group: {
+          _id: '$services.serviceType',
+          total: {
+            $sum: '$amount'
+          }
+        }
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+
+//   await Payment.aggregate([
+//     { $match: { category: 'Services' } },
+//     {
+//       $group: {
+//         _id: { month: { $month: '$createdAt' } },
+//         total: { $sum: { $multiply: ['$amount', 0.1] } },
+//       },
+//     },
+//   ]).exec((err, data) => {
+//     if (data) {
+//       data.sort((a, b) => a._id.month - b._id.month);
+
+//       const updatedData = data.map(item => {
+//         item._id.month = monthWords[item._id.month - 1];
+//         return { ...item };
+//       });
+//       res.status(200).json(updatedData);
+//     } else {
+//       res.status(404).json({ err: err });
+//     }
+//   });
+};
+
 module.exports = {
-    newServiceProvider,
-    viewServiceProvider,
-    updateServiceProvider,
-    deleteServiceProvider,
-    viewSingleProvider
+  newServiceProvider,
+  viewServiceProvider,
+  updateServiceProvider,
+  deleteServiceProvider,
+  viewSingleProvider,
+  getServiceProviderNames,
+  getCommissionByCategory,
 };

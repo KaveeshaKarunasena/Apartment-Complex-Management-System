@@ -9,20 +9,16 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 import AppointmentHandler from './AppointmentHandler';
 import { useNavigate } from "react-router-dom";
-import { Dispatch } from 'react';
-import { AuthContext } from '../../AuthProvider';
 
 const DUMMY_DATA = [
   {

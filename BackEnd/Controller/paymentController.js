@@ -4,12 +4,17 @@ const addPayment = async (req,res) =>{
 
     const apartmentNo = req.body.apartmentNo;
     const category = req.body.category;
-    const amount = req.body.amount;
+    const payeeId = req.body.payeeId;
+    const amount = +req.body.amount;
+    const currentDate = new Date()
+  
 
     const newPayment = new Payment({
         apartmentNo,
         category,
+        payeeId,
         amount,
+        createdAt: currentDate
     });
 
     newPayment
