@@ -19,6 +19,7 @@ import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
 import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
 import CustomerReport from './component/userComponent/component/CustomerReport'
+import ViewPayment from './component/userComponent/component/ViewPayment'
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerRepoDash from './component/adminComponents/maniDash/ManagerRepoDash';
@@ -28,6 +29,11 @@ import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+ 
+
+
+
+import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -126,6 +132,7 @@ function ProtectedRoutes() {
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="payment" element={<Payment/>}/>
+        <Route path="viewPayment" element={<ViewPayment/>} />
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
@@ -141,8 +148,8 @@ function GuestRoutes() {
       <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-        {/* /<Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} /> */}
+        /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>

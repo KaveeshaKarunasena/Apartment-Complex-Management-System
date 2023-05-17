@@ -12,8 +12,8 @@ const paymentSchema = new Schema({
         type : String,
         required: true
     },
-    payee:{
-        type:String,
+    payeeId:{
+        type:String
     },
     amount:{
         type : Number,

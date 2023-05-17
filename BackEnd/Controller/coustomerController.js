@@ -136,37 +136,22 @@ const resetPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    try {
-      Customer.findOne({ email })
-        .then(customer => {
-          bcrypt
-            .hash(password, 10)
-            .then(hash => {
-              Customer.updateOne(
-                { email: customer.email },
-                { password: hash },
-                function (err, data) {
-                  if (err) throw err;
-                  return res.status(201).send({ msg: 'Record Updated...!' });
-                }
-              );
-            })
-            .catch(e => {
-              return res.status(500).send({
-                error: 'Enable to hashed password',
-              });
-            });
-        })
-        .catch(error => {
-          return res.status(404).send({ error: 'Customer not Found' });
-        });
-    } catch (error) {
-      return res.status(500).send({ error });
+    const customer = await Customer.findOne({ email });
+    if (!customer) {
+      return res.status(404).send({ error: 'Customer not found' });
     }
+
+    const hash = await bcrypt.hash(password, 10);
+
+    await Customer.updateOne({ email: customer.email }, { password: hash });
+
+    return res.status(201).send({ msg: 'Record updated' });
   } catch (error) {
-    return res.status(401).send({ error });
+    console.error(error);
+    return res.status(500).send({ error: 'Internal server error' });
   }
 };
+
 
 const upload = async (req,res) =>{
 

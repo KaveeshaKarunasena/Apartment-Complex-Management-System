@@ -32,6 +32,6 @@ router.delete("/delete/:id/photo",deleteProfilePic);
 
 router.get("/",viewProfiles);
 
-router.put("/recoverypassword",resetPassword);
+router.put("/recoverypassword/:email",resetPassword);
 
 module.exports= router;
