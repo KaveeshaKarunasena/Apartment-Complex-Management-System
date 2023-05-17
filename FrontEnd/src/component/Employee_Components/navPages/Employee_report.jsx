@@ -6,7 +6,7 @@ import BarChart from '../Charts/barChart';
 import PieChart from '../Charts/PieChart';
 
 const EmployeeReport = () => {
-  const [EmployeeData, setEmployeeData] = useState({
+  const [EmployeeSalary, setEmployeeSalary] = useState({
     labels: ['Red', 'Yellow', 'Blue'],
     datasets: [
       {
@@ -15,27 +15,50 @@ const EmployeeReport = () => {
       },
     ],
   });
-
+  const [EmployeeCount, setEmployeeCount] = useState({
+    labels: ['Red', 'Yellow', 'Blue'],
+    datasets: [
+      {
+        data: [10, 20, 30],
+        backgroundColor: ['red', 'blue'],
+      },
+    ],
+  });
   useEffect(() => {
-    let EmployeesByCategory = async () => {
+    let EmployeeSalaryByDepartment = async () => {
       let { data } = await axios.get(
-        '/employee/getEmployeeByCategory'
+        '/employee/getEmployeeSalaryByDepartment'
       );
-      
-
-      setEmployeeData({
-        labels: data.map(stat => stat._id.month),
+     
+      setEmployeeSalary({
+        labels: data.map(stat => stat._id),
         datasets: [
           {
-            label: 'Number of staff',
+            label: 'Commission Gained',
             data: data.map(stat => stat.total),
-            backgroundColor: ['red', 'blue']
+            backgroundColor: ['red', 'blue','purple'],
           },
         ],
       });
     };
-
-    EmployeesByCategory();
+    let EmployeeByDepartment = async () => {
+      let { data } = await axios.get(
+        '/employee/getEmployeeByDepartment'
+      );
+     
+      setEmployeeCount({
+        labels: data.map(stat => stat._id),
+        datasets: [
+          {
+            label: 'Commission Gained',
+            data: data.map(stat => stat.numberofemployee),
+            backgroundColor: ['red', 'blue','purple'],
+          },
+        ],
+      });
+    };
+    EmployeeSalaryByDepartment();
+    EmployeeByDepartment();
   }, []);
 
   // useEffect(() => {
@@ -63,11 +86,11 @@ const EmployeeReport = () => {
   return (
     <div>
       <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
-        <BarChart chartData={EmployeeData} />
+        <BarChart chartData={EmployeeCount} />
       </div>
       {
        <div style={{ width: '40%', marginTop: '4%', marginLeft: '8%' }}>
-        <PieChart chartData={EmployeeData} />
+        <PieChart chartData={EmployeeSalary} />
       </div> }
     </div>
   );
