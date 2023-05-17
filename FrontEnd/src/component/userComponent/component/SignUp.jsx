@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
     )
     .required('apartment number is required'),
   phoneNo: Yup.number().required('phone number is required'),
-  nicNo: Yup.string().required('nic is required'),
+  nicNo: Yup.string().max(12).required('nic is required'),
   password: Yup.string().min(5).required('Password is required'),
   confPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],
