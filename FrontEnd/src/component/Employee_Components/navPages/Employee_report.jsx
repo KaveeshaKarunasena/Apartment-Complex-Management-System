@@ -34,9 +34,9 @@ const EmployeeReport = () => {
         labels: data.map(stat => stat._id),
         datasets: [
           {
-            label: 'Commission Gained',
+            label: 'Number of Employee per Department',
             data: data.map(stat => stat.total),
-            backgroundColor: ['red', 'blue','purple'],
+            backgroundColor: ["#ffa600", "#ff6361","#58508d","#ff6361"],
           },
         ],
       });
@@ -50,9 +50,9 @@ const EmployeeReport = () => {
         labels: data.map(stat => stat._id),
         datasets: [
           {
-            label: 'Commission Gained',
+            label: 'Number of Employee per Department',
             data: data.map(stat => stat.numberofemployee),
-            backgroundColor: ['red', 'blue','purple'],
+            backgroundColor: ["#ffa600", "#ff6361","#58508d","#ff6361"],
           },
         ],
       });
@@ -85,11 +85,14 @@ const EmployeeReport = () => {
 
   return (
     <div>
-      <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
+      
+      <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%', }}>
+      <h1>Number of Employee per Department</h1>
         <BarChart chartData={EmployeeCount} />
       </div>
       {
-       <div style={{ width: '40%', marginTop: '4%', marginLeft: '8%' }}>
+       <div style={{ width: '40%', marginTop: '10%', marginLeft: '8%',paddingLeft:'10%' }}>
+           <h1 style={{ marginTop: '10%' }} >Amount of Salaries paid per Department</h1>
         <PieChart chartData={EmployeeSalary} />
       </div> }
     </div>
