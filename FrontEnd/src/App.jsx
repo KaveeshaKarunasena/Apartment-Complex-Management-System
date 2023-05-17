@@ -1,32 +1,37 @@
 import './App.css';
 import MainDash from './component/adminComponents/maniDash/MainDash';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import Navbar from './component/adminComponents/maniDash/Navbar';
+import HomeNavBar from './component/adminComponents/maniDash/HomeNavBar';
+import ManagerNavBar from './component/adminComponents/maniDash/ManagerNavBar';
 import Cards from './component/adminComponents/cards/Cards';
 import AddApartments from './component/adminComponents/navPages/AddApartments';
 import Maintenance from './component/adminComponents/navPages/Maintenance';
 import ViewApartments from './component/adminComponents/navPages/ViewApartments';
-import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
 
 import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
+import Payment from './component/userComponent/component/Payment';
 import Home from './component/userComponent/component/Home';
 import UpdateCustomer from './component/userComponent/component/UpdateCustomer';
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword';
 import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage';
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
+import ManagerRepoDash from './component/adminComponents/maniDash/ManagerRepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
-import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+<<<<<<< HEAD
 import Amenity from './component/userComponent/amenitiesComponent/amenity';
 
 import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+=======
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -37,6 +42,7 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 
 //complain - imports start
 
+<<<<<<< HEAD
 //test
 // import Compage_Home from './component/adminComponents/Complains/Pages/Admin_complain_pg';
 // //import Compage_Home from './component/adminComponents/Complains/Pages/client_complain_pg'; // client home
@@ -50,6 +56,12 @@ import Compage_Home from './component/adminComponents/Complain/Pages/Complain_na
 import Single_complain from './component/adminComponents/Complain/Components/admin_comps/single/Single_complain';
 import All_complain from './component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain';
 import Report_complain from './component/adminComponents/Complain/Components/admin_comps/report/Report';
+=======
+import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 
 //---client
 import Compage_client_update from './component/adminComponents/Complain/Pages/Client_Complain';
@@ -81,6 +93,7 @@ const useStyles = makeStyles()(theme => ({
 function SupserAdminRoute() {
   return (
     <SuperAdminAuthGuard>
+      <Navbar />
       <Routes>
         <Route path="" element={<MainDash />}>
           <Route path="" element={<Cards />} />
@@ -103,6 +116,7 @@ function SupserAdminRoute() {
 function AdminRoute() {
   return (
     <AdminAuthGuard>
+      <ManagerNavBar />
       <Routes>
         <Route path="" element={<ManagerDashboard />}>
           <Route path="" element={<Cards />} />
@@ -112,6 +126,9 @@ function AdminRoute() {
           <Route path="serviceProvider" element={<ServiceProvider />} />
           <Route path="notices" element={<Cards />} />
         </Route>
+        <Route path="repo" element={<ManagerRepoDash />}>
+        </Route>
+
       </Routes>
     </AdminAuthGuard>
   );
@@ -120,10 +137,12 @@ function AdminRoute() {
 function ProtectedRoutes() {
   return (
     <AuthGuard>
-      <HomeBar></HomeBar>
+      <HomeNavBar />
+      <HomeBar/>
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="payment" element={<Payment/>}/>
         <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} />
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
@@ -138,13 +157,19 @@ function ProtectedRoutes() {
 function GuestRoutes() {
   return (
     <GuestGuard>
+      <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
+<<<<<<< HEAD
         <Route path="recoveryPassword" element={<RecoveryPassword />} />
         <Route
           path="recoveryPasswordSet/:email"
           element={<RecoveryPasswordSetPage />}
         />
+=======
+        {/* /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} /> */}
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
@@ -157,8 +182,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-
+  
       <Routes>
         <Route path="app/*" element={<ProtectedRoutes />} />
         <Route path="admin/*" element={<SupserAdminRoute />} />

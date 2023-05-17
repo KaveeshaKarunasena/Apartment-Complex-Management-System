@@ -1,8 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import {MenuItem,Menu} from '@material-ui/core';
 
 const HomeBar = () => {
 
@@ -20,11 +19,14 @@ const HomeBar = () => {
   return (
     <AppBar position="static" className="app-bar">
       <Toolbar style={{ align: 'center' }}>
-        <Button color="inherit">Home</Button>
+       
+        <NavLink to="/app">Home</NavLink>
         <Button color="inherit">
-          <NavLink to="amenities">Amenities</NavLink>
+          <NavLink to="amenities" style={{textDecoration:"none",color:'white'}}>Amenities</NavLink>
         </Button>
-        <Button color="inherit">Payment</Button>
+        <Button color="inherit">
+        <NavLink to="payment" style={{textDecoration:"none",color:'white'}}>Payment</NavLink>
+        </Button>
         <Button color="inherit">Services</Button>
         <Button color="inherit" onMouseEnter={handleClick}>Complaint</Button>
         <Button color="inherit">Appointment</Button>
@@ -41,13 +43,13 @@ const HomeBar = () => {
         >
            <NavLink
             to="Comlpain/update"
-            style = {{textDecoration: 'none', color: 'black', padding: '10px'}}
+            style = {{textDecoration: 'none', color: 'black'}}
           >
           <MenuItem>Update</MenuItem>
           </NavLink>
           <NavLink
             to="Comlpain/new"
-            style = {{textDecoration: 'none', color: 'black', padding: '10px'}}
+            style = {{textDecoration: 'none', color: 'black'}}
           >
             <MenuItem onClick={handleClose}>Add </MenuItem>
           </NavLink>

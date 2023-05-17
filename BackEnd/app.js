@@ -6,7 +6,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
+<<<<<<< HEAD
 const fileUpload = require('express-fileupload');
+=======
+//const fileUpload = require('express-fileupload')
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 const cors = require('cors');
 
 const sessoin = require('express-session');
@@ -43,6 +47,7 @@ const complain_Routes = require('./routes/Complain_Route');
 const appointmentRouter = require('./routes/appointment');
 const imageRouter = require('./routes/UploadRoute');
 const customerRouter = require('./routes/customers.js');
+const paymentRouter = require('./routes/payment')
 const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
 const imageRouter2 = require('./routes/UploadAmenityImage');
@@ -59,11 +64,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+<<<<<<< HEAD
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
+=======
+// app.use(fileUpload({
+//   useTempFiles: true
+// }))
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 
 app.use('/apartment', apartmentRouter);
 app.use('/maintenance', maintenanceRouter);
@@ -73,11 +84,21 @@ app.use('/service-provider', serviceProviderRouter);
 
 app.use('/complain', complain_Routes);
 
+<<<<<<< HEAD
 app.use('/appointment', appointmentRouter);
 app.use('/upload', imageRouter);
 app.use('/customer', customerRouter);
 app.use('/sendOTP', otpRouter);
 app.use('/employee', EmployeeRouter);
+=======
+
+app.use('/appointment',appointmentRouter);
+app.use('/upload',imageRouter);
+app.use("/customer",customerRouter)
+app.use("/addPayment",paymentRouter)
+app.use("/sendOTP",otpRouter)
+app.use('/employee',EmployeeRouter);
+>>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 app.use('/service-provider', serviceProviderRouter);
 app.use('/otp', otpRouter);
 app.use('/employee', EmployeeRouter);
@@ -103,7 +124,7 @@ app.use(function (err, req, res, next) {
 var PORT = 5000;
 
 app.listen(PORT, function (err) {
-  if (err) alert('Error in server setup');
+  if (err) console.log('Error in server setup');
   console.log('Server listening on Port', PORT);
 });
 

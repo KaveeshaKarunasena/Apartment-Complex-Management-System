@@ -62,7 +62,6 @@ const LineChart = () => {
         ],
       });
 
-      alert(setChartData.labels);
     };
     fetchData();
   }, []);

@@ -21,7 +21,7 @@ const newServiceProvider = async (req, res) => {
   const serviceType = req.body.serviceType;
   const location = req.body.location;
   const contactNumber = req.body.contactNumber;
-  // const photo = req.file.filename
+
 
   const newServiceProviderData = new ServiceProvider({
     companyName,
@@ -38,7 +38,7 @@ const newServiceProvider = async (req, res) => {
     })
     
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 };
 
@@ -49,7 +49,7 @@ const viewServiceProvider = async (req, res) => {
       res.json(serviceProviders);
     })
     .catch(err => {
-      alert(err);
+      console.log(err);
     });
 }
 

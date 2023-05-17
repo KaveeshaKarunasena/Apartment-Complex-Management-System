@@ -22,16 +22,16 @@ const View_complain = () => {
                 //console.log(rows)
             })
             .catch((err) => {
-                alert(err.message);
+                console.log(err.message);
             });
     }, []);
 
 
     const columns = [
         // { field: "_id", headerName: " _id", width: 150 },
-        { field: "Complain_No", headerName: "Complain_No", width: 150 },
-        { field: "complain", headerName: "complain", width: 150 },
-        { field: "Status", headerName: "Status", width: 150 },
+        { field: "Complain_No", headerName: "Complain_No", width: 250 },
+        { field: "complain", headerName: "complain", width: 650 },
+        { field: "Status", headerName: "Status", width: 200 },
 
     ];
     console.log(columns)
@@ -42,7 +42,7 @@ const View_complain = () => {
         axios.delete(`/complain/delete/${id}`)
             .then((res) => {
                 console.log(`Row with ID ${id} deleted successfully`);
-                alert(`Row with ID ${id} deleted successfully`);
+                console.log(`Row with ID ${id} deleted successfully`);
                 setData(data.filter((item) => item.id !== id));
                 window.location.reload();
             })
