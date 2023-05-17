@@ -28,7 +28,7 @@ router.get('/getCustomer/:id', viewCustomer);
 
 router.put('/update/:id', updateProfileById);
 
-router.delete('/delete/:id', deleteProfile);
+//router.delete('/delete/:id', deleteProfile);
 
 router.get('/', viewProfiles);
 router.put("/upload/:id",uploadMiddleware.single("photo"),upload)
