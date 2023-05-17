@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Add_Complain = () => {
+const Add_Complain = async() => {
 
     const initialData = {
         owner_name: '',
@@ -55,7 +55,7 @@ const Add_Complain = () => {
             return;
         }
 
-=======
+
 
             console.log("Enter a Number for Contact Number");
             return;
@@ -79,7 +79,7 @@ const Add_Complain = () => {
         } catch (error) {
             console.error(error);
         }
-    };
+    
 
     return (
         <div className="apply_from_container">
@@ -186,6 +186,6 @@ const Add_Complain = () => {
            
         </div>
     )
-}
+};
 
 export default Add_Complain
