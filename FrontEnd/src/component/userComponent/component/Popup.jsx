@@ -3,7 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useState, setHasError, useContext } from 'react';
+import { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Table from '@material-ui/core/Table';
@@ -28,16 +28,15 @@ function ViewPayment() {
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const keys = ['apartmentno', 'type', 'status', 'email'];
-  
-  let authPayload = useContext(AuthContext);
-  const ctx = authPayload.token
-  const headers = { 'Authorization': 'Bearer '+ctx  };
 
+  let authPayload = useContext(AuthContext);
+  const ctx = authPayload.token;
+  const headers = { Authorization: 'Bearer ' + ctx };
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch('/apartment/view',{headers});
+        const response = await fetch('/apartment/view', { headers });
         //  const sortData = response.sort((a, b) => (a.apartmentno > b.apartmentno ? 1 : -1));
 
         const json = await response.json();
@@ -55,11 +54,12 @@ function ViewPayment() {
       }
     };
     fetchDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteDetails = async id => {
     await axios
-      .delete(`/apartment/delete/${id}`,{headers})
+      .delete(`/apartment/delete/${id}`, { headers })
       .then(() => {
         const apartmentCopy = [...apartment];
         const filteredApartment = apartmentCopy.filter(item => item._id !== id);

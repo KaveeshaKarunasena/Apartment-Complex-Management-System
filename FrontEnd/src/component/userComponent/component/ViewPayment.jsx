@@ -80,7 +80,9 @@ function ViewPayment() {
                     ? data
                     : keys.some(
                         key =>
-                          data[key]?.toLowerCase()?.includes(search.toLowerCase()) || '' // Provide a default empty string for undefined data
+                          data[key]
+                            ?.toLowerCase()
+                            ?.includes(search.toLowerCase()) || '' // Provide a default empty string for undefined data
                       );
                 })
                 .map(data => (

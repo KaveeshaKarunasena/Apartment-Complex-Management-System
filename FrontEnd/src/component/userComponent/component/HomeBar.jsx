@@ -103,23 +103,34 @@ const HomeBar = () => {
           </NavLink>
         </Button>
         <Button color="inherit">
-          <NavLink to="amenities" style={{ textDecoration: 'none', color: 'white' }}>
+          <NavLink
+            to="amenities"
+            style={{ textDecoration: 'none', color: 'white' }}
+          >
             Amenities
           </NavLink>
         </Button>
-        <Button color="inherit" onClick={handlePaymentClick} aria-controls={paymentMenuId}>
+        <Button
+          color="inherit"
+          onClick={handlePaymentClick}
+          aria-controls={paymentMenuId}
+        >
           Payment
         </Button>
         {renderPaymentMenu}
         <Button color="inherit">Services</Button>
-        <Button color="inherit" onClick={handleComplaintClick} aria-controls={complaintMenuId}>
+        <Button
+          color="inherit"
+          onClick={handleComplaintClick}
+          aria-controls={complaintMenuId}
+        >
           Complaint
         </Button>
         {renderComplaintMenu}
         <Button color="inherit">Appointment</Button>
-</Toolbar>
-</AppBar>
-);
+      </Toolbar>
+    </AppBar>
+  );
 };
 
 export default HomeBar;
