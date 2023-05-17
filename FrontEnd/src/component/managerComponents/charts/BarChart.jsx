@@ -5,7 +5,7 @@ import {Chart as ChartJS} from 'chart.js/auto';
 
 function BarChart(props)
 {
-    return <Bar data = {props.chartData}/>
+    return <Bar data = {props.chartData} options = {props.options}/>
     return 
 }
 

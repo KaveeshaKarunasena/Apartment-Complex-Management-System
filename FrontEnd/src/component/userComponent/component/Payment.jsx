@@ -105,7 +105,7 @@ export default function Payment() {
                 
                 apartmentNo: "",
                 category:"",
-                payee:"",
+                payeeId:"",
                 amount:0,
           
               }}
@@ -177,8 +177,8 @@ export default function Payment() {
 
           {values.category === "Services" && <><FormControl fullWidth>
             <Select
-              name='payee'
-              value={values.payee}
+              name='payeeId'
+              value={values.payeeId}
               onChange={handleChange}
               displayEmpty
               variant="outlined"
@@ -186,7 +186,7 @@ export default function Payment() {
             >
               {
               serviceProviderList.map((sp) => (
-                      <MenuItem key={sp._id} value={sp.companyName}>
+                      <MenuItem key={sp._id} value={sp._id}>
                         {sp.companyName}
                       </MenuItem>
                        ))}

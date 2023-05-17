@@ -13,20 +13,48 @@ const ServiceReport = () => {
     ],
   });
 
+  const options = {
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Service Type',
+          color: 'black',
+          font: {
+            size: 16,
+            weight: 'bold',
+          },
+        },
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Commission Amount',
+          color: 'black',
+          font: {
+            size: 16,
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  };
+
   useEffect(() => {
     let getCommissionByCategory = async () => {
       let { data } = await axios.get(
         '/service-provider/getCommissionByCategory'
       );
-      
 
       setServiceData({
-        labels: data.map(stat => stat._id.month),
+        labels: data.map(stat => stat._id),
         datasets: [
           {
             label: 'Commission Gained',
             data: data.map(stat => stat.total),
-            backgroundColor: ['red', 'blue']
+            backgroundColor: ['red', 'blue'],
           },
         ],
       });
@@ -38,7 +66,7 @@ const ServiceReport = () => {
   return (
     <div>
       <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
-        <BarChart chartData={serviceData} />
+        <BarChart chartData={serviceData} options = {options}/>
       </div>
       <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
         <BarChart chartData={serviceData} />
