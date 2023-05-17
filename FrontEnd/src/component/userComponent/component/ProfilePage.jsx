@@ -16,53 +16,34 @@ import UpdateCustomer from './UpdateCustomer';
 import { IconButton } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import CustomerReport from './CustomerReport';
-//import Popup from './Popup';
 
-//import ClassNameGenerator from '@mui/core/generateUtilityClass/ClassNameGenerator';
-
-// function DataFetching(){
-//   const[posts, setPosts] = useState([])
-
-//   useEffect(() => {
-//     axios.get('/customer/get/')
-//     .then((res,err) => {
-//       console.log("Fetched Customer")
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//     })
-//   })
-// }
-
-export default function ProfilePage(props) {
+export default function ProfilePage() {
   let authPayload = useContext(AuthContext);
   const [customer, setCustomer] = useState([]);
   const decoded = jwt_decode(authPayload.token);
   const Id = decoded.id;
-  const [getId, setGetId] = useState(0);
-  const [openPopup, setOpenPopup] = useState(false);
+  const [setGetId] = useState(0);
   const navigate = useNavigate();
   const [photoUrl, setPhotoUrl] = useState('');
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [setDeleteLoading] = useState(false);
 
   useEffect(() => {
-
     const fetchData = async () => {
-    try{
-     
+      try {
         const { data } = await axios.get(`/customer/getCustomer/${Id}`);
 
         const cus = data.customerModle;
-        setPhotoUrl(cus.photo)
-        console.log(photoUrl)
+        setPhotoUrl(cus.photo);
+        console.log(photoUrl);
         //const val =Object.values(cus)
         setPhotoUrl(cus.photo);
         setCustomer(cus);
-      }catch (error){
+      } catch (error) {
         console.log('Error fetching customer data:', error);
+      }
     };
-  }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleProps = id => {
@@ -70,14 +51,13 @@ export default function ProfilePage(props) {
 
     <UpdateCustomer id={id}></UpdateCustomer>;
     navigate(`/app/updateCustomer/${id}`);
-
   };
 
   const handlePropsReport = id => {
     setGetId(id);
 
-    <CustomerReport id={id}></CustomerReport>
-    navigate(`/app/customerReport/${id}`)
+    <CustomerReport id={id}></CustomerReport>;
+    navigate(`/app/customerReport/${id}`);
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -88,20 +68,20 @@ export default function ProfilePage(props) {
 
   const handleFileUpload = async () => {
     const formData = new FormData();
-  formData.append('photo', selectedFile);
-  console.log(selectedFile);
+    formData.append('photo', selectedFile);
+    console.log(selectedFile);
 
-  try {
-    const response = await axios.put(`/customer/upload/${Id}`, formData);
-    //console.log(response);
-    setPhotoUrl(response.data.photo);
-    console.log('Profile photo uploaded successfully');
-  } catch (error) {
-    console.log('Error uploading file:', error);
-  }
+    try {
+      const response = await axios.put(`/customer/upload/${Id}`, formData);
+      //console.log(response);
+      setPhotoUrl(response.data.photo);
+      console.log('Profile photo uploaded successfully');
+    } catch (error) {
+      console.log('Error uploading file:', error);
+    }
   };
 
-  const handleDeletePhoto = async (photoUrl) => {
+  const handleDeletePhoto = async () => {
     try {
       setDeleteLoading(true);
       const result = await Swal.fire({
@@ -111,9 +91,9 @@ export default function ProfilePage(props) {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, delete it!',
       });
-  
+
       if (result.isConfirmed) {
         await Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
         await axios.delete(`/customer/delete/${Id}/photo`);
@@ -121,7 +101,7 @@ export default function ProfilePage(props) {
         setDeleteLoading(false); // Set loading state to false if deletion is canceled
         return; // Return early without clearing the photo state and logging success message
       }
-  
+
       // Clear the photo state
       // You may need to update the logic depending on how you manage state in your app
       setPhotoUrl(null);
@@ -132,7 +112,6 @@ export default function ProfilePage(props) {
       setDeleteLoading(false);
     }
   };
-  
 
   return (
     <Box
@@ -144,10 +123,7 @@ export default function ProfilePage(props) {
       }}
     >
       <Card>
-        <CardMedia
-            sx={{ height: 30 }}
-            
-        />
+        <CardMedia sx={{ height: 30 }} />
         <CardContent>
           <IconButton
             color="primary"
@@ -156,12 +132,19 @@ export default function ProfilePage(props) {
             style={{ marginTop: '-10%' }}
           >
             {photoUrl && (
-              <img src={`http://localhost:5000/uploads/${photoUrl}`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+              <img
+                src={`http://localhost:5000/uploads/${photoUrl}`}
+                style={{ width: 90, height: 90 }}
+                alt="Customer Profile"
+              />
             )}
-            {photoUrl == null &&(
-              <img src={`http://localhost:5000/assert/profile.png`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+            {photoUrl == null && (
+              <img
+                src={`http://localhost:5000/assert/profile.png`}
+                style={{ width: 90, height: 90 }}
+                alt="Customer Profile"
+              />
             )}
-            
           </IconButton>
         </CardContent>
       </Card>

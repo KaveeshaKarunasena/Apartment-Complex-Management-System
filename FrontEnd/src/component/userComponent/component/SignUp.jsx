@@ -88,14 +88,14 @@ export default function SignUp() {
       email: '',
       phoneNo: '',
       nicNo: '',
-      photo:'',
+      photo: '',
       confPassword: '',
       password: '',
     },
     validationSchema: validationSchema,
     validateOnChange: true,
     onSubmit: values => {
-      console.log(values)
+      console.log(values);
       if (values.confPassword === values.password) {
         axios({
           method: 'POST',
@@ -122,7 +122,6 @@ export default function SignUp() {
         })
           .then(result => {
             if (result.value) {
-              
               axios({
                 method: 'POST',
                 url: '/customer/add',
@@ -154,9 +153,9 @@ export default function SignUp() {
 
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword = () => setShowPassword(show => !show);
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = event => {
     event.preventDefault();
   };
 
@@ -302,45 +301,44 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              
-              <Grid item xs={12}>
-              <TextField
-                    margin="normal"
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type={showPassword ? 'text' : 'password'}
-                    className={classes.password}
-                    value={formik.values.password}
-                    error={
-                      formik.errors['password'] && formik.touched.password
-                        ? true
-                        : false
-                    }
-                    placeholder="Enter password"
-                    onChange={handleChange}
-                    helperText={
-                      formik.errors['password'] && formik.touched.password
-                        ? formik.errors['password']
-                        : null
-                    }
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
 
+              <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  className={classes.password}
+                  value={formik.values.password}
+                  error={
+                    formik.errors['password'] && formik.touched.password
+                      ? true
+                      : false
+                  }
+                  placeholder="Enter password"
+                  onChange={handleChange}
+                  helperText={
+                    formik.errors['password'] && formik.touched.password
+                      ? formik.errors['password']
+                      : null
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -372,13 +370,11 @@ export default function SignUp() {
                     ),
                   }}
                 />
-
               </Grid>
               <Grid item xs={12} marginTop="10px">
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
-                    
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
@@ -400,9 +396,7 @@ export default function SignUp() {
           <br></br>
           <Grid container justifyContent="flex-end">
             <Grid item marginTop="16px">
-              <NavLink to="/login">
-                Already have an account? Sign in
-              </NavLink>
+              <NavLink to="/login">Already have an account? Sign in</NavLink>
             </Grid>
           </Grid>
         </Box>
