@@ -48,6 +48,7 @@ const otpRouter = require('./routes/otp.js');
 const EmployeeRouter = require('./routes/Employee');
 const imageRouter2 = require('./routes/UploadAmenityImage');
 const productRouter = require('./routes/productRouter');
+const paymentRouter = require('./routes/payment')
 const app = express();
 
 // view engine setup

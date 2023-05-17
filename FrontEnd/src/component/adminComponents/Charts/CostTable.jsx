@@ -22,7 +22,9 @@ const CostTable = () => {
     const fetchData = async () => {
       const { data } = await axios.get('/maintenance/costDetails');
       setApartmentCost(data);
-      // console.log('resss', data);
+
+      console.log('resss', data);
+
     };
     fetchData();
   }, []);

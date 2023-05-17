@@ -1,4 +1,7 @@
-const Payment = require('../modles/payment');
+
+const Payment = require('../modles/Payment');
+
+
 
 const addPayment = async (req,res) =>{
 

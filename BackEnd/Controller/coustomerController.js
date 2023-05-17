@@ -146,11 +146,57 @@ const resetPassword = async (req, res) => {
     await Customer.updateOne({ email: customer.email }, { password: hash });
 
     return res.status(201).send({ msg: 'Record updated' });
+
   } catch (error) {
     console.error(error);
     return res.status(500).send({ error: 'Internal server error' });
+};
+
+
+const upload = async (req,res) =>{
+
+  let userID = req.params.id;
+
+  //Dstructure
+  const  photo = req.file.filename;
+  console.log(photo)
+  //Search the that id is available or not
+  
+  const update = await Customer.updateOne({_id: userID},{$set:{photo: photo}})
+    
+    .then(customer => {
+   
+      //status = 200 = updated
+      res.status(200).send({ status: 'User Updated', user: customer });
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ status: 'Error with updating data', error: err.message });
+    });
+}
+
+const deleteProfilePic = async (req, res) => {
+  
+
+  try {
+    let userID = req.params.id;
+    // Find the customer by their ID
+    const customer = await Customer.findById({_id: userID});
+
+    // Delete the photo field in the customer document
+    customer.photo = null;
+    await customer.save();
+
+    return res.json({ message: 'Profile photo deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting profile photo:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+
   }
 };
+
 
 
 const upload = async (req,res) =>{
@@ -198,7 +244,6 @@ const deleteProfilePic = async (req, res) => {
 
 
 
-
 module.exports = {
   newSignUp,
   login,
@@ -209,4 +254,6 @@ module.exports = {
   resetPassword,
   viewCustomer,
   upload,
+
 };
+

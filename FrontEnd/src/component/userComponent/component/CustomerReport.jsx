@@ -123,15 +123,18 @@ export default function CustomerReport(props) {
 //   return <Doughnut data={data} />;
 // }
   return (
+
     <Box
       sx={{
         marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h5" style={{textAlign:'center',marginTop:'10'}}>
+
         Customer Report
       </Typography>
       <div className={classes.root}>
@@ -188,10 +191,13 @@ export default function CustomerReport(props) {
           </Grid>
         </Grid>
       </div>
-      <div style={{width:'30%', height:'30%',alignContent:'center'}}>
-          <Doughnut data={chart} />
+
+      <div style={{ width: '30%', height: '30%', display: 'flex', justifyContent: 'center', alignItems: 'center' ,paddingLeft:'35%'}}>
+        <Doughnut data={chart} />
       </div>
       
     </Box>
+    
   );
 }
+

@@ -58,7 +58,7 @@ export default function ProfilePage(props) {
         setPhotoUrl(cus.photo)
         console.log(photoUrl)
         //const val =Object.values(cus)
-        setPhotoUrl(cus.photo);
+     
         setCustomer(cus);
       }catch (error){
         console.log('Error fetching customer data:', error);
@@ -94,8 +94,11 @@ export default function ProfilePage(props) {
   console.log(selectedFile);
 
   try {
+
+    // Upload the file and get the response
     const response = await axios.put(`/customer/upload/${Id}`, formData);
-    console.log(response);
+    // Update the photoUrl state with the response data
+
     setPhotoUrl(response.data.photo);
     console.log('Profile photo uploaded successfully');
   } catch (error) {
@@ -157,12 +160,26 @@ export default function ProfilePage(props) {
             component="children"
             style={{ marginTop: '-10%' }}
           >
+
+            {/* {photoUrl && (
+
             {photoUrl && (
+
               <img src={`http://localhost:5000/uploads/${photoUrl}`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
             )}
             {photoUrl == null &&(
               <img src={`http://localhost:5000/assert/profile.png`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+
+            )} */}
+
+            {photoUrl ? (
+                <img src={`http://localhost:5000/uploads/${photoUrl}`} style={{ width: 90, height: 90 }} alt="Customer Profile" />
+              ) : (
+                <img src={`http://localhost:5000/assets/profile.png`} style={{ width: 90, height: 90 }} alt="Customer Profile" />
+              )}
+
             )}
+
             
           </IconButton>
         </CardContent>

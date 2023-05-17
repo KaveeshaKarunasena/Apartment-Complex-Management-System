@@ -34,7 +34,9 @@ const ctx = authPayload.token
     }
     return <>{children}</>;
   } catch (error) {
- 
+
+    console.log(error);
+
   }
 };
 
@@ -56,7 +58,9 @@ export const SuperAdminAuthGuard = ({ children }) => {
     }
 
     if (decodedEmail !== 'superAdmin@gmail.com') {
- 
+
+      console.log("admin not super")
+
       return <Navigate to="/login" />;
     }
 
