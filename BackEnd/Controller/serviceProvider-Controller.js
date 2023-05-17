@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let ServiceProvider = require('../modles/service-provider');
+const Payment = require('../modles/payment');
 const uploadModel = require('../modles/uploadModel');
 
 // Route for adding a new Service Provider
@@ -139,11 +140,31 @@ const getServiceProviderNames = async (req, res) => {
     
 };
 
+const getCommissionByCategory = async (req, res) => {
+
+await Payment.aggregate(
+    [
+      {$match: {category: "Services"}},
+      {$group: {_id: {month: {$month: "$createdAt"}}, total: {$sum: { $multiply: ["$amount", 0.1]}}}}
+    ]
+  )
+  .exec((err, data) => {
+    if (data) {
+      console.log(data);
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+}
+
 module.exports = {
     newServiceProvider,
     viewServiceProvider,
     updateServiceProvider,
     deleteServiceProvider,
     viewSingleProvider,
-    getServiceProviderNames
+    getServiceProviderNames,
+    getCommissionByCategory
 };

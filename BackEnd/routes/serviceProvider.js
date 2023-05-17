@@ -5,7 +5,8 @@ const {
   updateServiceProvider,
   deleteServiceProvider,
   viewSingleProvider,
-  getServiceProviderNames
+  getServiceProviderNames,
+  getCommissionByCategory
 } = require('../Controller/serviceProvider-Controller');
 const uploadMiddleware = require('../service/MulterMiddleware');
 
@@ -28,5 +29,8 @@ router.get('/get/:id', viewSingleProvider);
 
 //Route for getting service provider names
 router.get('/getServiceProviderNames', getServiceProviderNames);
+
+//Route for getting commission by category
+router.get('/getCommissionByCategory',getCommissionByCategory);
 
 module.exports = router;

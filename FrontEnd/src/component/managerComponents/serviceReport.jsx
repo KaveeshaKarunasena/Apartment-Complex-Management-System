@@ -1,58 +1,50 @@
-import React, { useState } from "react";
-import BarChart from "./charts/BarChart";
-
-const USER_DATA = [
-    {
-      id: 1,
-      year: 2016,
-      userGain: 80000,
-      userLost: 823,
-    },
-    {
-      id: 2,
-      year: 2017,
-      userGain: 45677,
-      userLost: 345,
-    },
-    {
-      id: 3,
-      year: 2018,
-      userGain: 78888,
-      userLost: 555,
-    },
-    {
-      id: 4,
-      year: 2019,
-      userGain: 90000,
-      userLost: 4555,
-    },
-    {
-      id: 5,
-      year: 2020,
-      userGain: 4300,
-      userLost: 234,
-    },
-  ];
-
-
+import React, { useState, useEffect } from 'react';
+import BarChart from './charts/BarChart';
+import axios from 'axios';
 
 const ServiceReport = () => {
+  const [serviceData, setServiceData] = useState({
+    labels: ['Red', 'Yellow', 'Blue'],
+    datasets: [
+      {
+        data: [10, 20, 30],
+        backgroundColor: ['red', 'blue'],
+      },
+    ],
+  });
 
+  useEffect(() => {
+    let getCommissionByCategory = async () => {
+      let { data } = await axios.get(
+        '/service-provider/getCommissionByCategory'
+      );
+      
 
-    const [serviceData, setServiceData] = useState({
-        labels: USER_DATA.map( (data) => data.year),
+      setServiceData({
+        labels: data.map(stat => stat._id.month),
         datasets: [
-            {
-                label: "Users Gained",
-                data: USER_DATA.map( (data) => data.userGain)
-            }
-        ]
-    });
+          {
+            label: 'Commission Gained',
+            data: data.map(stat => stat.total),
+            backgroundColor: ['red', 'blue']
+          },
+        ],
+      });
+    };
 
+    getCommissionByCategory();
+  }, []);
 
-    return (<div>
-        <BarChart chartData = {serviceData}/>
-    </div>)
-}
+  return (
+    <div>
+      <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
+        <BarChart chartData={serviceData} />
+      </div>
+      <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%' }}>
+        <BarChart chartData={serviceData} />
+      </div>
+    </div>
+  );
+};
 
 export default ServiceReport;

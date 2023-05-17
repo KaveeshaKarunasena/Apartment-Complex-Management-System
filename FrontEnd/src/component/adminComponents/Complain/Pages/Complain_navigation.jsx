@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Home.scss"
 
 const Complain_navigation = () => {
   //complain navigation bar------------------------------------------
