@@ -119,7 +119,7 @@ export default function SignIn() {
 
         navigate('/');
       } catch (err) {
-        console.log(err);
+        alert('Error with user credentials');
       }
     },
   });
