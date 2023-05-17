@@ -3,9 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,10 +11,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as Yup from 'yup';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { useFormik } from 'formik';
 import { makeStyles } from '@mui/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const theme = createTheme();
 
@@ -31,6 +31,7 @@ const validationSchema = Yup.object({
     .required('Password confirmation is required'),
 });
 
+// eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -92,6 +93,14 @@ export default function RecoveryPasswordSetPage() {
     },
   });
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(show => !show);
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
   const { handleChange, handleSubmit } = formik;
 
   return (
@@ -122,18 +131,39 @@ export default function RecoveryPasswordSetPage() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   fullWidth
                   id="password"
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={formik.values.password}
                   error={
-                    formik.touched.password && Boolean(formik.errors.password)
+                    formik.errors['password'] && formik.touched.password
+                      ? true
+                      : false
                   }
-                  helperText={formik.touched.password && formik.errors.password}
                   placeholder="Enter password"
                   onChange={handleChange}
+                  helperText={
+                    formik.errors['password'] && formik.touched.password
+                      ? formik.errors['password']
+                      : null
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -141,17 +171,30 @@ export default function RecoveryPasswordSetPage() {
                   fullWidth
                   name="confPassword"
                   label="Confirm Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   value={formik.values.confPassword}
-                  error={
-                    formik.touched.confPassword &&
-                    Boolean(formik.errors.confPassword)
-                  }
-                  helperText={
-                    formik.touched.confPassword && formik.errors.confPassword
-                  }
+                  error={formik.errors['confPassword'] ? true : false}
                   onChange={handleChange}
+                  helperText={
+                    formik.errors['confPassword']
+                      ? formik.errors['confPassword']
+                      : null
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
             </Grid>
