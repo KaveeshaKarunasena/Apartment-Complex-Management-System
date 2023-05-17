@@ -101,6 +101,7 @@ app.use(function (err, req, res, next) {
 });
 
 var PORT = 5000;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 app.listen(PORT, function (err) {
   if (err) console.log('Error in server setup');

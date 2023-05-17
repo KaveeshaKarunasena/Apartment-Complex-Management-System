@@ -24,6 +24,7 @@ import ViewPayment from './component/userComponent/component/ViewPayment'
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
 import ManagerRepoDash from './component/adminComponents/maniDash/ManagerRepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
+import ServiceReport from './component/managerComponents/serviceReport';
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
@@ -112,6 +113,7 @@ function AdminRoute() {
           <Route path="notices" element={<Cards />} /> 
         </Route>
         <Route path="repo" element={<ManagerRepoDash />}>
+          <Route path="serviceProvider" element = {<ServiceReport/>} />
         </Route>
 
       </Routes>

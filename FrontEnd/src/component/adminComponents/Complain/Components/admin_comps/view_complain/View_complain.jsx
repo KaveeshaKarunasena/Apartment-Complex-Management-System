@@ -5,12 +5,8 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./View_complain.scss";
 
 const View_complain = () => {
-
-
-
 
     const [data, setData] = useState([]);
 
