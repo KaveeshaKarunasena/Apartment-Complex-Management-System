@@ -56,7 +56,9 @@ export default function ProfilePage(props) {
 
         const cus = data.customerModle;
         setPhotoUrl(cus.photo)
+        console.log(photoUrl)
         //const val =Object.values(cus)
+        setPhotoUrl(cus.photo);
         setCustomer(cus);
       }catch (error){
         console.log('Error fetching customer data:', error);
@@ -71,6 +73,11 @@ export default function ProfilePage(props) {
     <UpdateCustomer id={id}></UpdateCustomer>;
     navigate(`/app/updateCustomer/${id}`);
 
+  };
+
+  const handlePropsReport = id => {
+    setGetId(id);
+
     <CustomerReport id={id}></CustomerReport>
     navigate(`/app/customerReport/${id}`)
   };
@@ -83,15 +90,17 @@ export default function ProfilePage(props) {
 
   const handleFileUpload = async () => {
     const formData = new FormData();
-    formData.append('photo', selectedFile);
-    console.log(selectedFile);
+  formData.append('photo', selectedFile);
+  console.log(selectedFile);
 
-    const response = await axios
-      .put(`/customer/upload/${Id}`, formData)
-      .then( res => {console.log(res)})
-      .catch(error => {
-        console.log('Error uploading file:', error);
-      });
+  try {
+    const response = await axios.put(`/customer/upload/${Id}`, formData);
+    console.log(response);
+    setPhotoUrl(response.data.photo);
+    console.log('Profile photo uploaded successfully');
+  } catch (error) {
+    console.log('Error uploading file:', error);
+  }
   };
 
   const handleDeletePhoto = async (photoUrl) => {
@@ -149,7 +158,10 @@ export default function ProfilePage(props) {
             style={{ marginTop: '-10%' }}
           >
             {photoUrl && (
-              <img src={photoUrl} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+              <img src={`http://localhost:5000/uploads/${photoUrl}`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
+            )}
+            {photoUrl == null &&(
+              <img src={`http://localhost:5000/assert/profile.png`} style={{width: 90, height: 90}} alt = 'Customer Profile'/>
             )}
             
           </IconButton>
@@ -271,7 +283,7 @@ export default function ProfilePage(props) {
                   style={{
                     backgroundColor: '#006ee6',
                   }}
-                  onClick={() => handleProps(customer._id)}
+                  onClick={() => handlePropsReport(customer._id)}
                 >
                   Report
                 </Button>
