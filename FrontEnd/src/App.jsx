@@ -46,6 +46,7 @@ import Report_complain from "./component/adminComponents/Complain/Components/adm
 import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
 import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
 import HomeBar from './component/userComponent/component/HomeBar';
+import EmployeeReport from './component/Employee_Components/navPages/Employee_report';
 
 //complain - imports end
 
@@ -108,6 +109,7 @@ function AdminRoute() {
         </Route>
         <Route path="repo" element={<ManagerRepoDash />}>
           <Route path="serviceProvider" element = {<ServiceReport/>} />
+          <Route path="employee" element = {<EmployeeReport/>} />
         </Route>
 
       </Routes>
