@@ -26,12 +26,9 @@ import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
-<<<<<<< HEAD
 import Amenity from './component/userComponent/amenitiesComponent/amenity';
 
 import Add_Complain from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
-=======
->>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 import {
   SuperAdminAuthGuard,
   AdminAuthGuard,
@@ -42,26 +39,10 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 
 //complain - imports start
 
-<<<<<<< HEAD
-//test
-// import Compage_Home from './component/adminComponents/Complains/Pages/Admin_complain_pg';
-// //import Compage_Home from './component/adminComponents/Complains/Pages/client_complain_pg'; // client home
-// import All_complain from './component/adminComponents/Complains/Pages/Admin_complain_pg';
-// import Report_complain from './component/adminComponents/Complains/Components/admin_comps/report/Report';
-// import Compage_client_update from './component/adminComponents/Complains/Components/client_comps/Update_Complain/Update_Complain';
-// import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
-
-//---admin
-import Compage_Home from './component/adminComponents/Complain/Pages/Complain_navigation';
-import Single_complain from './component/adminComponents/Complain/Components/admin_comps/single/Single_complain';
-import All_complain from './component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain';
-import Report_complain from './component/adminComponents/Complain/Components/admin_comps/report/Report';
-=======
 import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
 import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
 import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
->>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
 
 //---client
 import Compage_client_update from './component/adminComponents/Complain/Pages/Client_Complain';
@@ -160,16 +141,8 @@ function GuestRoutes() {
       <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-<<<<<<< HEAD
-        <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route
-          path="recoveryPasswordSet/:email"
-          element={<RecoveryPasswordSetPage />}
-        />
-=======
         {/* /<Route path="recoveryPassword" element={<RecoveryPassword />} />
         <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} /> */}
->>>>>>> 9e1e7a9bd814df01f97419af51e697b26f94739e
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
