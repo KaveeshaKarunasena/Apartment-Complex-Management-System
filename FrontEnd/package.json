@@ -60,7 +60,6 @@
     "recharts": "^2.5.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
-    "sass": "^1.62.0",
     "sassy-datepicker": "^0.10.2",
     "sweetalert2": "^11.7.3",
     "tss-react": "^4.6.0",
