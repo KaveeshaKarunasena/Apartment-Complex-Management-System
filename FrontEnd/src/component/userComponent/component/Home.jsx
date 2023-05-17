@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography, Card, CardContent } from '@material-ui/core';
 
-
 function HomePage() {
+  // eslint-disable-next-line no-unused-vars
   const styles = `
     .app-bar {
       background-color: #333;
@@ -50,18 +50,14 @@ function HomePage() {
     
   `;
 
-  
-
   return (
     <div>
-
       <div className="content">
         <Card className="card">
           <CardContent>
             <Typography variant="h5" component="h2" className="card-title">
-              Welcome to My App!
+              Welcome to Wescott Apartment Web Site
             </Typography>
-            
           </CardContent>
         </Card>
       </div>

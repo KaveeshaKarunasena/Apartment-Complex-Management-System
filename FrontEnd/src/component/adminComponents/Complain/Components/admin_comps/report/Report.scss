@@ -1,0 +1,173 @@
+.Report {
+    display: flex;
+    
+    margin-top: 200px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    .all_report{
+        display: flex;
+        flex-direction: column;
+        //background-color: aqua;
+        border: 1px solid gray;
+        border-radius: 10px;
+        margin-left: 30px;
+         width: 70%;
+    
+        .top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+    
+            .item {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(194, 194, 194);
+                padding: 25px 50px 25px 50px; //t r b l
+                border-radius: 20px;
+    
+                .title {
+                    font-size: 20px;
+                    font-weight: 700;
+                }
+    
+                .count {
+                    margin-top: 10px;
+                    font-weight: 700;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        .bot {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 200px;
+    
+    
+            .left {
+                .item {
+                    width: 70px;
+                    display: flex;
+                    flex-direction: column;
+                    border: 2px solid blue;
+                    //background-color: aqua;
+                    padding: 25px 60px 25px 50px; //t r b l
+                    border-radius: 20px;
+    
+                    .title {
+                        font-size: 20px;
+                        color: blue;
+                    }
+    
+                    .count {
+                        margin-top: 10px;
+                        color: blue;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+    
+                .persentage {
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 40px;
+                    font-weight: 800;
+                    color: blue;
+                }
+            }
+
+            .Middle {
+                .item {
+                    width: 70px;
+                    display: flex;
+                    flex-direction: column;
+                    border: 2px solid rgb(134, 134, 134);
+                    //background-color: aqua;
+                    padding: 25px 70px 25px 50px; //t r b l
+                    border-radius: 20px;
+    
+                    .title {
+                        font-size: 20px;
+                        color: rgb(134, 134, 134);
+                    }
+    
+                    .count {
+                        margin-top: 10px;
+                        color: rgb(134, 134, 134);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+    
+                .persentage {
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 40px;
+                    font-weight: 800;
+                    color: rgb(134, 134, 134);
+                }
+            }
+    
+            .right {
+                .item {
+                    width: 70px;
+                    display: flex;
+                    flex-direction: column;
+                    border: 2px solid red;
+                    //background-color: aqua;
+                    padding: 25px 54px 25px 50px; //t r b l
+                    border-radius: 20px;
+    
+                    .title {
+                        font-size: 20px;
+                        color: red;
+                    }
+    
+                    .count {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 10px;
+                        color: red;
+                    }
+                }
+    
+                .persentage {
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 40px;
+                    font-weight: 800;
+                    color: red;
+                }
+            }
+    
+    
+        }
+
+    }
+
+    .calender{
+       // display: flex;
+       border-radius: 10px;
+       //background-color: rgb(241, 241, 241);
+        flex: 2;
+        margin: 20px;
+        
+    }
+    
+
+    
+}

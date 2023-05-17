@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -17,7 +16,11 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useFormik } from 'formik';
 import { makeStyles } from 'tss-react/mui';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const theme = createTheme();
 
@@ -31,7 +34,7 @@ const validationSchema = Yup.object({
     )
     .required('apartment number is required'),
   phoneNo: Yup.number().required('phone number is required'),
-  nicNo: Yup.string().required('nic is required'),
+  nicNo: Yup.string().max(12).required('nic is required'),
   password: Yup.string().min(5).required('Password is required'),
   confPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],
@@ -70,6 +73,10 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
+// const imageUpload = (event)=>{
+//   console.log(event.target.files[0])
+// }
+
 export default function SignUp() {
   const navigate = useNavigate();
   const { classes } = useStyles();
@@ -81,12 +88,14 @@ export default function SignUp() {
       email: '',
       phoneNo: '',
       nicNo: '',
+      photo: '',
       confPassword: '',
       password: '',
     },
     validationSchema: validationSchema,
     validateOnChange: true,
     onSubmit: values => {
+      console.log(values);
       if (values.confPassword === values.password) {
         axios({
           method: 'POST',
@@ -113,7 +122,6 @@ export default function SignUp() {
         })
           .then(result => {
             if (result.value) {
-              
               axios({
                 method: 'POST',
                 url: '/customer/add',
@@ -122,25 +130,34 @@ export default function SignUp() {
                   apartmentNo: values.apartmentNo,
                   email: values.email,
                   phoneNo: values.phoneNo,
+                  photo: values.photo,
                   nicNo: values.nicNo,
                   password: values.password,
                 },
               })
                 .then(() => {
-                  alert('Customer added');
+                  console.log('Customer added');
                   navigate('/login');
                 })
                 .catch(err => {
-                  alert(err);
+                  console.log(err);
                 });
             }
           })
           .catch(err => {
-            alert(err);
+            console.log(err);
           });
       }
     },
   });
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(show => !show);
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
 
   const { handleChange, handleSubmit } = formik;
 
@@ -284,13 +301,15 @@ export default function SignUp() {
                   }
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   fullWidth
                   id="password"
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   className={classes.password}
                   value={formik.values.password}
                   error={
@@ -305,14 +324,28 @@ export default function SignUp() {
                       ? formik.errors['password']
                       : null
                   }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   name="confPassword"
-                  label="Conform Password"
-                  type="password"
+                  label="Confirm Password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   value={formik.values.confPassword}
                   error={formik.errors['confPassword'] ? true : false}
@@ -322,9 +355,23 @@ export default function SignUp() {
                       ? formik.errors['confPassword']
                       : null
                   }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} marginTop="10px">
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
@@ -336,18 +383,20 @@ export default function SignUp() {
             <Button
               type="submit"
               fullWidth
+              marginTop="16px"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{
+                backgroundColor: '#006ee6',
+              }}
             >
               Get OTP
             </Button>
           </Box>
           <br></br>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link component="button" variant="body2" to="/login">
-                Already have an account? Sign in
-              </Link>
+            <Grid item marginTop="16px">
+              <NavLink to="/login">Already have an account? Sign in</NavLink>
             </Grid>
           </Grid>
         </Box>

@@ -44,7 +44,7 @@ const DateRange = (prpos) =>{
 
         </div>
             
-            <div className='App'>
+            <div className='app'>
             <div div className='repo'>
            <div className='lineChart'>
            <LineChart 

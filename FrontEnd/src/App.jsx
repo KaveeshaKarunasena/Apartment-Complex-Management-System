@@ -1,29 +1,35 @@
 import './App.css';
 import MainDash from './component/adminComponents/maniDash/MainDash';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import Navbar from './component/adminComponents/maniDash/Navbar';
+import HomeNavBar from './component/adminComponents/maniDash/HomeNavBar';
+import ManagerNavBar from './component/adminComponents/maniDash/ManagerNavBar';
 import Cards from './component/adminComponents/cards/Cards';
 import AddApartments from './component/adminComponents/navPages/AddApartments';
 import Maintenance from './component/adminComponents/navPages/Maintenance';
 import ViewApartments from './component/adminComponents/navPages/ViewApartments';
-import { SnackbarProvider } from 'notistack';
 import { makeStyles } from 'tss-react/mui';
 
 import SignUp from './component/userComponent/component/SignUp';
 import SignIn from './component/userComponent/component/SignIn';
 import ProfilePage from './component/userComponent/component/ProfilePage';
+import Payment from './component/userComponent/component/Payment';
 import Home from './component/userComponent/component/Home';
 import UpdateCustomer from './component/userComponent/component/UpdateCustomer'
 import RecoveryPassword from './component/userComponent/component/RecoveryPassword'
 import RecoveryPasswordSetPage from './component/userComponent/component/RecoveryPasswordSetPage'
+import CustomerReport from './component/userComponent/component/CustomerReport'
+import ViewPayment from './component/userComponent/component/ViewPayment'
 
 import RepoDash from './component/adminComponents/maniDash/RepoDash';
+import ManagerRepoDash from './component/adminComponents/maniDash/ManagerRepoDash';
 import ManagerDashboard from './component/managerComponents/managerDashboard';
+import ServiceReport from './component/managerComponents/serviceReport';
 import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
-import EditEmployee from './component/Employee_Components/navPages/EditEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+ 
 
 import Form from './component/adminComponents/navPages/Form'
 
@@ -88,6 +94,7 @@ const useStyles = makeStyles()(theme => ({
 function SupserAdminRoute() {
   return (
     <SuperAdminAuthGuard>
+      <Navbar />
       <Routes>
         <Route path="" element={<MainDash />}>
           <Route path="" element={<Cards />} />
@@ -110,6 +117,7 @@ function SupserAdminRoute() {
 function AdminRoute() {
   return (
     <AdminAuthGuard>
+      <ManagerNavBar />
       <Routes>
         <Route path="" element={<ManagerDashboard />}>
           <Route path="" element={<Cards />} />
@@ -119,6 +127,10 @@ function AdminRoute() {
           <Route path="serviceProvider" element={<ServiceProvider />} />
           <Route path="notices" element={<Cards />} /> 
         </Route>
+        <Route path="repo" element={<ManagerRepoDash />}>
+          <Route path="serviceProvider" element = {<ServiceReport/>} />
+        </Route>
+
       </Routes>
     </AdminAuthGuard>
   );
@@ -127,13 +139,17 @@ function AdminRoute() {
 function ProtectedRoutes() {
   return (
     <AuthGuard>
-      <HomeBar></HomeBar>
+      <HomeNavBar />
+      <HomeBar/>
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="payment" element={<Payment/>}/>
+        <Route path="viewPayment" element={<ViewPayment/>} />
         {/* <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} /> */}
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
+        <Route path="customerReport/:id" element={<CustomerReport/>} />
       </Routes>
     </AuthGuard>
   );
@@ -142,10 +158,11 @@ function ProtectedRoutes() {
 function GuestRoutes() {
   return (
     <GuestGuard>
+      <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-        <Route path="recoveryPassword" element={<RecoveryPassword />} />
-        <Route path="recoveryPasswordSet/:email" element={<RecoveryPasswordSetPage />} />
+        /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPasswordSet" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />
       </Routes>
@@ -158,8 +175,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-
+  
       <Routes>
         <Route path="app/*" element={<ProtectedRoutes />} />
         <Route path="admin/*" element={<SupserAdminRoute />} />

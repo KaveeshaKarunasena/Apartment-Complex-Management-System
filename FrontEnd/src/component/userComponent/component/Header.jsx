@@ -13,10 +13,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-//import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
-//import clsx from 'clsx';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { Dispatch } from 'react';
 import { AuthContext } from '../../AuthProvider';
 
@@ -25,7 +23,7 @@ const useStyles = makeStyles()(theme => ({
   nav: {
     '&:hover': {
       backgroundColor: 'none',
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     textDecoration: 'none',
     color: 'White',
@@ -45,13 +43,12 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
-  
+
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(24),
     width: 'auto',
-   
   },
- // borderRadius:'16px'
+  // borderRadius:'16px'
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -81,11 +78,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
- // const {classes} = useStyles();
-  const handleProfileMenuOpen = (event) => {
+  // const {classes} = useStyles();
+  const handleProfileMenuOpen = event => {
     setAnchorEl(true);
   };
 
@@ -99,16 +96,16 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleLogOut = async () => {
-    localStorage.removeItem("_chuck-38e6e39a-ab69-4aac-bb0c");
-    await Dispatch({ type: "reset", payload: AuthContext });
+    localStorage.removeItem('_chuck-38e6e39a-ab69-4aac-bb0c');
+    await Dispatch({ type: 'reset', payload: AuthContext });
   };
 
   const handleProfile = async () => {
-    navigate('/app/profile')
+    navigate('/app/profile');
   };
 
   // eslint-disable-next-line no-unused-vars
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -129,10 +126,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleProfile}>
-          Profile
-      </MenuItem>
-      
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+
       <MenuItem onClick={handleLogOut}>Logout</MenuItem>
     </Menu>
   );
@@ -160,7 +155,6 @@ export default function PrimarySearchAppBar() {
             <MailIcon />
           </Badge>
         </IconButton>
-        
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -172,7 +166,6 @@ export default function PrimarySearchAppBar() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-       
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -184,14 +177,13 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        
       </MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: '#2E3B55' }} >
+      <AppBar position="static" style={{ background: '#2E3B55' }}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -199,7 +191,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-           WESCCOT
+            WESCCOT
           </Typography>
           {/* <NavLink
           to="/app"
@@ -234,7 +226,11 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
               <Badge badgeContent={4} color="error">
                 <MailIcon />
               </Badge>
@@ -260,20 +256,10 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
     </Box>
   );
-
-
 }
-
-
-
-
-
-
-

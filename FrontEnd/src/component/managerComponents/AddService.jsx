@@ -101,21 +101,21 @@ const AddService = props => {
   const addServiceProvider = async formData => {
     try {
      
-
-      // const formData1 = new FormData();
-      // formData1.append("companyName", formData.companyName);
-      // formData1.append("location", formData.location);
-      // formData1.append("serviceType", formData.serviceType);
-      // formData1.append("contactNumber", formData.contactNumber);
-      // formData1.append('photo', selectedFile);
+      const formData1 = new FormData();
+      formData1.append("companyName", formData.companyName);
+      formData1.append("location", formData.location);
+      formData1.append("serviceType", formData.serviceType);
+      formData1.append("contactNumber", formData.contactNumber);
+      formData1.append("photo", selectedFile);
+      
 
       const res1 = await axios
-        .post('/service-provider/add', formData)
+        .post('/service-provider/add', formData1)
         .then(res => {
-          alert(res.data);
+          console.log(res.data);
         })
         .catch(err => {
-          alert(err.message);
+          console.log(err.message);
         });
 
       // const res = await axios.post('/service-provider/add', { ...formData });
