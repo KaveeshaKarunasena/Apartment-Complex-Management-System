@@ -97,9 +97,7 @@ const HomeBar = () => {
   return (
     <AppBar position="static" className="app-bar">
       <Toolbar style={{ align: 'center' }}>
-       <Button color="inherit">
-        <NavLink to="/app">Home</NavLink>
-        </Button>
+      
         <Button color="inherit">
           <NavLink to="" style={{ textDecoration: 'none', color: 'white' }}>
             Home

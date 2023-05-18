@@ -60,9 +60,9 @@ function HomePage() {
 
   const calcTotal = () => {
     let total = 0;
-    cart.forEach(item => {
+   cart.forEach(item => {
       total += item.fee;
-    });
+    }); 
     return total;
   };
 

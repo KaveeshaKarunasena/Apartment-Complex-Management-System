@@ -28,6 +28,7 @@ router.get('/getCustomer/:id', viewCustomer);
 
 router.put('/update/:id', updateProfileById);
 
+router.post("/login",login);
 //router.delete('/delete/:id', deleteProfile);
 
 router.get('/', viewProfiles);

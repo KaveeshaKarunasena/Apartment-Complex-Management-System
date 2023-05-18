@@ -30,6 +30,7 @@ import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRep
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 import Amenity from './component/userComponent/amenitiesComponent/amenity';
+import AmenityReport from './component/adminComponents/Amenity/report/Amenityreport';
  
 
 
@@ -92,7 +93,7 @@ function SupserAdminRoute() {
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
-          <Route path="amenity" element={<AddApartments />} />
+          <Route path="amenity" element={<AmenityReport/>} />
           <Route path="Comlpain/reprot" element={<Report_complain />} />
         </Route>
       </Routes>

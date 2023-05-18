@@ -59,7 +59,7 @@ function AmenitiyCard({ product, handleCart, inCart, handleClose }) {
         <CardMedia
           component="img"
           sx={{ height: 250, padding: '1em 1em 0 1em', objectFit: 'contain' }}
-          image={product.images.url}
+          image={`http://localhost:5000/uploads/${product.images}`}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary" align="center">
