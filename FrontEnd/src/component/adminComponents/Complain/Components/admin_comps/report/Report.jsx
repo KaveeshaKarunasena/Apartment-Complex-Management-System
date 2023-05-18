@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Calander from "../../../../rightSide/CalenderComp"
-//import Chart from "../../Complain_chart/Complain_chart"
+// import Chart from "../../Complain_chart/Complain_chart"
+import './Report.scss'
+
 
 const Report = () => {
 
