@@ -1,86 +1,148 @@
+
+
 import { useEffect, useState } from 'react';
-import {Chart as ChartJs, Tooltip, Title, ArcElement, Legend} from 'chart.js';
+import { Chart as ChartJs, Tooltip, Title, ArcElement, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import moment from 'moment';
 import axios from 'axios';
-ChartJs.register(
-  Tooltip, Title, ArcElement, Legend
-);
+import Chart from 'chart.js/auto';
 
+ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
 function PieChart() {
   const [data, setData] = useState({
-    datasets: [{
+    datasets: [
+      {
         data: [10, 20, 30, 40, 50, 60, 70],
-        backgroundColor:[
-          'purple',
-          'orange',
-          'blue',
-          'red',
-          'yellow',
-          'green',
-          'pink'
-        ]
-    },
-  ],
-  labels: [
+        backgroundColor: [
+          '#c5a3e9',
+          '#f6d365',
+          '#95c6e7',
+          '#ff7b7b',
+          '#f6a6b2',
+          '#adebad',
+          '#e7f196',
+        ],
+      },
+    ],
+    labels: [
       'Yoga Deck',
       'Gymnasium',
       'Kids Club',
       'Kiddies Play Area',
       'Kiddies Pool',
       'Infinity Pool',
-      'Laundry'
+      'Laundry',
+    ],
+  });
 
-  ], 
-});
+  useEffect(() => {
+    const fetchTotal = async () => {
+      const { data } = await axios.get('/product/getTotalFee');
+      console.log(data);
 
-const [total, setTotal] = useState({data:0});
+      setData({
+        labels: data.map(
+          (stat) =>
+            `${stat._id} (${(
+              (stat.totalOrdered / data.reduce((acc, curr) => acc + curr.totalOrdered, 0)) *
+              100
+            ).toFixed(2)}%)`
+        ),
+        datasets: [
+          {
+            label: 'Total Amenity Members',
+            data: data.map((stat) => stat.totalOrdered),
+            backgroundColor: [
+              '#c5a3e9',
+              '#f6d365',
+              '#95c6e7',
+              '#ff7b7b',
+              '#f6a6b2',
+              '#adebad',
+              '#e7f196',
+            ],
+          },
+        ],
+      });
+    };
 
+    fetchTotal();
+  }, []);
 
-  useEffect(()=> {
-   
+  const handleDownload = () => {
+    // Logic for downloading the chart image
+    const canvas = document.getElementById('pie-chart');
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pie-chart.png';
+    a.click();
+  };
 
-  const fetchTotal = async () =>{
-    const {data} = await axios.get('/product/getTotalFee');
-        
-        const data2= data.total.map(item =>item.total)
+  const handleFilter = () => {
+    // Logic for filtering the chart data
+    // Add your filter functionality here
+    console.log('Filter button clicked');
+  };
 
-        setTotal({
-          data :data2[0]
- })   
-  }
-  fetchTotal();
-  }, [])
-
-  // const text1 =  total && total.map(item => {return item.data})
-
-  // const text2 = total.data;
-  
-  // const plugins = [{
-  //   beforeDraw: function(chart,total) {
-  //    var width = chart.width,
-  //        height = chart.height,
-  //        ctx = chart.ctx;
-  //        ctx.restore();
-  //        var fontSize = (height / 160).toFixed(2);
-  //        ctx.font = fontSize + "em sans-serif";
-  //        ctx.textBaseline = "top";
-  //        var text  = total.data,
-  //        textX = Math.round((width - ctx.measureText(text).width) / 2),
-  //        textY = height / 2;
-  //        ctx.fillText(text, textX, textY);
-  //        ctx.save();
-  //   } 
-  // }]
   return (
-    <div style={{width:'20%', height:'20%'}}>
-      <Doughnut data={data}
-      type="doughnut" 
-      // plugins={plugins} 
-      />
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ width: '30%', height: '30%' }}>
+          <Doughnut
+            data={data}
+            type="doughnut"
+            options={{
+              plugins: {
+                legend: {
+                  display: true,
+                  labels: {
+                    font: {
+                      weight: 'bold',
+                      color: 'black',
+                    },
+                  },
+                },
+              },
+            }}
+            id="pie-chart"
+          />
+        </div>
+      </div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <h3>Labels and Percentages:</h3>
+        {data.labels.map((label, index) => (
+          <p key={index}>{label}</p>
+        ))}
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '20px',
+        }}
+      >
+        <button
+          style={{ backgroundColor: 'green', color: 'white', marginRight: '10px' }}
+          onClick={handleDownload}
+        >
+          Download
+        </button>
+        <button style={{ backgroundColor: 'blue', color: 'white' }} onClick={handleFilter}>
+          Filter
+        </button>
+      </div>
     </div>
   );
 }
 
 export default PieChart;
+
+

@@ -126,21 +126,7 @@ const getServiceProviderNames = async (req, res) => {
 };
 
 const getCommissionByCategory = async (req, res) => {
-  // const monthWords = [
-  //   'Jan',
-  //   'Feb',
-  //   'Mar',
-  //   'Apr',
-  //   'May',
-  //   'June',
-  //   'July',
-  //   'Aug',
-  //   'Sep',
-  //   'Oct',
-  //   'Nov',
-  //   'Dec',
-  // ];
-
+  const targetMonth = +req.params.month;
   await Payment.aggregate([
     {
       $addFields: {
@@ -156,6 +142,13 @@ const getCommissionByCategory = async (req, res) => {
         foreignField: "_id",
         as: 'services',
       },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{$month: "$createdAt"}, targetMonth]
+        }
+      }
     },
     {
         $group: {
@@ -174,28 +167,49 @@ const getCommissionByCategory = async (req, res) => {
   });
 
 
-//   await Payment.aggregate([
-//     { $match: { category: 'Services' } },
-//     {
-//       $group: {
-//         _id: { month: { $month: '$createdAt' } },
-//         total: { $sum: { $multiply: ['$amount', 0.1] } },
-//       },
-//     },
-//   ]).exec((err, data) => {
-//     if (data) {
-//       data.sort((a, b) => a._id.month - b._id.month);
 
-//       const updatedData = data.map(item => {
-//         item._id.month = monthWords[item._id.month - 1];
-//         return { ...item };
-//       });
-//       res.status(200).json(updatedData);
-//     } else {
-//       res.status(404).json({ err: err });
-//     }
-//   });
 };
+
+const getServicePayment = async (req,res) => {
+
+  const monthWords = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'June',
+    'July',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+    await Payment.aggregate([
+    { $match: { category: 'Services' } },
+    {
+      $group: {
+        _id: { month: { $month: '$createdAt' } },
+        total: { $sum: '$amount'},
+      },
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      data.sort((a, b) => a._id.month - b._id.month);
+
+      const updatedData = data.map(item => {
+        item._id.month = monthWords[item._id.month - 1];
+        return { ...item };
+      });
+      res.status(200).json(updatedData);
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+}
 
 module.exports = {
   newServiceProvider,
@@ -205,4 +219,5 @@ module.exports = {
   viewSingleProvider,
   getServiceProviderNames,
   getCommissionByCategory,
+  getServicePayment
 };

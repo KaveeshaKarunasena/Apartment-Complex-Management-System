@@ -1,5 +1,6 @@
 const Products = require ('../modles/productModel')
-const Customer = require('../modles/Customer')
+const Customer = require('../modles/Customer');
+const productModel = require('../modles/productModel');
 
 
  
@@ -115,15 +116,17 @@ const productCtrl = {
     totalFee : async(req,res) =>{
 
         await Customer.aggregate(
-            [
-               {
-                  '$group': {
-                    '_id': "$cart.category", 
-                    'total': {
-                      $count:{}
+           
+            [   
+                {
+                    $unwind: "$cart"
+                    },
+                    {
+                     $group: {
+                             _id: "$cart.title",
+                              totalOrdered: {$sum: 1}
+                     }
                     }
-                  }
-                }
               ]
         ).exec((err,total) =>{
     
@@ -131,6 +134,7 @@ const productCtrl = {
                 res.status(404).json({ err})
             }
             if(total){
+                res.status(200).json(total)
                console.log(total)
     
             }
