@@ -11,18 +11,27 @@ ChartJs.register(
 function PieChart() {
   const [data, setData] = useState({
     datasets: [{
-        data: [10, 20, 30],
+        data: [10, 20, 30, 40, 50, 60, 70],
         backgroundColor:[
           'purple',
           'orange',
-          'blue'
+          'blue',
+          'red',
+          'yellow',
+          'green',
+          'pink'
         ]
     },
   ],
   labels: [
-      'Puple',
-      'Orange',
-      'Blue'
+      'Yoga Deck',
+      'Gymnasium',
+      'Kids Club',
+      'Kiddies Play Area',
+      'Kiddies Pool',
+      'Infinity Pool',
+      'Laundry'
+
   ], 
 });
 
@@ -33,14 +42,13 @@ const [total, setTotal] = useState({data:0});
    
 
   const fetchTotal = async () =>{
-    const {data} = await axios.get('/product/getTotalFee')
+    const {data} = await axios.get('/product/getTotalFee');
         
-        const data1 = data.total.map(item =>item.total)
-        
-    
-         
-            
-      
+        const data2= data.total.map(item =>item.total)
+
+        setTotal({
+          data :data2[0]
+ })   
   }
   fetchTotal();
   }, [])

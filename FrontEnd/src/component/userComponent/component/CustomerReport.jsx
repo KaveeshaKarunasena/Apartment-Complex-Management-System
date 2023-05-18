@@ -128,12 +128,12 @@ export default function CustomerReport(props) {
       <Typography
         component="h1"
         variant="h5"
-        style={{ paddingLeft: '40%', marginTop: '10' }}
+        style={{ paddingLeft: '40%', marginTop: '5%' }}
       >
         Customer Report
       </Typography>
       <div className={classes.root}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ marginTop: '2%' }}>
           <Grid item xs={4} className={classes.cardContainer}>
             <Card>
               <CardContent>
@@ -204,8 +204,15 @@ export default function CustomerReport(props) {
           </Grid>
         </Grid>
       </div>
-      <div style={{ width: '30%', height: '30%', paddingLeft: '33%' }}>
-        <Doughnut data={chart} />
+      <div
+        style={{
+          width: '30%',
+          height: '30%',
+          paddingLeft: '33%',
+          marginTop: '5%',
+        }}
+      >
+        <Doughnut data={chart} />""
       </div>
     </Box>
   );

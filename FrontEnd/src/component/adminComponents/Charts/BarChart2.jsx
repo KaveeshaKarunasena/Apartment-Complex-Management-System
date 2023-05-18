@@ -11,9 +11,15 @@ import {
   Legend,
 } from 'chart.js';
 import { padding } from '@mui/system';
+import { Button } from '@mui/material';
+import { saveAs } from 'file-saver';
+import moment from 'moment';
+import Controls from "../controls/Controls"
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const BarChart2 = () => {
+const BarChart2 = props => {
+  const { startDate, endDate, comand } = props;
+  const [allData, setAllData] = useState([]);
   const [data, setData] = useState({
     labels: ['Red', 'Yellow', 'Blue'],
     datasets: [
@@ -66,19 +72,74 @@ const BarChart2 = () => {
           },
         ],
       });
+      setAllData(data.total);
+      console.log(allData);
     };
     fetchData();
   }, []);
+
+  const handleSubmit = () => {
+    let filtered = allData.filter(allData => {
+      // let date2 = moment(allData.date).format('YYYY-MM-DD')
+      let Chdate = new Date(allData.date);
+      //  console.log(Chdate)
+      if (Chdate >= startDate && Chdate <= endDate) {
+        const filterData = Chdate;
+        console.log(filterData);
+
+        return filterData;
+      }
+    });
+
+    console.log(filtered);
+    setData({
+      labels: filtered.total && filtered.total.map(item => item._id),
+      datasets: [
+        {
+          data: filtered.total && filtered.total.map(item => item.total),
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+          ],
+          // borderWidth :1,
+          // barPercentage: 0.9,
+          // categoryPercentage: 1,
+        },
+      ],
+    });
+    console.log(startDate);
+    console.log(endDate);
+
+    console.log(filtered);
+  };
+
+  const saveCanvas = () => {
+    //save to png
+    const canvasSave = document.getElementById('barChart');
+    canvasSave.toBlob(function (blob) {
+      saveAs(blob, 'BarChart.png');
+    });
+  };
 
   return (
     <div
       style={{
         padding: '0px',
         width: '40%',
-        height: '70%',
+        height: '40%',
       }}
     >
-      <Bar data={data} options={options}></Bar>
+      <Bar id ="barChart" data={data} options={options}></Bar>
+      <Controls.Button
+        text="Download"
+        color="secondary"
+        onClick={() => saveCanvas()} />
+
+      <Controls.Button
+        text="Filter"
+        color="primary"
+        onClick={handleSubmit} />
     </div>
   );
 };

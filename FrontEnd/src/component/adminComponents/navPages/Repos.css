@@ -1,8 +1,8 @@
-/* 
-.App {
-    padding: 0.5rem 3.5rem; 
+
+.app {
+    /* padding: 0.5rem 3.5rem; 
     color: var(--black);
-    background: rgb(226, 217, 217); 
+    background: rgb(226, 217, 217);  */
     height: 100hv;
     
     margin-right: 0%;
@@ -12,14 +12,14 @@
 .repo {
     display:flex;
     margin-top: 60px;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 .repo2 {
     display:flex;
     margin-top: 10%;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 20px;
+    margin-right: 30px;
 }
 
 
@@ -33,10 +33,11 @@
 .pieChart {
     
     margin-top: 60px;
+    padding-left: 10%;
    
 }
 
 .table{
-    padding-right: 40px;
+    padding-left: 70px;
     margin-bottom: 10%;
-} */
+}

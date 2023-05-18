@@ -17,15 +17,16 @@ import { IconButton } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import CustomerReport from './CustomerReport';
 
-export default function ProfilePage() {
+export default function ProfilePage(props) {
   let authPayload = useContext(AuthContext);
   const [customer, setCustomer] = useState([]);
   const decoded = jwt_decode(authPayload.token);
   const Id = decoded.id;
-  const [setGetId] = useState(0);
+  const [getId, setGetId] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
   const navigate = useNavigate();
   const [photoUrl, setPhotoUrl] = useState('');
-  const [setDeleteLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +44,6 @@ export default function ProfilePage() {
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleProps = id => {
@@ -81,7 +81,7 @@ export default function ProfilePage() {
     }
   };
 
-  const handleDeletePhoto = async () => {
+  const handleDeletePhoto = async photoUrl => {
     try {
       setDeleteLoading(true);
       const result = await Swal.fire({
