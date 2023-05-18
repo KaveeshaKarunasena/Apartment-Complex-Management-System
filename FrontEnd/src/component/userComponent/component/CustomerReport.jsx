@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Typography, Grid, Box } from '@material-ui/core';
+import { Card, CardContent, Typography, Grid, Box, Button } from '@material-ui/core';
 import { AuthContext } from '../../AuthProvider';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut , Chart } from 'react-chartjs-2';
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { colors } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -19,16 +21,28 @@ const useStyles = makeStyles({
   },
 });
 
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+  },
+  section: {
+    textAlign:'center',
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+});
+
+
+
 export default function CustomerReport(props) {
   let authPayload = useContext(AuthContext);
   const decoded = jwt_decode(authPayload.token);
   const classes = useStyles();
   const apartmentNo = decoded.apartmentNo;
-  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
-
   const [count, setCount] = useState(0);
-
   const [amenityAmount, setAmenityAmount] = useState(0);
   const [billAmount, setBillAmount] = useState(0);
   const [serviceAmount, setServiceAmount] = useState(0);
@@ -37,16 +51,12 @@ export default function CustomerReport(props) {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get(
-          `/addPayment/getPayment/${apartmentNo}`
-        );
+        const response = await axios.get(`/addPayment/getPayment/${apartmentNo}`);
         const data = response.data;
-        //console.log(data)
-
-        let amenityAmount = '';
-        let billAmount = '';
-        let serviceAmount = '';
-        let otherAmount = '';
+        let amenityAmount = 0;
+        let billAmount = 0;
+        let serviceAmount = 0;
+        let otherAmount = 0;
 
         data.forEach(payment => {
           if (payment.category === 'Amenity Chargers') {
@@ -59,21 +69,17 @@ export default function CustomerReport(props) {
             otherAmount += payment.amount;
           }
         });
-        //const count = amenityAmount+billAmount+serviceAmount+otherAmount;
+
         setAmenityAmount(amenityAmount);
         setBillAmount(billAmount);
         setServiceAmount(serviceAmount);
         setOtherAmount(otherAmount);
-
-        // console.log(amenity)
-
         setData(data);
       } catch (err) {
         console.log(err.message);
       }
     };
     fetchPayments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -81,7 +87,6 @@ export default function CustomerReport(props) {
     const bill = parseInt(billAmount, 10);
     const service = parseInt(serviceAmount, 10);
     const other = parseInt(otherAmount, 10);
-
     const sum = amenity + bill + service + other;
     setCount(sum);
   }, [amenityAmount, billAmount, serviceAmount, otherAmount]);
@@ -113,9 +118,30 @@ export default function CustomerReport(props) {
     ],
   };
 
-  // export function App() {
-  //   return <Doughnut data={data} />;
-  // }
+
+  const PdfDocument = ({ amenityAmount, billAmount, serviceAmount, otherAmount, chart }) => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text>Customer Report</Text>
+          <Text>Amenity: Total - {amenityAmount}</Text>
+          <Text>Bill: Total - {billAmount}</Text>
+          <Text>Service: Total - {serviceAmount}</Text>
+          <Text>Other: Total - {otherAmount}</Text>
+          <Text>Total of Payments: {amenityAmount + billAmount + serviceAmount + otherAmount}</Text>
+        </View>
+        <View style={{
+            width: '30%',
+            height: '30%',
+            paddingLeft: '33%',
+            marginTop: '5%',}
+          }>
+          <Chart data={chart} type="doughnut" />
+        </View>
+      </Page>
+    </Document>
+  );
+
   return (
     <Box
       sx={{
@@ -212,8 +238,28 @@ export default function CustomerReport(props) {
           marginTop: '5%',
         }}
       >
-        <Doughnut data={chart} />""
+        <Doughnut data={chart} />
       </div>
+      <Button variant="contained" color="primary" style={{ color: 'white' }}>
+      <PDFDownloadLink
+        document={
+          <PdfDocument
+            amenityAmount={amenityAmount}
+            billAmount={billAmount}
+            serviceAmount={serviceAmount}
+            otherAmount={otherAmount}
+            chart={chart}
+          />
+        }
+        fileName="customer_report.pdf"
+        style={{
+          textDecoration: 'none',
+          color: 'white',
+        }}
+      >
+        {({ loading }) => (loading ? 'Loading...' : 'Download PDF')}
+      </PDFDownloadLink>
+    </Button>
     </Box>
   );
 }
