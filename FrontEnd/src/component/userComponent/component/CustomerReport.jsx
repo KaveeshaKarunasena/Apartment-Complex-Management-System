@@ -7,7 +7,8 @@ import jwt_decode from 'jwt-decode';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut , Chart } from 'react-chartjs-2';
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { colors } from '@mui/material';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -98,168 +99,147 @@ export default function CustomerReport(props) {
         label: '# Chargers',
         data: [amenityAmount, billAmount, serviceAmount, otherAmount],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          '#633EBB',
+          '#BE61CA',
+          '#F2BC5E',
+          '#F13C59',
+          
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+ 
         ],
         borderWidth: 1,
       },
     ],
   };
 
+  const saveAsPDF = () => {
+    const chartContainer = document.getElementById('chart-container');
 
-  const PdfDocument = ({ amenityAmount, billAmount, serviceAmount, otherAmount, chart }) => (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Customer Report</Text>
-          <Text>Amenity: Total - {amenityAmount}</Text>
-          <Text>Bill: Total - {billAmount}</Text>
-          <Text>Service: Total - {serviceAmount}</Text>
-          <Text>Other: Total - {otherAmount}</Text>
-          <Text>Total of Payments: {amenityAmount + billAmount + serviceAmount + otherAmount}</Text>
-        </View>
-        <View style={{
+    html2canvas(chartContainer).then( (canvas) => {
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+      const width = pdf.internal.pageSize.getWidth();
+      const height = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'PNG', 0,0,width, height);
+      pdf.save('chart.pdf');
+
+    });
+  }
+
+  return (
+    <div>
+      <Box
+      id='chart-container'
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{ paddingLeft: '40%', marginTop: '5%' }}
+        >
+          Customer Report
+        </Typography>
+        <div className={classes.root}>
+          <Grid container spacing={2} style={{ marginTop: '2%' }}>
+            <Grid item xs={4} className={classes.cardContainer}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    Amenity
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Total: {amenityAmount}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={4} className={classes.cardContainer}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    Bill
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Total: {billAmount}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              className={classes.cardContainer}
+              alignItems="center"
+            >
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    Service
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Total: {serviceAmount}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              className={classes.cardContainer}
+              alignItems="center"
+            >
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    Other
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Total: {otherAmount}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={4} className={classes.cardContainer}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    Total Of Payments
+                  </Typography>
+                  <Typography color="textSecondary">Total: {count}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
+        <div
+          style={{
             width: '30%',
             height: '30%',
             paddingLeft: '33%',
-            marginTop: '5%',}
-          }>
-          <Chart data={chart} type="doughnut" />
-        </View>
-      </Page>
-    </Document>
-  );
-
-  return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Typography
-        component="h1"
-        variant="h5"
-        style={{ paddingLeft: '40%', marginTop: '5%' }}
-      >
-        Customer Report
-      </Typography>
-      <div className={classes.root}>
-        <Grid container spacing={2} style={{ marginTop: '2%' }}>
-          <Grid item xs={4} className={classes.cardContainer}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  Amenity
-                </Typography>
-                <Typography color="textSecondary">
-                  Total: {amenityAmount}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4} className={classes.cardContainer}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  Bill
-                </Typography>
-                <Typography color="textSecondary">
-                  Total: {billAmount}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            className={classes.cardContainer}
-            alignItems="center"
-          >
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  Service
-                </Typography>
-                <Typography color="textSecondary">
-                  Total: {serviceAmount}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            className={classes.cardContainer}
-            alignItems="center"
-          >
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  Other
-                </Typography>
-                <Typography color="textSecondary">
-                  Total: {otherAmount}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4} className={classes.cardContainer}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  Total Of Payments
-                </Typography>
-                <Typography color="textSecondary">Total: {count}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </div>
-      <div
-        style={{
-          width: '30%',
-          height: '30%',
-          paddingLeft: '33%',
-          marginTop: '5%',
-        }}
-      >
-        <Doughnut data={chart} />
-      </div>
-      <Button variant="contained" color="primary" style={{ color: 'white' }}>
-      <PDFDownloadLink
-        document={
-          <PdfDocument
-            amenityAmount={amenityAmount}
-            billAmount={billAmount}
-            serviceAmount={serviceAmount}
-            otherAmount={otherAmount}
-            chart={chart}
-          />
-        }
-        fileName="customer_report.pdf"
-        style={{
-          textDecoration: 'none',
-          color: 'white',
-        }}
-      >
-        {({ loading }) => (loading ? 'Loading...' : 'Download PDF')}
-      </PDFDownloadLink>
-    </Button>
-    </Box>
+            marginTop: '5%',
+          }}
+        >
+          <Doughnut data={chart} />
+        </div>
+      
+      </Box>
+      <Button onClick={saveAsPDF} style={{
+            backgroundColor:'#006ee6',
+            
+          }}>
+        Download PDF
+      </Button>
+    </div>
   );
 }

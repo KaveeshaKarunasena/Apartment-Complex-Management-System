@@ -13,24 +13,12 @@ function PieChart() {
     datasets: [{
         data: [10, 20, 30, 40, 50, 60, 70],
         backgroundColor:[
-          'purple',
-          'orange',
-          'blue',
-          'red',
-          'yellow',
-          'green',
-          'pink'
+          '#c5a3e9', '#f6d365', '#95c6e7', '#ff7b7b', '#f6a6b2', '#adebad', '#e7f196'
         ]
     },
   ],
   labels: [
-      'Yoga Deck',
-      'Gymnasium',
-      'Kids Club',
-      'Kiddies Play Area',
-      'Kiddies Pool',
-      'Infinity Pool',
-      'Laundry'
+      'Yoga Deck','Gymnasium','Kids Club','Kiddies Play Area','Kiddies Pool','Infinity Pool','Laundry'
 
   ], 
 });
@@ -74,12 +62,11 @@ const [total, setTotal] = useState({data:0});
   //   } 
   // }]
   return (
-    <div style={{width:'20%', height:'20%'}}>
-      <Doughnut data={data}
-      type="doughnut" 
-      // plugins={plugins} 
-      />
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ width: '30%', height: '30%' }}>
+      <Doughnut data={data} type="doughnut" />
     </div>
+  </div>
   );
 }
 
