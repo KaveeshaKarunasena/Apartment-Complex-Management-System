@@ -83,7 +83,6 @@ const LineChart = (props) => {
      
       console.log("Line Chart :",data)
 
-      console.log(setChartData.labels);
     };
     fetchData();
   }, []);
