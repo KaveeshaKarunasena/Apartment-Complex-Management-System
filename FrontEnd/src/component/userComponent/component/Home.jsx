@@ -65,29 +65,29 @@ function HomePage() {
   //   }); 
   //   return total;
   // };
-  const calcTotal = () => {
-    let total = 0;
-    cart.forEach(item => {
-      total += item.fee;
-    });
+  // const calcTotal = () => {
+  //   let total = 0;
+  //   cart.forEach(item => {
+  //     total += item.fee;
+  //   });
   
-    if (total === 0) {
-      return 'Empty';
-    } else {
-      return `Total: Rs.${total}`;
-    }
-  };
+  //   if (total === 0) {
+  //     return 'Empty';
+  //   } else {
+  //     return `Total: Rs.${total}`;
+  //   }
+  // };
 
-  console.log(calcTotal());
-  const inCart = true;
-  useEffect(() => {
-    const getCart = async () => {
-      const res = await axios.get(`/customer/getCart?id=${Id}`);
-      setCart(res.data);
-    };
+  // console.log(calcTotal());
+  // const inCart = true;
+  // useEffect(() => {
+  //   const getCart = async () => {
+  //     const res = await axios.get(`/customer/getCart?id=${Id}`);
+  //     setCart(res.data);
+  //   };
 
-    getCart();
-  }, [Id]);
+  //   getCart();
+  // }, [Id]);
 
   return (
     <div>
@@ -99,7 +99,7 @@ function HomePage() {
             </Typography>
           </CardContent>
         </Card>
-        {calcTotal()}
+        {/* {calcTotal()} */}
       </div>
       {cart && cart.length ? (
         <div className="products">
@@ -109,7 +109,7 @@ function HomePage() {
                 key={product._id}
                 product={product}
                 state={state}
-                inCart={inCart}
+                //inCart={inCart}
               />
             );
           })}
