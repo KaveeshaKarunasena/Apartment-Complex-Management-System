@@ -18,6 +18,7 @@ import Popup from './Popup';
 import IconButton from '@mui/material/IconButton';
 import { useSnackbar } from 'notistack';
 import { AuthContext } from '../../AuthProvider';
+import ConfirmDialog from './ConfirmDialod';
 
 function ViewApaertment() {
   const [apartment, setApartment] = useState([]);
@@ -28,7 +29,9 @@ function ViewApaertment() {
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const keys = ['apartmentno', 'type', 'status', 'email'];
-  
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+
+
   let authPayload = useContext(AuthContext);
   const ctx = authPayload.token
   const headers = { 'Authorization': 'Bearer '+ctx  };
@@ -58,6 +61,10 @@ function ViewApaertment() {
   }, []);
 
   const deleteDetails = async id => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+  })
     await axios
       .delete(`/apartment/delete/${id}`,{headers})
       .then(() => {
@@ -149,7 +156,14 @@ function ViewApaertment() {
                       </IconButton>
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton onClick={() => deleteDetails(data._id)}>
+                      <IconButton onClick={() => {
+                                                setConfirmDialog({
+                                                    isOpen: true,
+                                                    title: 'Are you sure to delete this record?',
+                                                    subTitle: "You can't undo this operation",
+                                                    onConfirm: () =>{ deleteDetails(data._id) }
+                                                })
+                                            }}>
                         <DeleteIcon style={{ color: 'red' }} />
                       </IconButton>
                     </TableCell>
@@ -179,6 +193,10 @@ function ViewApaertment() {
         setApartment={setApartment}
         getId={getId}
       ></Popup>
+       <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
     </div>
   );
 }

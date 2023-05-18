@@ -31,9 +31,12 @@ const customerSchema = new Schema({
     photo:{
         type: String,
         default: '../public/assert/profile.png'
-    }
+    },
+    cart: {
+      type: Object,
+      default: {},
+    },
+  });
 
-})
-
-const Customer = mongoose.model("Customer",customerSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 module.exports = Customer;

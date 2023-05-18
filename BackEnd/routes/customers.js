@@ -15,23 +15,34 @@ const{
     viewCustomer,
     upload
 } = require('../Controller/coustomerController');
-
+const{
+  addCart,
+  getCart,
+  deleteCart
+}= require('../Controller/Cart');
 router.post("/add",newSignUp);
 
+router.get('/get', authGuard, viewProfileById);
+
+router.get('/getCustomer/:id', viewCustomer);
+
+router.put('/update/:id', updateProfileById);
+
 router.post("/login",login);
+//router.delete('/delete/:id', deleteProfile);
 
-router.get("/get",authGuard,viewProfileById);
-
-router.get("/getCustomer/:id",viewCustomer);
-
-router.put("/update/:id",updateProfileById);
-
+router.get('/', viewProfiles);
 router.put("/upload/:id",uploadMiddleware.single("photo"),upload)
 
 router.delete("/delete/:id/photo",deleteProfilePic);
 
-router.get("/",viewProfiles);
+router.put('/recoverypassword', resetPassword);
 
+// add to cart route
+router.put('/addcart', addCart);
+router.get('/getCart', getCart);
+router.delete('/deleteItem/:id/:itemId', deleteCart);
 router.put("/recoverypassword/:email",resetPassword);
 
-module.exports= router;
+router.put("/recoverypassword/:email",resetPassword);
+module.exports = router;

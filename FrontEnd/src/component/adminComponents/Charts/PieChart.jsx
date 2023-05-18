@@ -3,15 +3,20 @@ import {Chart as ChartJs, Tooltip, Title, ArcElement, Legend} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import moment from 'moment';
 import axios from 'axios';
+import {
+  Button,
+} from '@mui/material';
+import { saveAs } from 'file-saver';
+import Controls from "../controls/Controls"
 ChartJs.register(
   Tooltip, Title, ArcElement, Legend
 );
 
 
-function PieChart() {
-  const [data, setData] = useState({
+function PieChart(props) {
+  const [chartData, setChartData] = useState({
     datasets: [{
-        data: [10, 20, 30],
+        data: [10, 20, 30,40,50,60,70,80,90],
         backgroundColor:[
           'red',
           'blue',
@@ -27,14 +32,18 @@ function PieChart() {
 });
 
 const [total, setTotal] = useState({data:0});
-
+const {startDate,endDate,comand} = props
+const [allData, setAllData] = useState([])
 
   useEffect(()=> {
     const fetchData = async () =>  {
       const {data} = await axios.get('/maintenance/getTotalByDate')
-        //alert("resss", data.totalCost)
+        console.log("Pie Chart", data.totalCost)
+        const total = data.totalCost
+        setAllData(data.totalCost)
+        console.log("allData",allData)
 
-        setData(
+        setChartData(
           {
             datasets: [{
                 data: data.totalCost && data.totalCost.map(item => item.totalCost),
@@ -49,11 +58,15 @@ const [total, setTotal] = useState({data:0});
         }
         ) 
     }
+
+   
+    
+    
   fetchData();
 
   const fetchTotal = async () =>{
     const {data} = await axios.get('/maintenance/getTotalCost')
-        alert("resss", data.total)
+        // alert("resss", data.total)
         const data1 = data.total.map(item =>item.total)
         
         setTotal({
@@ -64,6 +77,56 @@ const [total, setTotal] = useState({data:0});
   }
   fetchTotal();
   }, [])
+
+  const handleSubmit = () =>{
+    
+  console.log("allData",allData)
+    let filtered = allData.filter((allData)=>{
+
+      // let date2 = moment(allData.date).format('YYYY-MM-DD')
+      let Chdate = new Date(allData._id)
+       console.log(Chdate)
+       if(Chdate >= startDate && Chdate <= endDate){
+         const filterData = Chdate
+         console.log(filterData)
+         
+          return filterData
+         
+       }
+       
+    })
+    
+    
+    console.log(filtered)
+    setChartData(
+      {
+        datasets: [{
+            data: filtered && filtered.map(item => item.totalCost),
+            backgroundColor:[
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ]
+        },
+      ],
+      labels:filtered && filtered.map(item => {return moment(item._id).format('YYYY-MM-DD')}),
+    }
+    );
+    console.log(startDate)
+    console.log(endDate)
+
+    console.log(filtered)
+
+
+}
+
+const saveCanvas = ()  => {
+  //save to png
+  const canvasSave = document.getElementById('pieChart');
+  canvasSave.toBlob(function (blob) {
+      saveAs(blob, "PieChart.png")
+  })
+}
 
   // const text1 =  total && total.map(item => {return item.data})
 
@@ -86,11 +149,30 @@ const [total, setTotal] = useState({data:0});
   //   } 
   // }]
   return (
-    <div style={{width:'20%', height:'20%'}}>
-      <Doughnut data={data}
+    <div style={{width:'40%', height:'40%'}}>
+      <Doughnut 
+      id ="pieChart"
+      data={chartData}
       type="doughnut" 
       // plugins={plugins} 
       />
+      <div
+      style={{
+       paddingTop: '30px',
+       paddingLeft:'90px'
+      }}>
+
+      <Controls.Button
+        text="Download"
+        color="secondary"
+        onClick={() => saveCanvas()} />
+
+      <Controls.Button
+        text="Filter"
+        color="primary"
+        onClick={handleSubmit} />
+      </div >
+      
     </div>
   );
 }

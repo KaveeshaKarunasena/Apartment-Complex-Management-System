@@ -1,5 +1,13 @@
 const Products = require ('../modles/productModel')
+const Customer = require('../modles/Customer')
 
+
+ 
+
+  
+    
+
+  
 //filter, sorting and paginating
 
 class APIfeatures{
@@ -7,6 +15,8 @@ class APIfeatures{
         this.query = query;
         this.queryString = queryString;
     }
+   
+    //////////     // /////////////////////////////////////////////////////////////////////////
     filtering(){
         const queryObj = {...this.queryString} //queryString = req.query
         
@@ -100,7 +110,34 @@ const productCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-    }
+
+    },
+    totalFee : async(req,res) =>{
+
+        await Customer.aggregate(
+            [
+               {
+                  '$group': {
+                    '_id': "$cart.category", 
+                    'total': {
+                      $count:{}
+                    }
+                  }
+                }
+              ]
+        ).exec((err,total) =>{
+    
+            if(err){
+                res.status(404).json({ err})
+            }
+            if(total){
+               console.log(total)
+    
+            }
+        })
+      }
+
 }
 
-module.exports = productCtrl
+
+module.exports =productCtrl
