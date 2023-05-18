@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState, useContext, createContext } from 'react';
 import { Typography, Card, CardContent } from '@material-ui/core';
+import { AuthContext } from '../../AuthProvider';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import ProductItem from '../amenitiesComponent/ProductItem';
 
 function HomePage() {
-  // eslint-disable-next-line no-unused-vars
+  let authPayload = useContext(AuthContext);
+  const decoded = jwt_decode(authPayload.token);
+  const Id = decoded.id;
+  const state = createContext();
+  const [cart, setCart] = useState([]);
   const styles = `
     .app-bar {
       background-color: #333;
@@ -50,6 +58,25 @@ function HomePage() {
     
   `;
 
+  const calcTotal = () => {
+    let total = 0;
+   cart.forEach(item => {
+      total += item.fee;
+    }); 
+    return total;
+  };
+
+  console.log(calcTotal());
+  const inCart = true;
+  useEffect(() => {
+    const getCart = async () => {
+      const res = await axios.get(`/customer/getCart?id=${Id}`);
+      setCart(res.data);
+    };
+
+    getCart();
+  }, [Id]);
+
   return (
     <div>
       <div className="content">
@@ -60,7 +87,24 @@ function HomePage() {
             </Typography>
           </CardContent>
         </Card>
+        {calcTotal()}
       </div>
+      {cart && cart.length ? (
+        <div className="products">
+          {cart.map(product => {
+            return (
+              <ProductItem
+                key={product._id}
+                product={product}
+                state={state}
+                inCart={inCart}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <p>No products in cart.</p>
+      )}
     </div>
   );
 }
