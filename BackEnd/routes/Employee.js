@@ -9,6 +9,8 @@ const {
   viewEmployeeByname,
   updateEmployee,
   DeleteEmployee,
+  getEmployeeSalaryByDepartment,
+  getEmployeeByDepartment
 } = require('../Controller/Employee-Controller');
 
 router.post('/add', newEmployee);
@@ -30,5 +32,9 @@ router.get('/getById/:name',viewEmployeeByname);
 router.put('/update/:_id', updateEmployee);
 
 router.delete('/delete/:id', DeleteEmployee);
+
+router.get('/getEmployeeSalaryByDepartment',getEmployeeSalaryByDepartment)
+
+router.get('/getEmployeeByDepartment',getEmployeeByDepartment)
 
 module.exports = router;

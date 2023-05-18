@@ -116,7 +116,40 @@ const DeleteEmployee = async (req, res) => {
       });
   });
 };
+const getEmployeeByDepartment = async (req, res) => {
+  await EmployeeModel.aggregate([
+         {
+        $group:{
+          _id: '$department',
+          numberofemployee:{$count:{}}
+        }
+      }]).exec((err, data) => {
+        if (data) {
+          res.status(200).json(data);
+        } else {
+          res.status(404).json({ err: err });
+        }
+      });
+};
+const getEmployeeSalaryByDepartment = async (req, res) => {
+  await EmployeeModel.aggregate([
+       
+       {
+          $group: {
+            _id: '$department',
+            total: { $sum: {$add:['$basicSalary',{$multiply:['$allowance','$overtime']}]}  
+          },
+        },
+      }]).exec((err, data) => {
+        if (data) {
+          
+         res.status(200).json(data);
+        } else {
+          res.status(404).json({ err: err });
+        }
+      });
 
+};
 module.exports = {
   newEmployee,
   viewEmployee,
@@ -124,4 +157,6 @@ module.exports = {
   viewEmployeeByname,
   updateEmployee,
   DeleteEmployee,
+  getEmployeeByDepartment,
+  getEmployeeSalaryByDepartment
 };

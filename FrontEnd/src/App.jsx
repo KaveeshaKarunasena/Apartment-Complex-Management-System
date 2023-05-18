@@ -65,11 +65,13 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
 
-//---client
+
 // import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
 // import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
  import HomeBar from './component/userComponent/component/HomeBar';
 import EditApartments from './component/adminComponents/navPages/EditApartments';
+import EmployeeReport from './component/Employee_Components/navPages/Employee_report';
+
 
 //complain - imports end
 
@@ -131,6 +133,7 @@ function AdminRoute() {
         </Route>
         <Route path="repo" element={<ManagerRepoDash />}>
           <Route path="serviceProvider" element = {<ServiceReport/>} />
+          <Route path="employee" element = {<EmployeeReport/>} />
         </Route>
 
       </Routes>
