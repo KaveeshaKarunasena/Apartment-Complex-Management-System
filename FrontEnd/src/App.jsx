@@ -169,7 +169,7 @@ function GuestRoutes() {
       <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-        /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPassword" element={<RecoveryPassword />} />
         <Route path="recoveryPasswordSet" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />

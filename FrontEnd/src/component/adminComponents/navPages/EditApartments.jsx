@@ -17,6 +17,7 @@ import './RditForm.css';
 import { AuthContext } from '../../AuthProvider';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Controls from "../controls/Controls"
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -263,14 +264,18 @@ const EditApartments = props => {
                   {errors.status}
                 </FormHelperText>
               </FormControl>
-              <Button
-                onClick={() => updateApartment()}
-                type="submit"
-                className={classes.submitBtn}
-                variant="contained"
-              >
-                Update
-              </Button>
+              <div 
+               style={{
+                paddingTop: '20px',
+                
+               }}>
+              <Controls.Button
+                  text="Update"
+                  color="primary"
+                  onClick={updateApartment} />
+
+              </div>
+              
             </>
           );
         }}

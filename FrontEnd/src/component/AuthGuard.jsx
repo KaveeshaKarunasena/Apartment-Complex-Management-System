@@ -23,13 +23,13 @@ const ctx = authPayload.token
       return <Navigate to="/manager" />;
     }
 
-    if (adminString === 'super') {
+    else if (adminString === 'super') {
       return <Navigate to="/admin" />;
     }
 
-    if (!authPayload || !authPayload.token) {
+     if (!authPayload || !authPayload.token) {
       //  navigate("/login")
-      // alert("no payloard");
+      console.log("no payloard");
        return <Navigate to="/login" />;
     }
     return <>{children}</>;
@@ -121,7 +121,7 @@ export function GuestGuard({ children }) {
       if (adminString === 'super') {
         navigate('/admin');
       }
-      if (adminString === 'admin') {
+      else if (adminString === 'admin') {
         navigate('/manager');
       } else {
         navigate('/app');
