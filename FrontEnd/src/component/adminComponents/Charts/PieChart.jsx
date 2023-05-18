@@ -66,7 +66,7 @@ const [allData, setAllData] = useState([])
 
   const fetchTotal = async () =>{
     const {data} = await axios.get('/maintenance/getTotalCost')
-        alert("resss", data.total)
+        // alert("resss", data.total)
         const data1 = data.total.map(item =>item.total)
         
         setTotal({
