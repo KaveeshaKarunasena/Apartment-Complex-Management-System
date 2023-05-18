@@ -29,6 +29,8 @@ import ServiceProvider from './component/managerComponents/serviceProvider';
 import MaintenanceRepo from './component/adminComponents/navPages/MaintenanceRepo';
 import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
+import Amenity from './component/userComponent/amenitiesComponent/amenity';
+import AmenityReport from './component/adminComponents/Amenity/report/Amenityreport';
  
 
 import Form from './component/adminComponents/navPages/Form'
@@ -44,6 +46,7 @@ import {
 } from './component/AuthGuard';
 import VisitorHomePage from './component/userComponent/component/VisitorHomePage';
 
+//complain - imports start
 
  //complain - imports start
 
@@ -69,7 +72,6 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 import EditApartments from './component/adminComponents/navPages/EditApartments';
 
 //complain - imports end
-
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -106,7 +108,7 @@ function SupserAdminRoute() {
         </Route>
         <Route path="repo" element={<RepoDash />}>
           <Route path="" element={<MaintenanceRepo />} />
-          <Route path="amenity" element={<Form/>} />
+          <Route path="amenity" element={<AmenityReport/>} />
           <Route path="Comlpain/reprot" element={<Form />} />
         </Route>
       </Routes>
@@ -125,7 +127,7 @@ function AdminRoute() {
           <Route path="Employee_view" element={<ViewEmployee />} />
           <Route path="staff" element={<Cards />} />
           <Route path="serviceProvider" element={<ServiceProvider />} />
-          <Route path="notices" element={<Cards />} /> 
+          <Route path="notices" element={<Cards />} />
         </Route>
         <Route path="repo" element={<ManagerRepoDash />}>
           <Route path="serviceProvider" element = {<ServiceReport/>} />
@@ -149,6 +151,9 @@ function ProtectedRoutes() {
         {/* <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} /> */}
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
+        <Route path="" element={<Home />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="amenities" element={<Amenity />} />
         <Route path="customerReport/:id" element={<CustomerReport/>} />
       </Routes>
     </AuthGuard>
@@ -181,8 +186,8 @@ function App() {
         <Route path="admin/*" element={<SupserAdminRoute />} />
         <Route path="manager/*" element={<AdminRoute />} />
         <Route path="*" element={<GuestRoutes />} />
+        <Route path="amenity" element={<AddApartments />} />
       </Routes>
-
     </div>
   );
 }
