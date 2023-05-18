@@ -58,12 +58,24 @@ function HomePage() {
     
   `;
 
+  // const calcTotal = () => {
+  //   let total = 0;
+  //  cart.forEach(item => {
+  //     total += item.fee;
+  //   }); 
+  //   return total;
+  // };
   const calcTotal = () => {
     let total = 0;
-   cart.forEach(item => {
+    cart.forEach(item => {
       total += item.fee;
-    }); 
-    return total;
+    });
+  
+    if (total === 0) {
+      return 'Empty';
+    } else {
+      return `Total: Rs.${total}`;
+    }
   };
 
   console.log(calcTotal());
