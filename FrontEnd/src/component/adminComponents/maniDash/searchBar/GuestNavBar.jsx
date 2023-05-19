@@ -19,10 +19,8 @@ import { NavLink } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
-import AppointmentHandler from './AppointmentHandler';
-import { useNavigate } from "react-router-dom";
-import { Dispatch } from 'react';
-import { AuthContext } from '../../AuthProvider';
+
+import { useNavigate } from 'react-router-dom';
 
 const DUMMY_DATA = [
   {
@@ -110,9 +108,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -133,23 +131,13 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
-  const handleLogOut = async () => {
-    localStorage.removeItem('token');
-    
-    navigate('/login')
-  };
+  const handleLogOut = async () => {};
 
-  const handleProfile = async () => {
-    navigate('/app/profile')
-  };
+  const handleProfile = async () => {};
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const showAppointment = () => {
-    setIsModalOpen(!isModalOpen);
-  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -231,106 +219,55 @@ export default function PrimarySearchAppBar() {
 
   return (
     <React.Fragment>
-    <AppointmentHandler isModalOpen = {isModalOpen} toggleModal = {showAppointment} DUMMY_DATA = {DUMMY_DATA}/>
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: 'black' }}>
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            WESCCOT
-          </Typography>
-          <NavLink
-            to="/manager"
-            style={({ isActive }) => {
-              return {
-                frontWeight: isActive ? 'bold' : 'normal',
-                color: isActive ? 'green' : 'white',
-              };
-            }}
-            className={clsx(classes.nav, classes.p2)}
-          >
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" style={{ background: '#000000' }}>
+          <Toolbar>
             <Typography
-              variant="h6"
+              component="h1"
+              variant="h5"
               noWrap
-              component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              OverView
+              WESCCOT
             </Typography>
-          </NavLink>
 
-          <NavLink
-            to="/admin/repo"
-            style={({ isActive, isPending }) => {
-              return {
-                fontWeight: isActive ? 'bold' : '',
-                color: isActive ? 'green' : 'white',
-              };
-            }}
-            className={clsx(classes.nav)}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-              style={{ paddingLeft: '15px', frontWeight: 'bold' }}
-            >
-              Report
-            </Typography>
-          </NavLink>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={showAppointment}
-            >
-              <Badge badgeContent={DUMMY_DATA.length} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={4} color="error">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={DUMMY_DATA.length} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
     </React.Fragment>
   );
 }
-

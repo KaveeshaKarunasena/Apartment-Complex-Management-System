@@ -42,7 +42,7 @@ router.put('/recoverypassword', resetPassword);
 router.put('/addcart', addCart);
 router.get('/getCart', getCart);
 router.delete('/deleteItem/:id/:itemId', deleteCart);
-router.put("/recoverypassword/:email",resetPassword);
+
 
 
 module.exports = router;

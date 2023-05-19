@@ -189,7 +189,7 @@ const deleteProfilePic = async (req, res) => {
     customer.photo = null;
     await customer.save();
 
-    return res.json({ message: 'Profile photo deleted successfully' });
+    return res.status(200).send({ status: 'Profile photo deleted successfully' });
   } catch (error) {
     console.error('Error deleting profile photo:', error);
     return res.status(500).json({ message: 'Internal server error' });

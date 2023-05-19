@@ -84,7 +84,7 @@ const productCtrl = {
             product_id, title: title.toLowerCase(),fee,description,content, images,category
           })
           await newProduct.save()         
-          res.json({msg:"Created a Amenity"})
+          res.status(200).json({msg:"Created a Amenity"})
 
         } catch (err) {
             return res.status(500).json({msg: err.message})     
@@ -93,7 +93,7 @@ const productCtrl = {
     deleteProduct: async(req,res) =>{
         try {
             await Products.findByIdAndDelete(req.params.id)
-            res.json({msg:"Deleted a Product"})
+            res.status(200).json({msg:"Deleted a Product"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -107,7 +107,7 @@ const productCtrl = {
                 title: title.toLowerCase(),fee,description,content, images,category
             })
 
-            res.json({msg: "Updated a Product"})
+            res.status(200).json({msg: "Updated a Product"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
