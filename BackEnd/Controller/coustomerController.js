@@ -36,7 +36,7 @@ const newSignUp = async (req, res) => {
   newCustomer
     .save()
     .then(() => {
-      res.json('Customer Added');
+      res.status(200).json('Customer Added');
     })
     .catch(err => {
       console.log(err);
@@ -145,7 +145,7 @@ const resetPassword = async (req, res) => {
 
     await Customer.updateOne({ email: customer.email }, { password: hash });
 
-    return res.status(201).send({ msg: 'Record updated' });
+    return res.status(200).send({ msg: 'Record updated' });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ error: 'Internal server error' });

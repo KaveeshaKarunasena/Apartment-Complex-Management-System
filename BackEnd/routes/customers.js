@@ -44,5 +44,5 @@ router.get('/getCart', getCart);
 router.delete('/deleteItem/:id/:itemId', deleteCart);
 router.put("/recoverypassword/:email",resetPassword);
 
-router.put("/recoverypassword/:email",resetPassword);
+
 module.exports = router;

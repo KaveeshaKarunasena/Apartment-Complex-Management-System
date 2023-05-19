@@ -41,7 +41,7 @@ const newServiceProvider = async (req, res) => {
 const viewServiceProvider = async (req, res) => {
   ServiceProvider.find()
     .then(serviceProviders => {
-      res.json(serviceProviders);
+      res.status(200).json(serviceProviders);
     })
     .catch(err => {
       console.log(err);

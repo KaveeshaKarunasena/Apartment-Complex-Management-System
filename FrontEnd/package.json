@@ -85,7 +85,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "jest --verbose"
   },
   "eslintConfig": {
     "extends": [
