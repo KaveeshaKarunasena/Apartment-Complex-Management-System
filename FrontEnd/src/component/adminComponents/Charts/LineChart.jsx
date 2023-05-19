@@ -19,6 +19,8 @@ import {
 } from '@mui/material';
 import { saveAs } from 'file-saver';
 import Controls from "../controls/Controls"
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 ChartJS.register(
   ArcElement,
   CategoryScale,
@@ -133,18 +135,25 @@ const LineChart = (props) => {
   }
 
   const saveCanvas = ()  => {
-    //save to png
-    const canvasSave = document.getElementById('stackD');
-    canvasSave.toBlob(function (blob) {
-        saveAs(blob, "LineChart.png")
-    })
+    const chartContainer = document.getElementById('Linechart-container');
+
+  html2canvas(chartContainer).then( (canvas) => {
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+    const width = pdf.internal.pageSize.getWidth();
+    const height = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imgData, 'PNG', 0,0,width, height);
+    pdf.save('Linechart.pdf');
+
+  });
 }
 
 
 
   return (
     <div>
-      <div style={{ width: '700px' , height:'300px' }}>
+      <div style={{ width: '700px' , height:'300px' }} id = 'Linechart-container'>
         <Line
           id="stackD"
           data={chartData}

@@ -15,6 +15,8 @@ import { Button } from '@mui/material';
 import { saveAs } from 'file-saver';
 import moment from 'moment';
 import Controls from "../controls/Controls"
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarChart2 = props => {
@@ -115,11 +117,18 @@ const BarChart2 = props => {
   };
 
   const saveCanvas = () => {
-    //save to png
-    const canvasSave = document.getElementById('barChart');
-    canvasSave.toBlob(function (blob) {
-      saveAs(blob, 'BarChart.png');
-    });
+    const chartContainer = document.getElementById('Barchart-container');
+
+  html2canvas(chartContainer).then( (canvas) => {
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+    const width = pdf.internal.pageSize.getWidth();
+    const height = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imgData, 'PNG', 0,0,width, height);
+    pdf.save('Barchart.pdf');
+
+  });
   };
 
   return (
@@ -130,12 +139,14 @@ const BarChart2 = props => {
         height: '40%',
       }}
     >
+      <div id = 'Barchart-container'>
       <Bar id ="barChart" data={data} options={options}></Bar>
+      </div>
       <Controls.Button
         text="Download"
         color="secondary"
         onClick={() => saveCanvas()} />
-
+      
       <Controls.Button
         text="Filter"
         color="primary"

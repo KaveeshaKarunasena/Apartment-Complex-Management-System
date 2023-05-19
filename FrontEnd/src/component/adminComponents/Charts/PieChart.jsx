@@ -123,21 +123,16 @@ const [allData, setAllData] = useState([])
 }
 
 const saveCanvas = ()  => {
-  //save to png
-  // const canvasSave = document.getElementById('pieChart');
-  // canvasSave.toBlob(function (blob) {
-  //     saveAs(blob, "PieChart.png")
-  // })
-  const chartContainer = document.getElementById('chart-container');
+  const chartContainer = document.getElementById('Piechart-container');
 
   html2canvas(chartContainer).then( (canvas) => {
 
     const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF();
+    const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
     const width = pdf.internal.pageSize.getWidth();
     const height = pdf.internal.pageSize.getHeight();
     pdf.addImage(imgData, 'PNG', 0,0,width, height);
-    pdf.save('chart.pdf');
+    pdf.save('Piechart.pdf');
 
   });
 }
@@ -163,9 +158,10 @@ const saveCanvas = ()  => {
   //   } 
   // }]
   return (
-    <div style={{width:'40%', height:'40%'}} id = 'chart-container'>
+    <div style={{width:'40%', height:'40%'}} >
+      
       <Doughnut 
-      id ="pieChart"
+      id = 'Piechart-container'
       data={chartData}
       type="doughnut" 
       // plugins={plugins} 
