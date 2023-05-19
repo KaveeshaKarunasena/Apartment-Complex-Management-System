@@ -64,7 +64,7 @@ const productCtrl = {
             const products = await features.query
 
             res.json({
-                status: 'success',
+                status: 200,
                 result: products.length,
                 products: products
             })

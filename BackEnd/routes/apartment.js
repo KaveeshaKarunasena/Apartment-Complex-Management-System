@@ -10,7 +10,7 @@ const {
   deleteApartment,
   getAllApartment
 } = require('../Controller/apartment-Controller');
-const authGuard = require('../Utils/authGuard');
+// const = require('../Util');
 
 router.post(
   '/add',
@@ -19,19 +19,19 @@ router.post(
     body('floor').exists().isLength(2),
     body('buildingNo').isAlpha(),
     body('email').isEmail().normalizeEmail(),
-  ]),authGuard,
+  ]),
   newApartment
 );
 
-router.get('/view', authGuard,viewApartment);
+router.get('/view',viewApartment);
 
-router.get('/getById/:id',authGuard, viewApartmentById);
+router.get('/getById/:id', viewApartmentById);
 
 router.put('/update/:_id',validator([
   body('email').isEmail().normalizeEmail(),
-]), authGuard,updateApartment);
+]),updateApartment);
 
-router.delete('/delete/:_id', authGuard,deleteApartment);
-router.get('/allApartment',authGuard, getAllApartment)
+router.delete('/delete/:_id',deleteApartment);
+router.get('/allApartment', getAllApartment)
 
 module.exports = router;

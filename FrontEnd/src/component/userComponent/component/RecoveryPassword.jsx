@@ -50,7 +50,7 @@ const useStyles = makeStyles()(theme => ({
 }));
 
 export default function RecoveryPassword() {
-  const [setEmail] = useState('');
+  const [email,setEmail] = useState('');
   const { classes } = useStyles();
   const navigate = useNavigate();
 

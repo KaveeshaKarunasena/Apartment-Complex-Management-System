@@ -8,11 +8,9 @@ const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 // const fileUpload = require('express-fileupload')
 const cors = require('cors');
-
 const sessoin = require('express-session');
 
-mongoose.connect('mongodb://127.0.0.1:27017/apartment');
-
+mongoose.connect('mongodb+srv://kaveesha:kavee123@cluster0.wntpax1.mongodb.net/apartmentDB');
 
 
 const apartmentRouter = require('./routes/apartment');
@@ -58,7 +56,6 @@ app.use("/customer",customerRouter)
 app.use("/addPayment",paymentRouter)
 //app.use("/sendOTP",otpRouter)
 app.use('/employee',EmployeeRouter);
-app.use('/service-provider', serviceProviderRouter);
 app.use('/otp', otpRouter);
 app.use('/employee', EmployeeRouter);
 app.use('/api', imageRouter2);
