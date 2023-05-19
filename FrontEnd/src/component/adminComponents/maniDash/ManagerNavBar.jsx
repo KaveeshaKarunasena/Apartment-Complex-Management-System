@@ -230,7 +230,7 @@ export default function PrimarySearchAppBar() {
     <React.Fragment>
     <AppointmentHandler isModalOpen = {isModalOpen} toggleModal = {showAppointment} DUMMY_DATA = {DUMMY_DATA}/>
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: '#2E3B55' }}>
+      <AppBar position="static" style={{ background: 'black' }}>
         <Toolbar>
           <Typography
             variant="h6"
