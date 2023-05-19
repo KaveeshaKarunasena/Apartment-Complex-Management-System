@@ -153,14 +153,6 @@ export default function SignUp() {
           .catch(err => {
             console.log(err);
           });
-      }else{
-        Swal.fire({
-          title: 'Recheck the entered data',
-          icon: 'question',
-          iconHtml: '?',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Back'
-        })
       }
     },
   });
