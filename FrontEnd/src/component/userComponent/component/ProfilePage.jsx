@@ -73,9 +73,17 @@ export default function ProfilePage(props) {
 
     try {
       const response = await axios.put(`/customer/upload/${Id}`, formData);
-      //console.log(response);
-      setPhotoUrl(response.data.photo);
+      const newPhotoUrl = response.data.photo;
       console.log('Profile photo uploaded successfully');
+      
+      // Update the photo URL immediately
+      setPhotoUrl(newPhotoUrl);
+  
+      // Update the customer state with the new photo
+      setCustomer(prevCustomer => ({
+        ...prevCustomer,
+        photo: newPhotoUrl
+      }));
     } catch (error) {
       console.log('Error uploading file:', error);
     }
