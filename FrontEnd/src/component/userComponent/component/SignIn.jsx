@@ -18,7 +18,7 @@ import { makeStyles } from 'tss-react/mui';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useNavigate, NavLink } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
@@ -119,7 +119,14 @@ export default function SignIn() {
 
         navigate('/');
       } catch (err) {
-        alert('Error with user credentials');
+        //alert('Error with user credentials');
+        Swal.fire({
+          title: 'Error with user credentials?',
+          icon: 'question',
+          iconHtml: '?',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Back'
+        })
       }
     },
   });
