@@ -127,6 +127,7 @@ const getServiceProviderNames = async (req, res) => {
 
 const getCommissionByCategory = async (req, res) => {
   const targetMonth = +req.params.month;
+  
   await Payment.aggregate([
     {
       $addFields: {
