@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import {MenuItem,Menu} from '@material-ui/core';
+import { AuthContext } from '../../AuthProvider';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -19,6 +19,7 @@ import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 import AppointmentHandler from './AppointmentHandler';
 import { useNavigate } from "react-router-dom";
+import jwt_decode from 'jwt-decode';
 
 const DUMMY_DATA = [
   {
@@ -109,7 +110,9 @@ export default function PrimarySearchAppBar() {
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const navigate = useNavigate()
-
+  let authPayload = useContext(AuthContext);
+  const decoded = jwt_decode(authPayload.token);
+  const Id = decoded.id;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -260,7 +263,7 @@ export default function PrimarySearchAppBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/repo"
+            to="/app/customerReport/${id}"
             style={({ isActive, isPending }) => {
               return {
                 fontWeight: isActive ? 'bold' : '',

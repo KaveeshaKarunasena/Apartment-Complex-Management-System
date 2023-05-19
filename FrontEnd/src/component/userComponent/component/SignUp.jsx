@@ -116,7 +116,13 @@ export default function SignUp() {
                 return response.data;
               })
               .catch(error => {
-                Swal.showValidationMessage(`Request failed: ${error}`);
+                Swal.fire({
+                  title: 'Mismatched OTP',
+                  icon: 'question',
+                  iconHtml: '?',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'Back'
+                })
               });
           },
         })
@@ -147,6 +153,14 @@ export default function SignUp() {
           .catch(err => {
             console.log(err);
           });
+      }else{
+        Swal.fire({
+          title: 'Recheck the entered data',
+          icon: 'question',
+          iconHtml: '?',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Back'
+        })
       }
     },
   });
