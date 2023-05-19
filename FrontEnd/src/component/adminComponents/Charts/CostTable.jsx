@@ -17,7 +17,9 @@ import {
   Button,
 } from '@mui/material';
 import Controls from "../controls/Controls"
-var tableExport = require('table-export');
+// var tableExport = require('table-export');
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const CostTable = (props) => {
 
@@ -48,12 +50,18 @@ const CostTable = (props) => {
     rowsPerPage - Math.min(rowsPerPage, apartmentCost.length - page * rowsPerPage);
 
     const saveCanvas = ()  => {
-      //save to png
-      // const canvasSave = document.getElementById('table');
-      // canvasSave.toBlob(function (blob) {
-      //     saveAs(blob, "CostTable.png")
-      // })
-      tableExport('table', 'myName', 'pdf')
+      const chartContainer = document.getElementById('table');
+
+  html2canvas(chartContainer).then( (canvas) => {
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+    const width = pdf.internal.pageSize.getWidth();
+    const height = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imgData, 'PNG', 0,0,width, height);
+    pdf.save('Table.pdf');
+
+  });
   }
 
   const handleSubmit = () =>{

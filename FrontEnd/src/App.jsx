@@ -31,7 +31,7 @@ import AddEmployees from './component/Employee_Components/navPages/AddEmployee';
 import ViewEmployee from './component/Employee_Components/navPages/ViewEmployee';
 import Amenity from './component/userComponent/amenitiesComponent/amenity';
 import AmenityReport from './component/adminComponents/Amenity/report/Amenityreport';
- 
+import GuestNavBar from'./component/adminComponents/maniDash/searchBar/GuestNavBar'
 
 import Form from './component/adminComponents/navPages/Form'
 
@@ -63,6 +63,10 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 //import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
 //import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
 //import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+// import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
+// import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+// import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
 
 
@@ -165,7 +169,7 @@ function ProtectedRoutes() {
 function GuestRoutes() {
   return (
     <GuestGuard>
-      <Navbar />
+      <GuestNavBar/>
       <Routes>
         <Route path="login" element={<SignIn />} />
         <Route path="recoveryPassword" element={<RecoveryPassword />} />

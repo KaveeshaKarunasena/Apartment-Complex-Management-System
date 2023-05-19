@@ -14,7 +14,11 @@ const ctx = authPayload.token
     console.log("auths",authPayload.token);
     <Profile token= {{ctx}}></Profile>
     // setToken(authPayload.token)
-   
+    if (!authPayload || !authPayload.token) {
+      //  navigate("/login")
+      console.log("no payloard");
+       return <Navigate to="/login" />;
+    }
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
 
@@ -23,15 +27,11 @@ const ctx = authPayload.token
       return <Navigate to="/manager" />;
     }
 
-    if (adminString === 'super') {
+    else if (adminString === 'super') {
       return <Navigate to="/admin" />;
     }
 
-    if (!authPayload || !authPayload.token) {
-      //  navigate("/login")
-      // alert("no payloard");
-       return <Navigate to="/login" />;
-    }
+    
     return <>{children}</>;
   } catch (error) {
  
@@ -44,6 +44,11 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
   try {
     let authPayload = useContext(AuthContext);
+
+    if (!authPayload || !authPayload.token) {
+      
+      return <Navigate to="/login" />;
+    }
  
     const decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
@@ -57,13 +62,10 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
     if (decodedEmail !== 'superAdmin@gmail.com') {
  
-      return <Navigate to="/login" />;
+      return <Navigate to="/app" />;
     }
 
-    if (!authPayload || !authPayload.token) {
-      
-      return <Navigate to="/login" />;
-    }
+    
 
     
 
@@ -82,6 +84,11 @@ export const AdminAuthGuard = ({ children }) => {
   try {
     let authPayload = useContext(AuthContext);
 
+     if (!authPayload || !authPayload.token) {
+      
+      return <Navigate to="/login" />;
+    }
+
     var decoded = jwt_decode(authPayload.token);
     const decodedEmail = decoded.email;
     let adminString = decodedEmail.substring(0, 5);
@@ -91,14 +98,11 @@ export const AdminAuthGuard = ({ children }) => {
     }
 
     if (adminString !== 'admin') {
-      return <Navigate to="/login" />;
+      return <Navigate to="/app" />;
     }
     // alert("Manager")
 
-    if (!authPayload || !authPayload.token) {
-      
-      return <Navigate to="/login" />;
-    }
+   
 
     return <>{children}</>;
   } catch (error) {
@@ -121,7 +125,7 @@ export function GuestGuard({ children }) {
       if (adminString === 'super') {
         navigate('/admin');
       }
-      if (adminString === 'admin') {
+      else if (adminString === 'admin') {
         navigate('/manager');
       } else {
         navigate('/app');

@@ -14,7 +14,7 @@ const MaintenanceRepo = () =>{
         <div className='App'>
         < div className='repo'>
            <div className='lineChart'>
-            {/* <DateRange></DateRange> */}
+            <DateRange></DateRange>
              {/* <LineChart></LineChart> */}
              </div>
           {/* <BarChart2></BarChart2> */}

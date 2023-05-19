@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from 'react';
 import { Chart as ChartJs, Tooltip, Title, ArcElement, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -87,7 +86,7 @@ function PieChart() {
   };
 
   return (
-    <div>
+    <div style={{ background: 'rgba(173, 216, 230, 0.4)' }}>
       <div
         style={{
           display: 'flex',
@@ -117,7 +116,7 @@ function PieChart() {
         </div>
       </div>
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <h3>Labels and Percentages:</h3>
+        <h3>Amenities and Percentages:</h3>
         {data.labels.map((label, index) => (
           <p key={index}>{label}</p>
         ))}
@@ -144,5 +143,4 @@ function PieChart() {
 }
 
 export default PieChart;
-
 
