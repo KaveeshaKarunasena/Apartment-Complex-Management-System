@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import BarChart from './charts/BarChart';
+import Button from '@mui/material/Button';
 import LineChart from './charts/LineChart';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+
 
 const ServiceReport = () => {
 
@@ -30,7 +32,7 @@ const ServiceReport = () => {
     ],
   });
 
-  const options = {
+  const options1 = {
     scales: {
       x: {
         display: true,
@@ -59,13 +61,42 @@ const ServiceReport = () => {
     },
   };
 
+  const options2 = {
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Month',
+          color: 'black',
+          font: {
+            size: 16,
+            weight: 'bold',
+          },
+        },
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Total Amount',
+          color: 'black',
+          font: {
+            size: 16,
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  };
+
   const saveAsPDF = () => {
     const chartContainer = document.getElementById('chart-container');
 
     html2canvas(chartContainer).then( (canvas) => {
 
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
+      const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
       const width = pdf.internal.pageSize.getWidth();
       const height = pdf.internal.pageSize.getHeight();
       pdf.addImage(imgData, 'PNG', 0,0,width, height);
@@ -77,7 +108,6 @@ const ServiceReport = () => {
   useEffect(() => {
     let getCommissionByCategory = async () => {
       const month = selectedDate.getMonth();
-      console.log(month);
 
       let { data } = await axios.get(
         `/service-provider/getCommissionByCategory/${month}`
@@ -114,7 +144,8 @@ const ServiceReport = () => {
   }, [selectedDate]);
 
   return (
-    <div>
+    <>
+    <div id = "chart-container">
       <div
         style={{
           display: 'flex',
@@ -123,8 +154,8 @@ const ServiceReport = () => {
           marginTop: '5%',
         }}
       >
-        <div style={{ flex: 1 }} id = "chart-container">
-          <BarChart chartData={serviceData} options={options} />
+        <div style={{ flex: 1 }} >
+          <BarChart chartData={serviceData} options={options1}/>
         </div>
         <div style={{ flex: 1, marginLeft: '5%', marginTop: '10%' }}>
           <DatePicker
@@ -144,7 +175,7 @@ const ServiceReport = () => {
         }}
       >
         <div style={{ flex: 1 }}>
-          <LineChart chartData={paymentData} options={options} />
+          <LineChart chartData={paymentData} options={options2} />
         </div>
         <div style={{ flex: 1, marginLeft: '5%', marginTop: '10%' }}>
           <DatePicker
@@ -156,9 +187,22 @@ const ServiceReport = () => {
         </div>
       </div>
       <div>
-        <button type="button" onClick={saveAsPDF}>Download</button>
+      
       </div>
     </div>
+    <Button
+    variant="contained"
+    onClick={saveAsPDF}
+    style={{
+      backgroundColor: '#488042',
+      marginTop: '2%',
+      marginBottom: '2%',
+      marginLeft: '40%'
+    }}
+  >
+   Download PDF
+  </Button>
+  </>
   );
 };
 
