@@ -44,7 +44,7 @@ export default function ProfilePage(props) {
       }
     };
     fetchData();
-  }, []);
+  }, [photoUrl]);
 
   const handleProps = id => {
     setGetId(id);
