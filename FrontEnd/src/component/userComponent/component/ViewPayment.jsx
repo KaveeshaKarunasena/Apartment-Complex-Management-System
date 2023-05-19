@@ -74,17 +74,16 @@ function ViewPayment() {
           </TableHead>
           <TableBody>
             {payment &&
-              payment
+                payment
                 .filter(data => {
-                  return search.toLowerCase() === ''
-                    ? data
-                    : keys.some(
-                        key =>
-                          data[key]
-                            ?.toLowerCase()
-                            ?.includes(search.toLowerCase()) || '' // Provide a default empty string for undefined data
-                      );
+                  return search.toLowerCase() === '' ?
+                    data :
+                    keys.some(key => {
+                      const value = String(data[key]);
+                      return (value && value.toLowerCase().includes(search.toLowerCase())) || false;
+                    });
                 })
+           
                 .map(data => (
                   <TableRow key={data._id}>
                     <TableCell align="center">{data.apartmentNo}</TableCell>
