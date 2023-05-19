@@ -28,7 +28,7 @@ const newEmployee = async (req, res) => {
 
 const viewEmployee = async (req, res) => {
   EmployeeModel.find()
-    .then(Employee => res.json(Employee))
+    .then(Employee => res.status(200).json(Employee))
     .catch(err => res.status(404).json({ notfound: 'No Employee found' }));
 };
 

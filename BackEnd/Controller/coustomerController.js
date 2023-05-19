@@ -36,9 +36,7 @@ const newSignUp = async (req, res) => {
   newCustomer
     .save()
     .then(() => {
-      res.status(200).send({
-        status: 'Customer Added'
-      })
+      res.status(200).json('Customer Added');
     })
     .catch(err => {
       console.log(err);

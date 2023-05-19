@@ -63,8 +63,8 @@ const productCtrl = {
 
             const products = await features.query
 
-            res.status(200).json({
-                status: 'success',
+            res.json({
+                status: 200,
                 result: products.length,
                 products: products
             })

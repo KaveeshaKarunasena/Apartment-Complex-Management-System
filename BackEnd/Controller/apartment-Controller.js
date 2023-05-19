@@ -5,6 +5,8 @@ const newApartment = async (req, res) => {
   try {
     const { apartmentno, floor, buildingNo, type, status, ownersName, email } = req.body;
 
+    console.log(apartmentno)
+
 
     const existApartment = await apartmentService.findApartmentByNo(apartmentno);
    
@@ -52,7 +54,7 @@ const viewApartment = async (req, res) => {
   try{
     await apartmentModel
     .find()
-    .then(apartment => res.json(apartment))
+    .then(apartment => res.status(200).json(apartment))
 
   }catch(err){
     res.status(404).send({ err: 'No Apartment found' });
