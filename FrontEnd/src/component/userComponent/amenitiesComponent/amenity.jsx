@@ -21,7 +21,7 @@ function Amenities() {
     if (cart.length > 0) {
     if (prev.some(item => item._id === product._id)) {
     // Product already exists, no need to add it again
-    alert('product already added');
+    alert('Amenity already added');
     return prev;
     } else {
     // Product doesn't exist, add it to the cart
@@ -49,7 +49,7 @@ function Amenities() {
     url: `http://localhost:5000/customer/addcart`,
     data: values,
     });
-   
+    alert('Now this amenity add your profile ');
     return newCart;
     }
     });
