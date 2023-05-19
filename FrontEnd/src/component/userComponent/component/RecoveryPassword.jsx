@@ -50,7 +50,7 @@ const useStyles = makeStyles()(theme => ({
 }));
 
 export default function RecoveryPassword() {
-  const [setEmail] = useState('');
+  const [email,setEmail] = useState('');
   const { classes } = useStyles();
   const navigate = useNavigate();
 
@@ -88,13 +88,7 @@ export default function RecoveryPassword() {
               return response.data;
             })
             .catch(error => {
-              Swal.fire({
-                title: 'Error with entered OTP?',
-                icon: 'question',
-                iconHtml: '?',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Back'
-              })
+              Swal.showValidationMessage(`Request failed: ${error}`);
             });
         },
       })
@@ -150,7 +144,7 @@ export default function RecoveryPassword() {
             </Grid>
           </Grid>
           <br />
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" onClick={handleSubmit}>
             Get OTP
           </Button>
         </Box>

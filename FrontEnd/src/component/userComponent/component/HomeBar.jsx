@@ -111,7 +111,7 @@ const HomeBar = () => {
           </Button>
           <Button color="inherit">
             <NavLink
-              to="amenities"
+              to="/app/amenities"
               style={{ textDecoration: 'none', color: 'white' }}
             >
               Amenities

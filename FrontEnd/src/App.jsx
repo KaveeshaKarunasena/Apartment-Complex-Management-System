@@ -59,15 +59,15 @@ import VisitorHomePage from './component/userComponent/component/VisitorHomePage
 // import Compage_client_new from './component/adminComponents/Complains/Components/client_comps/Add_Complain/Add_Complain';
 
 //---admin
-// import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
-// import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
-// import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
-// import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
+//import Compage_Home from "./component/adminComponents/Complain/Pages/Complain_navigation"
+//import Single_complain from "./component/adminComponents/Complain/Components/admin_comps/single/Single_complain"
+//import All_complain from "./component/adminComponents/Complain/Components/admin_comps/view_complain/View_complain"
+//import Report_complain from "./component/adminComponents/Complain/Components/admin_comps/report/Report"
 
 
 
-// import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
-// import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
+//import Compage_client_update from "./component/adminComponents/Complain/Pages/Client_Complain"
+//import Compage_client_new from './component/adminComponents/Complain/Components/client_comps/Add_Complain/Add_Complain';
  import HomeBar from './component/userComponent/component/HomeBar';
 import EditApartments from './component/adminComponents/navPages/EditApartments';
 import EmployeeReport from './component/Employee_Components/navPages/Employee_report';
@@ -154,8 +154,6 @@ function ProtectedRoutes() {
         {/* <Route path="Comlpain/new" element={<Compage_client_new />} />
         <Route path="Comlpain/update" element={<Compage_client_update />} /> */}
         <Route path="updateCustomer/:id" element={<UpdateCustomer />} />
-        <Route path="" element={<Home />} />
-        <Route path="profile" element={<ProfilePage />} />
         <Route path="amenities" element={<Amenity />} />
         <Route path="customerReport/:id" element={<CustomerReport/>} 
         />
@@ -170,7 +168,7 @@ function GuestRoutes() {
       <Navbar />
       <Routes>
         <Route path="login" element={<SignIn />} />
-        /<Route path="recoveryPassword" element={<RecoveryPassword />} />
+        <Route path="recoveryPassword" element={<RecoveryPassword />} />
         <Route path="recoveryPasswordSet" element={<RecoveryPasswordSetPage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/" exact element={<VisitorHomePage />} />

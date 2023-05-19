@@ -36,7 +36,9 @@ const newSignUp = async (req, res) => {
   newCustomer
     .save()
     .then(() => {
-      res.json('Customer Added');
+      res.status(200).send({
+        status: 'Customer Added'
+      })
     })
     .catch(err => {
       console.log(err);
@@ -145,7 +147,7 @@ const resetPassword = async (req, res) => {
 
     await Customer.updateOne({ email: customer.email }, { password: hash });
 
-    return res.status(201).send({ msg: 'Record updated' });
+    return res.status(200).send({ msg: 'Record updated' });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ error: 'Internal server error' });
@@ -189,7 +191,7 @@ const deleteProfilePic = async (req, res) => {
     customer.photo = null;
     await customer.save();
 
-    return res.json({ message: 'Profile photo deleted successfully' });
+    return res.status(200).send({ status: 'Profile photo deleted successfully' });
   } catch (error) {
     console.error('Error deleting profile photo:', error);
     return res.status(500).json({ message: 'Internal server error' });
