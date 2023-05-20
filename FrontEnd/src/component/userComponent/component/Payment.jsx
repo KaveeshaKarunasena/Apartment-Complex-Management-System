@@ -15,6 +15,7 @@ import jwt_decode from 'jwt-decode';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -51,6 +52,7 @@ export default function Payment() {
   const decoded = jwt_decode(authPayload.token);
   const [serviceProviderList, setServiceProviderList] = useState([]);
   const apartmentNo = decoded.apartmentNo;
+  const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
   //const navigate = useNavigate();
@@ -60,6 +62,7 @@ export default function Payment() {
       console.log(formData);
       const res = await axios.post('/addPayment/addPayment/', {
         ...formData,
+       // navigate('/app/viewPayment');
       });
       enqueueSnackbar('Payment Complete', { variant: 'success' });
     } catch (err) {

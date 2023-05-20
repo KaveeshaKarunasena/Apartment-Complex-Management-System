@@ -27,6 +27,7 @@ export default function ProfilePage(props) {
   const navigate = useNavigate();
   const [photoUrl, setPhotoUrl] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
+  
 
   useEffect(() => {
     const fetchData = async () => {
