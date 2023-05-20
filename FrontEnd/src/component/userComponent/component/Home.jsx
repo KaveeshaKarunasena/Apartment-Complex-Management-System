@@ -69,6 +69,7 @@ textShadow: '2px 2px 4px #000000',
         total += item.fee;
       });
     }
+    localStorage.setItem("amenityTotal",total)
 
     return (
       <Typography variant="h6" component="p" style={{ color: 'green',fontWeight:'bold'}} >
