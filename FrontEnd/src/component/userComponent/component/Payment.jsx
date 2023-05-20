@@ -53,6 +53,7 @@ export default function Payment() {
   const [serviceProviderList, setServiceProviderList] = useState([]);
   const apartmentNo = decoded.apartmentNo;
   const navigate = useNavigate();
+  var amenityTotal = parseInt(localStorage.getItem("amenityTotal"));
 
   const { enqueueSnackbar } = useSnackbar();
   //const navigate = useNavigate();
@@ -62,7 +63,6 @@ export default function Payment() {
       console.log(formData);
       const res = await axios.post('/addPayment/addPayment/', {
         ...formData,
-       
       });
       enqueueSnackbar('Payment Complete', { variant: 'success' });
       navigate('/app/viewPayment');
@@ -77,6 +77,11 @@ export default function Payment() {
         '/service-provider/getServiceProviderNames'
       );
       setServiceProviderList(data);
+
+      if (localStorage.getItem("amenityTotal")) {
+        amenityTotal = parseInt(localStorage.getItem("amenityTotal"));
+        
+      }
     };
     fetchDetails();
   }, []);
@@ -156,6 +161,7 @@ export default function Payment() {
                         <MenuItem value="">
                           <Typography>Categories</Typography>
                         </MenuItem>
+
                         <MenuItem value="Amenity Chargers">Amenities</MenuItem>
                         <MenuItem value="Bill Chargers">Bills</MenuItem>
                         <MenuItem value="Services Chargers">Services</MenuItem>
@@ -182,19 +188,38 @@ export default function Payment() {
                         </FormControl>
                       </>
                     )}
-
-                    <FormControl className={classes.formControl} fullWidth>
-                      <TextField
-                        margin="normal"
-                        onChange={handleChange}
-                        id="amount"
-                        name="amount"
-                        label="Amount"
-                        type="number"
-                        value={values.amount}
-                        placeholder="Rs."
-                      />
-                    </FormControl>
+                    {values.category === 'Amenity Chargers' && (
+                      <>
+                        <FormControl className={classes.formControl} fullWidth>
+                          <TextField
+                            margin="normal"
+                            onChange={handleChange}
+                            id="amount"
+                            name="amount"
+                            label="Amount"
+                            type="number"
+                            value={values.amount = amenityTotal? amenityTotal:0}
+                            placeholder="Rs."
+                          />
+                        </FormControl>
+                      </>
+                    )}
+                    {values.category !== 'Amenity Chargers' && (
+                      <>
+                        <FormControl className={classes.formControl} fullWidth>
+                          <TextField
+                            margin="normal"
+                            onChange={handleChange}
+                            id="amount"
+                            name="amount"
+                            label="Amount"
+                            type="number"
+                            value={values.amount}
+                            placeholder="Rs."
+                          />
+                        </FormControl>
+                      </>
+                    )}
                     <Button
                       type="submit"
                       fullWidth
