@@ -127,13 +127,19 @@ const getServiceProviderNames = async (req, res) => {
 };
 
 const getCommissionByCategory = async (req, res) => {
-  const targetMonth = +req.params.month;
+  const targetMonth = +req.query.month + 1;
+  const targetYear = +req.query.year;
 
   await Payment.aggregate([
     {
       $addFields: {
         payee: {
-          $toObjectId: '$payeeId',
+          $convert: {
+            input: '$payeeId',
+            to: 'objectId',
+            onError: '',
+            onNull: '',
+          },
         },
       },
     },
@@ -148,7 +154,10 @@ const getCommissionByCategory = async (req, res) => {
     {
       $match: {
         $expr: {
-          $eq: [{ $month: '$createdAt' }, targetMonth],
+          $and: 
+            [
+           {$eq: [{ $month: '$createdAt' }, targetMonth]},
+            {$eq: [{ $year: '$createdAt'}, targetYear]}]
         },
       },
     },
@@ -164,12 +173,13 @@ const getCommissionByCategory = async (req, res) => {
     if (data) {
       res.status(200).json(data);
     } else {
-      res.status(404).json({ err: err });
+      res.status(400).json({ err: err });
     }
   });
 };
 
 const getServicePayment = async (req, res) => {
+  const targetYear = +req.params.year;
   const monthWords = [
     'Jan',
     'Feb',
@@ -186,7 +196,13 @@ const getServicePayment = async (req, res) => {
   ];
 
   await Payment.aggregate([
-    { $match: { category: 'Service Chargers' } },
+    {
+      $match: { category: 'Services Chargers', 
+      $expr: {
+        $eq: [{ $year: '$createdAt' }, targetYear],
+      },},
+     
+    },
     {
       $group: {
         _id: { month: { $month: '$createdAt' } },
@@ -203,7 +219,7 @@ const getServicePayment = async (req, res) => {
       });
       res.status(200).json(updatedData);
     } else {
-      res.status(404).json({ err: err });
+      res.status(400).json({ err: err });
     }
   });
 };
