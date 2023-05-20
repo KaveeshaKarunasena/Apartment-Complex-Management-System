@@ -6,7 +6,6 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut , Chart } from 'react-chartjs-2';
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import DatePicker from 'react-datepicker';
@@ -23,18 +22,18 @@ const useStyles = makeStyles({
   },
 });
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-  },
-  section: {
-    textAlign:'center',
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
+// const styles = StyleSheet.create({
+//   page: {
+//     flexDirection: 'row',
+//     backgroundColor: '#fff',
+//   },
+//   section: {
+//     textAlign:'center',
+//     margin: 10,
+//     padding: 10,
+//     flexGrow: 1,
+//   },
+// });
 
 export default function CustomerReport(props) {
   let authPayload = useContext(AuthContext);
