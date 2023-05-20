@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let ServiceProvider = require('../modles/service-provider');
 const Payment = require('../modles/payment');
+const Employee = require('../modles/Customer');
 const uploadModel = require('../modles/uploadModel');
 
 // Route for adding a new Service Provider
@@ -223,6 +224,105 @@ const getServicePayment = async (req, res) => {
   });
 };
 
+const getManagerStatistics = async (req, res) => {
+  var spCount = 0;
+  var commissionGained = 0;
+
+
+  await ServiceProvider.aggregate([
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 },
+      },
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      spCount = data[0].count;
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+  await Payment.aggregate([
+    {
+      $match: { category: 'Services Chargers' },
+    },
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: { $multiply: ['$amount', 0.1] },
+        },
+      },
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      commissionGained = data[0].total;
+
+      
+      const stat = {
+        spCount: spCount,
+        commissionGained: commissionGained,
+      };
+
+      res.status(200).json(stat);
+
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+};
+
+const getEmployeeStatistics = async (req, res) => {
+  var employeeCount = 0;
+  var salaryPaid = 0;
+
+  await Employee.aggregate([
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 },
+      },
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      employeeCount = data[0].count;
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+
+
+  await Employee.aggregate([
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: '$basicSalary'
+        },
+      },
+    },
+  ]).exec((err, data) => {
+    if (data) {
+      console.log(data);
+      salaryPaid = data[0].total;
+
+      const stat = {
+        employeeCount: employeeCount,
+        salaryPaid: salaryPaid,
+      };
+
+      res.status(200).json(stat);
+    } else {
+      res.status(404).json({ err: err });
+    }
+  });
+};
+
+
+
 module.exports = {
   newServiceProvider,
   viewServiceProvider,
@@ -232,4 +332,6 @@ module.exports = {
   getServiceProviderNames,
   getCommissionByCategory,
   getServicePayment,
+  getManagerStatistics,
+  getEmployeeStatistics
 };

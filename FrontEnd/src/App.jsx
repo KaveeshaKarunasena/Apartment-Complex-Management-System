@@ -5,6 +5,7 @@ import Navbar from './component/adminComponents/maniDash/Navbar';
 import HomeNavBar from './component/adminComponents/maniDash/HomeNavBar';
 import ManagerNavBar from './component/adminComponents/maniDash/ManagerNavBar';
 import Cards from './component/adminComponents/cards/Cards';
+import ManagerCard from './component/managerComponents/managerCard';
 import AddApartments from './component/adminComponents/navPages/AddApartments';
 import Maintenance from './component/adminComponents/navPages/Maintenance';
 import ViewApartments from './component/adminComponents/navPages/ViewApartments';
@@ -128,7 +129,7 @@ function AdminRoute() {
       <ManagerNavBar />
       <Routes>
         <Route path="" element={<ManagerDashboard />}>
-          <Route path="" element={<Cards />} />
+          <Route path="" element={<ManagerCard />} />
           <Route path="Employee_add" element={<AddEmployees />} />
           <Route path="Employee_view" element={<ViewEmployee />} />
           <Route path="staff" element={<Cards />} />
