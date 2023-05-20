@@ -1,121 +1,100 @@
-import React, { useState } from 'react'
-import './Card.css'
-import {motion,AnimateSharedLayout} from 'framer-motion'
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { UilTimes } from "@iconscout/react-unicons";
-import Chart from "react-apexcharts";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-const Card = (props) => {
+export default function OutlinedCard(props) {
+  const { apartmentCnt, income, apartment, title, title2, title3 } = props;
 
-    const [expanded, setExpanded] = useState(false);
+  const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+  );
+
+  const card = (
+    <React.Fragment>
+      <CardContent>
+        <Typography
+          variant="h5"
+          component="div"
+          style={{ paddingLeft: '60px' }}
+        >
+          {title}
+        </Typography>
+
+        <Typography
+          variant="h6"
+          style={{ paddingLeft: '80px', textDecoration: 'bold' }}
+        >
+          {apartmentCnt}
+        </Typography>
+      </CardContent>
+    </React.Fragment>
+  );
+  const incomeCard = (
+    <React.Fragment>
+      <CardContent>
+        <Typography
+          variant="h5"
+          component="div"
+          style={{ paddingLeft: '35px' }}
+        >
+          {title3}
+        </Typography>
+
+        <Typography variant="h6" style={{ paddingLeft: '80px' }}>
+          {apartment}
+        </Typography>
+      </CardContent>
+    </React.Fragment>
+  );
+
+  const availableCard = (
+    <React.Fragment>
+      <CardContent>
+        <Typography
+          variant="h5"
+          component="div"
+          style={{ paddingLeft: '40px' }}
+        >
+          {title2}
+        </Typography>
+
+        <Typography variant="h6" style={{ paddingLeft: '60px' }}>
+          {income}
+        </Typography>
+      </CardContent>
+    </React.Fragment>
+  );
+
   return (
-    <AnimateSharedLayout>
-        {
-            expanded? (
-                <ExpandedCard param ={props} setExpanded={()=>setExpanded(false)}/>
-            ):
-            <CompactCard param ={props} setExpanded={()=>setExpanded(true)}/>
-        }
-    </AnimateSharedLayout>
-  )
+    <Box sx={{ width: '120%', display: 'flex', columnGap: '7%', justifyContent:'space-between'  }}>
+      <Card
+        variant="outlined"
+        style={{ backgroundColor: '#2ECC71', display: 'flex', width: '25%' }}
+      >
+        {card}
+      </Card>
+      <Card
+        variant="outlined"
+        style={{ backgroundColor: '#16A085', display: 'flex', width: '25%' }}
+      >
+        {incomeCard}
+      </Card>
+      <Card
+        variant="outlined"
+        style={{ backgroundColor: '#3498DB', display: 'flex', width: '25%' }}
+      >
+        {availableCard}
+      </Card>
+    </Box>
+  );
 }
-
-
-function CompactCard({param, setExpanded}){
-
-    const Png = param.png;
-    return(
-        <motion.div className="CompactCard" style={{
-            background : param.color.backGround,
-            boxShadow : param.color.boxShadow
-        }} onClick ={setExpanded} layoutId = 'expandableCard'>
-
-            <div className="radialBar">
-                <CircularProgressbar value={ param.barValue}  text={`${param.barValue}%`}/>
-                <span>{param.title}</span>
-            </div>
-            <div className="detail">
-                <Png/>
-                <span>{param.value}</span>
-                <span>Last Month</span>
-            </div>
-        </motion.div>
-
-    )
-    
-
-}
-
-
-function ExpandedCard({param, setExpanded}){
-
-    const data ={
-        options: {
-            chart: {
-              type: "area",
-              height: "auto",
-            },
-      
-            dropShadow: {
-              enabled: false,
-              enabledOnSeries: undefined,
-              top: 0,
-              left: 0,
-              blur: 3,
-              color: "#000",
-              opacity: 0.35,
-            },
-      
-            fill: {
-              colors: ["#fff"],
-              type: "gradient",
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              curve: "smooth",
-              colors: ["white"],
-            },
-            tooltip: {
-              x: {
-                format: "dd/MM/yy HH:mm",
-              },
-            },
-            grid: {
-              show: true,
-            },
-            xaxis: {
-              type: "datetime",
-              categories: [
-                "2018-09-19T00:00:00.000Z",
-                "2018-09-19T01:30:00.000Z",
-                "2018-09-19T02:30:00.000Z",
-                "2018-09-19T03:30:00.000Z",
-                "2018-09-19T04:30:00.000Z",
-                "2018-09-19T05:30:00.000Z",
-                "2018-09-19T06:30:00.000Z",
-              ],
-            },
-          },
-    }
-    return(
-        < motion.div className="ExpandedCard" style={{
-        background : param.color.backGround,
-        boxShadow : param.color.boxShadow}}
-        layoutId = 'expandableCard'>
-            <div style={{alignSelf : 'flex-end', cursor: 'pointer', color : 'white'}}>
-                <UilTimes onClick={setExpanded}/>
-            </div>
-            <span>{param.title}</span>
-            <div className="chartContainer">
-                <Chart series={param.series} typr='area' options={data.options}/>
-            </div>
-            <span>Last Month</span>
-        </motion.div>
-    )
-    
-}
-
-export default Card

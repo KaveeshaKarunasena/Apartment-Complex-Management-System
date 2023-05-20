@@ -7,7 +7,9 @@
 }
 .Card {
   padding-top: 3rem;
+  width: 73%;
 }
 .parentContainer {
-  width: 23%;
+  display: flex;
+  width: 73%;
 }
