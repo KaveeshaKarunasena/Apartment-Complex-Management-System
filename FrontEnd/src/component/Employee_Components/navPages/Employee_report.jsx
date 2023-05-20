@@ -24,20 +24,20 @@ import html2canvas from 'html2canvas';
   }
 const EmployeeReport = () => {
   const [EmployeeSalary, setEmployeeSalary] = useState({
-    labels: ['Red', 'Yellow', 'Blue'],
+    labels: ["#ffa600", "#ff6361", "#ffa600", "#ff6361"],
     datasets: [
       {
         data: [10, 20, 30],
-        backgroundColor: ['red', 'blue'],
+        backgroundColor: ["#ffa600", "#ff6361"],
       },
     ],
   });
   const [EmployeeCount, setEmployeeCount] = useState({
-    labels: ['Red', 'Yellow', 'Blue'],
+    labels: ["#ffa600", "#ff6361", 'Blue'],
     datasets: [
       {
         data: [10, 20, 30],
-        backgroundColor: ['red', 'blue'],
+        backgroundColor: ["#ffa600", "#ff6361"],
       },
     ],
   });
