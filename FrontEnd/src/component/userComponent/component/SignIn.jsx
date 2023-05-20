@@ -84,7 +84,7 @@ const useStyles = makeStyles()(theme => ({
 const theme = createTheme();
 
 const saveToken = async payload => {
-  await localStorage.setItem('token', JSON.stringify(payload));
+   localStorage.setItem('token', JSON.stringify(payload));
 };
 
 export default function SignIn() {
