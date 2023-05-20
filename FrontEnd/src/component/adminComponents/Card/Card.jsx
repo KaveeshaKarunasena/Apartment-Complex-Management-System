@@ -79,19 +79,19 @@ export default function OutlinedCard(props) {
     <Box sx={{ width: '120%', display: 'flex', columnGap: '7%', justifyContent:'space-between'  }}>
       <Card
         variant="outlined"
-        style={{ backgroundColor: 'grey', display: 'flex', width: '25%' }}
+        style={{ backgroundColor: '#2ECC71', display: 'flex', width: '25%' }}
       >
         {card}
       </Card>
       <Card
         variant="outlined"
-        style={{ backgroundColor: 'pink', display: 'flex', width: '25%' }}
+        style={{ backgroundColor: '#16A085', display: 'flex', width: '25%' }}
       >
         {incomeCard}
       </Card>
       <Card
         variant="outlined"
-        style={{ backgroundColor: 'white', display: 'flex', width: '25%' }}
+        style={{ backgroundColor: '#3498DB', display: 'flex', width: '25%' }}
       >
         {availableCard}
       </Card>

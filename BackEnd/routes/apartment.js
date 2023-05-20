@@ -10,7 +10,7 @@ const {
   deleteApartment,
   getAllApartment
 } = require('../Controller/apartment-Controller');
-// const = require('../Util');
+const authGuard  = require('../Utils/authGuard')
 
 router.post(
   '/add',
