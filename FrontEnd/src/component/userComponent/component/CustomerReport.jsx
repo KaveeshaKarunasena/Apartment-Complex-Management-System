@@ -9,6 +9,7 @@ import { Doughnut , Chart } from 'react-chartjs-2';
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import DatePicker from 'react-datepicker';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -35,8 +36,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 export default function CustomerReport(props) {
   let authPayload = useContext(AuthContext);
   const decoded = jwt_decode(authPayload.token);
@@ -48,11 +47,21 @@ export default function CustomerReport(props) {
   const [billAmount, setBillAmount] = useState(0);
   const [serviceAmount, setServiceAmount] = useState(0);
   const [otherAmount, setOtherAmount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get(`/addPayment/getPayment/${apartmentNo}`);
+        const month = selectedDate.getMonth();
+        const year = selectedDate.getFullYear();
+        const response = await axios.get(`/addPayment/getPayment`, {
+          params: {
+            apartmentNo,
+            month,
+            year
+          }
+        });
+
         const data = response.data;
         let amenityAmount = 0;
         let billAmount = 0;
@@ -81,7 +90,7 @@ export default function CustomerReport(props) {
       }
     };
     fetchPayments();
-  }, []);
+  }, [selectedDate]);
 
   useEffect(() => {
     const amenity = parseInt(amenityAmount, 10);
@@ -103,14 +112,12 @@ export default function CustomerReport(props) {
           '#BE61CA',
           '#F2BC5E',
           '#F13C59',
-          
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
- 
         ],
         borderWidth: 1,
       },
@@ -120,22 +127,24 @@ export default function CustomerReport(props) {
   const saveAsPDF = () => {
     const chartContainer = document.getElementById('chart-container');
 
-    html2canvas(chartContainer).then( (canvas) => {
-
+    html2canvas(chartContainer).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+      const pdf = new jsPDF({
+        orientation: '1',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
       const width = pdf.internal.pageSize.getWidth();
       const height = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, 'PNG', 0,0,width, height);
+      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
       pdf.save('chart.pdf');
-
     });
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#F0F0F0' }}>
       <Box
-      id='chart-container'
+        id='chart-container'
         sx={{
           marginTop: 8,
           display: 'flex',
@@ -150,8 +159,8 @@ export default function CustomerReport(props) {
         >
           Customer Report
         </Typography>
-        <div className={classes.root}>
-          <Grid container spacing={2} style={{ marginTop: '2%' }}>
+        <div className={classes.root} style={{ textAlign: 'center' }}>
+          <Grid container spacing={2} style={{ marginTop: '2%', justifyContent: 'center' }}>
             <Grid item xs={4} className={classes.cardContainer}>
               <Card>
                 <CardContent>
@@ -228,18 +237,27 @@ export default function CustomerReport(props) {
             height: '30%',
             paddingLeft: '33%',
             marginTop: '5%',
+            textAlign: 'center',
           }}
         >
           <Doughnut data={chart} />
         </div>
-      
       </Box>
-      <Button onClick={saveAsPDF} style={{
-            backgroundColor:'#006ee6',
-            
-          }}>
-        Download PDF
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2%' }}>
+        <div style={{ flex: 1, marginLeft: '28%' }}>
+          <DatePicker
+            dateFormat="MMMM yyyy"
+            showMonthYearPicker
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+          />
+        </div>
+        <div style={{ flex: 1,  }}>
+          <Button onClick={saveAsPDF} style={{ backgroundColor: '#006ee6' }}>
+            Download PDF
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

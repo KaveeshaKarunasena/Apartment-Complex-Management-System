@@ -140,7 +140,8 @@ const fetchData = async () => {
 </CardContent>
  </Card>
         {calcTotal()}
-      </div>
+      </div >
+      
       {cart && cart.length ? (
         <div className="products">
           {cart.map((product) => {
@@ -157,6 +158,7 @@ const fetchData = async () => {
       ) : (
         <h3>You can add amenities to this page</h3>
       )}
+      
     </div>
   );
 }

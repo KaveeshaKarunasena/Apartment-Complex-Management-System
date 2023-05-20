@@ -4,9 +4,11 @@ const { body } = require('express-validator');
 
 const{
     addPayment,
-    viewPayment} = require('../Controller/paymentController')
+    viewPayment,
+    viewAllPayment} = require('../Controller/paymentController')
 
 router.post("/addPayment",addPayment)
-router.get('/getPayment/:apartmentNo',viewPayment)
+router.get('/getPayment',viewPayment)
+router.get('/allPayment/:apartmentNo',viewAllPayment)
 
 module.exports = router
