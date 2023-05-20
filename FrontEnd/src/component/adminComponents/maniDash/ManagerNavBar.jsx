@@ -275,7 +275,7 @@ export default function PrimarySearchAppBar() {
               noWrap
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
-              style={{ paddingLeft: '15px', frontWeight: 'bold' }}
+              style={{ paddingLeft: '15px', frontWeight: 'bold',color: 'white' }}
             >
               Report
             </Typography>

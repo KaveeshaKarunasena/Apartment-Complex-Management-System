@@ -14,7 +14,8 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
-
+import { MenuItem } from '@material-ui/core';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const useStyles = makeStyles()(theme => ({
   root: {
@@ -28,6 +29,10 @@ const useStyles = makeStyles()(theme => ({
   formControl: {
     marginTop: '10px',
     paddingTop: '5px',
+    padding: '5px'
+  },
+  TextField:{
+    padding: '1000px'
   },
   submitBtn: {
     color : 'primary'
@@ -157,8 +162,9 @@ const EditEmployee = props => {
           return (
             <>
               <Typography variant="h3">Edit Employee</Typography>
-              <FormControl className={classes.formControl} variant="outlined">
+              <FormControl className={classes.formControl} variant="outlined" >
                 <TextField
+                
                   value={state.name}
                   onChange={onInputChange}
                   name="name"
@@ -219,18 +225,24 @@ const EditEmployee = props => {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
-                  value={state.jobTitle}
-                  onChange={onInputChange}
-                  name="jobTitle"
-                  label="jobTitle"
-                  type="text"
-                  size="small"
-                  
-                  error={
-                    errors.jobTitle && errors.jobTitle?.length ? true : false
-                  }
-                />
+              <Typography>Job-Title</Typography>
+                <FormControl fullWidth>
+                      <Select
+                        name="jobTitle"
+                        value={state.jobTitle}
+                        onChange={onInputChange}
+                        variant="outlined"
+                        label="job Title"
+                      >
+                        <MenuItem value="">
+                          
+                        </MenuItem>
+                        <MenuItem value="Manager">Manager</MenuItem>
+                        <MenuItem value="Executive Grade 1">Executive Grade 1</MenuItem>
+                        <MenuItem value="Executive Grade 2">Executive Grade 2</MenuItem>
+                        <MenuItem value="Junior">Junior</MenuItem>
+                      </Select>
+                    </FormControl>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.jobTitle}
                 </FormHelperText>
