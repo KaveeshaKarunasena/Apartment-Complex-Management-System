@@ -25,7 +25,7 @@ function ViewPayment() {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch(`/addPayment/getPayment/${apartmentNo}`);
+        const response = await fetch(`/addPayment/allPayment/${apartmentNo}`);
         const json = await response.json();
 
         if (response.ok) {

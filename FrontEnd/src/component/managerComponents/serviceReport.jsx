@@ -12,7 +12,8 @@ import jsPDF from 'jspdf';
 const ServiceReport = () => {
 
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate1, setSelectedDate1] = useState(new Date());
+  const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [serviceData, setServiceData] = useState({
     labels: ['Red', 'Yellow', 'Blue'],
     datasets: [
@@ -107,11 +108,19 @@ const ServiceReport = () => {
 
   useEffect(() => {
     let getCommissionByCategory = async () => {
-      const month = selectedDate.getMonth();
+      const month = selectedDate1.getMonth();
+      const year = selectedDate1.getFullYear();
 
       let { data } = await axios.get(
-        `/service-provider/getCommissionByCategory/${month}`
+        `/service-provider/getCommissionByCategory`, {
+          params: {
+            month,
+            year
+          }
+        }
       );
+
+      data = data.filter( item => item._id.length !== 0)
 
       setServiceData({
         labels: data.map(stat => stat._id),
@@ -126,7 +135,8 @@ const ServiceReport = () => {
     };
 
     let getServicePayment = async () => {
-      let { data } = await axios.get(`/service-provider/getServicePayment`);
+      const year = selectedDate2.getFullYear();
+      let { data } = await axios.get(`/service-provider/getServicePayment/${year}`);
 
       setPaymentData({
         labels: data.map(stat => stat._id.month),
@@ -141,7 +151,7 @@ const ServiceReport = () => {
 
     getCommissionByCategory();
     getServicePayment();
-  }, [selectedDate]);
+  }, [selectedDate1, selectedDate2]);
 
   return (
     <>
@@ -161,8 +171,8 @@ const ServiceReport = () => {
           <DatePicker
             dateFormat="MMMM yyyy"
             showMonthYearPicker
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
+            selected={selectedDate1}
+            onChange={date => setSelectedDate1(date)}
           />
         </div>
       </div>
@@ -179,10 +189,10 @@ const ServiceReport = () => {
         </div>
         <div style={{ flex: 1, marginLeft: '5%', marginTop: '10%' }}>
           <DatePicker
-            dateFormat="MMMM yyyy"
-            showMonthYearPicker
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
+            dateFormat="yyyy"
+            showYearPicker
+            selected={selectedDate2}
+            onChange={date => setSelectedDate2(date)}
           />
         </div>
       </div>

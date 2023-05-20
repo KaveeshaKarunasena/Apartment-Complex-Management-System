@@ -17,6 +17,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Popup from './Popup';
 import IconButton from '@mui/material/IconButton';
 import { useSnackbar } from 'notistack';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
 
 function ViewEmployee() {
   const [employee, setEmployee] = useState([]);
@@ -26,7 +32,7 @@ function ViewEmployee() {
   const [openPopup, setOpenPopup] = useState(false);
   const [getId, setGetId] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const [display,setdisplay] = useState(false);
+  const [display, setdisplay] = useState(false);
   const keys = [
     'id',
     'Name',
@@ -40,6 +46,8 @@ function ViewEmployee() {
     'Allowance',
     'Overtime',
   ];
+  const [deleteId, setDeleteId] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -48,23 +56,30 @@ function ViewEmployee() {
 
       if (response.ok) {
         setEmployee(json);
-        setdisplay(true)
+        setdisplay(true);
       }
     };
 
     fetchDetails();
   }, [display]);
 
-  const deleteDetails = async id => {
+  const deleteDetails = id => {
+    setDeleteId(id);
+    setOpenDialog(true);
+  };
+
+  const handleDeleteConfirmation = async () => {
     await axios
-      .delete(`/employee/delete/${id}`)
+      .delete(`/employee/delete/${deleteId}`)
       .then(() => {
         const employeeCopy = [...employee];
-        const filteredEmployee = employeeCopy.filter(item => item._id !== id);
+        const filteredEmployee = employeeCopy.filter(item => item._id !== deleteId);
         setEmployee(filteredEmployee);
-        enqueueSnackbar('Succesfully Deleted', { variant: 'error' });
+        enqueueSnackbar('Successfully Deleted', { variant: 'error' });
       })
       .catch(err => enqueueSnackbar(err, { variant: 'error' }));
+
+    setOpenDialog(false);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -131,19 +146,14 @@ function ViewEmployee() {
             {employee &&
               employee
                 .filter(data => {
-                  return search.toLowerCase() === ''
-                    ? data
-                    : data.name.toLowerCase().includes(search.toLowerCase()) ||
-                        data.nic.toLowerCase().includes(search.toLowerCase()) ||
-                        data.address
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        data.department
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        data.jobTitle
-                          .toLowerCase()
-                          .includes(search.toLowerCase());
+                  return (
+                    search.toLowerCase() === '' ||
+                    data.name.toLowerCase().includes(search.toLowerCase()) ||
+                    data.nic.toLowerCase().includes(search.toLowerCase()) ||
+                    data.address.toLowerCase().includes(search.toLowerCase()) ||
+                    data.department.toLowerCase().includes(search.toLowerCase()) ||
+                    data.jobTitle.toLowerCase().includes(search.toLowerCase())
+                  );
                 })
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(data => (
@@ -214,6 +224,27 @@ function ViewEmployee() {
         setApartment={setEmployee}
         getId={getId}
       ></Popup>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this employee?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirmation} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

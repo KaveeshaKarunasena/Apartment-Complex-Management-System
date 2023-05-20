@@ -134,7 +134,8 @@ const viewProfiles = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.params;
+    const {password} = req.body;
 
     const customer = await Customer.findOne({ email });
     if (!customer) {

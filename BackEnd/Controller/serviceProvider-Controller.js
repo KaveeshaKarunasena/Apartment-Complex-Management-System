@@ -126,53 +126,59 @@ const getServiceProviderNames = async (req, res) => {
 };
 
 const getCommissionByCategory = async (req, res) => {
-  const targetMonth = +req.params.month;
-  
+  const targetMonth = +req.query.month + 1;
+  const targetYear = +req.query.year;
+
   await Payment.aggregate([
     {
       $addFields: {
         payee: {
-          $toObjectId: "$payeeId"
-        }
-      }
+          $convert: {
+            input: '$payeeId',
+            to: 'objectId',
+            onError: '',
+            onNull: '',
+          },
+        },
+      },
     },
     {
       $lookup: {
         from: 'service-providers',
         localField: 'payee',
-        foreignField: "_id",
+        foreignField: '_id',
         as: 'services',
       },
     },
     {
       $match: {
         $expr: {
-          $eq: [{$month: "$createdAt"}, targetMonth]
-        }
-      }
+          $and: 
+            [
+           {$eq: [{ $month: '$createdAt' }, targetMonth]},
+            {$eq: [{ $year: '$createdAt'}, targetYear]}]
+        },
+      },
     },
     {
-        $group: {
-          _id: '$services.serviceType',
-          total: {
-            $sum: '$amount'
-          }
-        }
+      $group: {
+        _id: '$services.serviceType',
+        total: {
+          $sum: '$amount',
+        },
+      },
     },
   ]).exec((err, data) => {
     if (data) {
       res.status(200).json(data);
     } else {
-      res.status(404).json({ err: err });
+      res.status(400).json({ err: err });
     }
   });
-
-
-
 };
 
-const getServicePayment = async (req,res) => {
-
+const getServicePayment = async (req, res) => {
+  const targetYear = +req.params.year;
   const monthWords = [
     'Jan',
     'Feb',
@@ -188,12 +194,18 @@ const getServicePayment = async (req,res) => {
     'Dec',
   ];
 
-    await Payment.aggregate([
-    { $match: { category: 'Services' } },
+  await Payment.aggregate([
+    {
+      $match: { category: 'Services Chargers', 
+      $expr: {
+        $eq: [{ $year: '$createdAt' }, targetYear],
+      },},
+     
+    },
     {
       $group: {
         _id: { month: { $month: '$createdAt' } },
-        total: { $sum: '$amount'},
+        total: { $sum: '$amount' },
       },
     },
   ]).exec((err, data) => {
@@ -206,11 +218,10 @@ const getServicePayment = async (req,res) => {
       });
       res.status(200).json(updatedData);
     } else {
-      res.status(404).json({ err: err });
+      res.status(400).json({ err: err });
     }
   });
-
-}
+};
 
 module.exports = {
   newServiceProvider,
@@ -220,5 +231,5 @@ module.exports = {
   viewSingleProvider,
   getServiceProviderNames,
   getCommissionByCategory,
-  getServicePayment
+  getServicePayment,
 };
