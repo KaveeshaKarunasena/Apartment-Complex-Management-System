@@ -15,12 +15,12 @@ function Cards(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get('/maintenance/apartmentCount');
+      const { data } = await axios.get('/apartment/apartmentCount');
       const { apartmentno } = data.count[0];
       setApartmentCnt(apartmentno);
       console.log(apartmentCnt);
 
-      const response = await axios.get('/maintenance/registeredApartments');
+      const response = await axios.get('/apartment/registeredApartments');
       const { string } = response.data.details[0];
       setApartment(string);
 
@@ -35,7 +35,7 @@ function Cards(props) {
       const { apartmentNo } = res2.data.count[0];
       setMaintenanceCnt(apartmentNo);
 
-      const res3 = await axios.get('/maintenance/pendingCount');
+      const res3 = await axios.get('/apartment/pendingCount');
       const  {pend}  = res3.data.details[0]
       setPendingCnt(pend);
       console.log(pend);
