@@ -32,9 +32,9 @@ router.get('/get/:id', viewSingleProvider);
 router.get('/getServiceProviderNames', getServiceProviderNames);
 
 //Route for getting commission by category
-router.get('/getCommissionByCategory/:month',getCommissionByCategory);
+router.get('/getCommissionByCategory',getCommissionByCategory);
 
 //Route for getting payments made to service providers
-router.get('/getServicePayment', getServicePayment)
+router.get('/getServicePayment/:year', getServicePayment)
 
 module.exports = router;
