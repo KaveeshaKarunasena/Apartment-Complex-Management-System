@@ -4,7 +4,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BarChart from '../Charts/barChart';
 import PieChart from '../Charts/PieChart';
+import jsPDF from 'jspdf';
+import Button from '@mui/material/Button';
+import html2canvas from 'html2canvas';
 
+ const saveAsPDF = () => {
+    const chartContainer = document.getElementById('chart-container');
+
+    html2canvas(chartContainer).then( (canvas) => {
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: '1', unit: 'px', format: [canvas.width, canvas.height]});
+      const width = pdf.internal.pageSize.getWidth();
+      const height = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'PNG', 0,0,width, height);
+      pdf.save('EmployeeReport.pdf');
+
+    });
+  }
 const EmployeeReport = () => {
   const [EmployeeSalary, setEmployeeSalary] = useState({
     labels: ['Red', 'Yellow', 'Blue'],
@@ -60,6 +77,7 @@ const EmployeeReport = () => {
     EmployeeSalaryByDepartment();
     EmployeeByDepartment();
   }, []);
+ 
 
   // useEffect(() => {
   //   let EmployeebySalary = async () => {
@@ -84,7 +102,7 @@ const EmployeeReport = () => {
   // }, []);
 
   return (
-    <div>
+    <div id = 'chart-container'>
       
       <div style={{ width: '80%', marginTop: '4%', marginLeft: '8%', }}>
       <h1>Number of Employee per Department</h1>
@@ -95,8 +113,22 @@ const EmployeeReport = () => {
            <h1 style={{ marginTop: '10%' }} >Amount of Salaries paid per Department</h1>
         <PieChart chartData={EmployeeSalary} />
       </div> }
+      <Button
+variant="contained"
+onClick={saveAsPDF}
+style={{
+  backgroundColor: '#488042',
+  marginTop: '-200%',
+  marginBottom: '2%',
+  marginLeft: '80%'
+}}
+>
+Download Employee Report 
+</Button>
+
     </div>
   );
+  
 };
 
 export default EmployeeReport;
