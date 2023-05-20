@@ -62,9 +62,10 @@ export default function Payment() {
       console.log(formData);
       const res = await axios.post('/addPayment/addPayment/', {
         ...formData,
-       // navigate('/app/viewPayment');
+       
       });
       enqueueSnackbar('Payment Complete', { variant: 'success' });
+      navigate('/app/viewPayment');
     } catch (err) {
       enqueueSnackbar(err, { variant: 'error' });
     }
