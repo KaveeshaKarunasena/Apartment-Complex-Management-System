@@ -7,7 +7,9 @@ const {
   viewSingleProvider,
   getServiceProviderNames,
   getCommissionByCategory,
-  getServicePayment
+  getServicePayment,
+  getManagerStatistics,
+  getEmployeeStatistics
 } = require('../Controller/serviceProvider-Controller');
 const uploadMiddleware = require('../service/MulterMiddleware');
 
@@ -35,6 +37,10 @@ router.get('/getServiceProviderNames', getServiceProviderNames);
 router.get('/getCommissionByCategory',getCommissionByCategory);
 
 //Route for getting payments made to service providers
+router.get('/getServicePayment', getServicePayment);
+
+router.get('/getManagerStatistics',  getManagerStatistics);
+router.get('/getEmployeeStatistics', getEmployeeStatistics)
 router.get('/getServicePayment/:year', getServicePayment)
 
 module.exports = router;

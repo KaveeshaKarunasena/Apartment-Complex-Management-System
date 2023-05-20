@@ -125,8 +125,7 @@ const HomeBar = () => {
             Payment
           </Button>
           {renderPaymentMenu}
-          <Button color="inherit">Services</Button>
-          <Button
+            <Button
             color="inherit"
             onClick={handleComplaintClick}
             aria-controls={complaintMenuId}
