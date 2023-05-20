@@ -44,9 +44,10 @@ export const SuperAdminAuthGuard = ({ children }) => {
 
   try {
     let authPayload = useContext(AuthContext);
-
+    
+    
     if (!authPayload || !authPayload.token) {
-      console.log("no payloard");
+      console.log("no payloard",authPayload.life);
       return <Navigate to="/login" />;
     }
  

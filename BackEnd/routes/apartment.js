@@ -8,7 +8,10 @@ const {
   viewApartmentById,
   updateApartment,
   deleteApartment,
-  getAllApartment
+  getAllApartment,
+  getApartmentCount,
+  getRegisteredApartment,
+  getPendingApartment
 } = require('../Controller/apartment-Controller');
 const authGuard  = require('../Utils/authGuard')
 
@@ -33,5 +36,9 @@ router.put('/update/:_id',validator([
 
 router.delete('/delete/:_id',deleteApartment);
 router.get('/allApartment', getAllApartment)
+
+router.get('/apartmentCount', getApartmentCount);
+router.get('/registeredApartments',getRegisteredApartment);
+router.get('/pendingCount', getPendingApartment);
 
 module.exports = router;

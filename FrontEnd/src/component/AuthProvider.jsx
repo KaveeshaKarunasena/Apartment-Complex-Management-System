@@ -16,7 +16,7 @@ export function AuthProviderComponent({ children }) {
   const init = useCallback(async () => {
     try {
       setLoading(true);
-      const fromStorage = await localStorage.getItem('token');
+      const fromStorage = localStorage.getItem('token');
       if (fromStorage) {
         const data = JSON.parse(fromStorage);
         const axiosClient = axios.create({
@@ -49,7 +49,7 @@ export function AuthProviderComponent({ children }) {
     } finally {
       setLoading(false);
     }
-  }, [  ]);
+  }, [ authPayload ]);
 
   useEffect(() => {
     init();

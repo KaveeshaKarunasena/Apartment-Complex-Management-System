@@ -133,6 +133,69 @@ const getAllApartment = async (req, res) => {
     });
 };
 
+const getRegisteredApartment = async (req,res) => {
+  await apartmentModel
+    .aggregate([
+      {
+        $match: {
+          status: 'Owned',
+        },
+       
+      },
+       {
+          $count : 'string'
+        },
+    ])
+    .exec((err, details) => {
+      if (err) {
+        res.status(404).json({ err });
+      }
+      if (details) {
+        res.status(200).json({ details });
+      }
+    });
+};
+
+const getPendingApartment = async (req,res) => {
+  await apartmentModel
+    .aggregate([
+      {
+        $match: {
+          status: 'Pending',
+        },
+       
+      },
+       {
+          $count : 'pend'
+        },
+    ])
+    .exec((err, details) => {
+      if (err) {
+        res.status(404).json({ err });
+      }
+      if (details) {
+        res.status(200).json({ details });
+      }
+    });
+};
+const getApartmentCount = async (req,res) => {
+  await apartmentModel
+    .aggregate([
+      {
+        $count: 'apartmentno',
+      },
+    ])
+    .exec((err, count) => {
+      if (err) {
+        res.status(404).json({ err });
+      }
+      if (count) {
+        res.status(200).json({ count });
+      }
+    });
+};
+
+
 module.exports = {
   newApartment,
   viewApartment,
@@ -140,4 +203,7 @@ module.exports = {
   updateApartment,
   deleteApartment,
   getAllApartment,
+  getRegisteredApartment,
+  getPendingApartment,
+  getApartmentCount
 };
