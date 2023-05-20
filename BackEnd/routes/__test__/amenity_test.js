@@ -5,7 +5,8 @@ const request = require('supertest')
 describe('register',() => {
     it('testAddAmenity',async() => {
         const newAmenity =  {
-            product_id: "YG001",
+            
+            product_id: "YG009",
             title: "Yoga Deck",
             fee: 2500,
             description: "a wide array of the most traditional and the most beneficial physical…",

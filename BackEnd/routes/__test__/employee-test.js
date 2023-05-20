@@ -1,19 +1,20 @@
 const app = require("../../app")
 const request = require('supertest')
 
-describe('employer',() => {
+describe('employertest',() => {
+
     it('testNewEmployee',async() => {
         const newEmployee ={
-            name: 'zimmendra',
-            nic: '200103678465',
+            name: '',
+            nic: '',
             dob: '2001-04-17',
             address: 'kandy',
             jobTitle: 'manager',
             department: 'management',
-            contactNumber: '0785462434',
-            basicSalary: '15000',
-            allowance: '1',
-            overtime: '1',
+            contactNumber: '785462434',
+            basicSalary: '',
+            allowance: '0',
+            overtime: '0',
           };
         const res = await request(app).post('/employee/add').send(newEmployee)
         expect(res.statusCode).toEqual(200)
@@ -25,9 +26,9 @@ describe('employer',() => {
     })
 
     it('testViewEmployee',async() => {
-        const name = ''
+        const name = 'Heshanth'
 
-        const res = await request(app).post(`/employee/getById/${name}`)
+        const res = await request(app).get(`/employee/getById/${name}`)
         expect(res.statusCode).toEqual(200)
     })
 
@@ -51,9 +52,9 @@ describe('employer',() => {
     })
 
     it('testDeleteEmployee',async() => {
-        const id = ''
+        const id = '6467a1b1887b5bfb'
 
-        const res = await request(app).post(`/employee/delete/${id}`)
+        const res = await request(app).delete(`/employee/delete/${id}`)
         expect(res.statusCode).toEqual(200)
     })
 

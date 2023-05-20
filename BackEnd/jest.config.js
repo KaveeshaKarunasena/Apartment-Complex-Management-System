@@ -7,13 +7,13 @@ const jestConfig = {
       '^.+\\.js?$': 'babel-jest',
     },
     testMatch: [
-        '**\\*employee-test.js',
-        '**\\*employee-test.js',
-        '**/*employee-test.js',
-        'src\\**\\*.employee-test.js',
-        'src/**/*.employee-test.js',
-        '<rootDir>\\src\\**\\*.employee-test.js',
-        '<rootDir>/src/**/*.employee-test.js',
+        '**\\*amenity_test.js',
+        '**\\*amenity_test.js',
+        '**/*amenity_test.js',
+        'src\\**\\*.amenity_test.js',
+        'src/**/*.amenity_test.js',
+        '<rootDir>\\src\\**\\*.amenity_test.js',
+        '<rootDir>/src/**/*.amenity_test.js',
         'src/.*|(.|/)(.test).js?$'
       ],
   }
