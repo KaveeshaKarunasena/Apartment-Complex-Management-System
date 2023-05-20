@@ -5,8 +5,8 @@ const request = require('supertest')
 describe('service-Provider',() =>{
   it('testNewServiceProvider',async() => {
     const serviceProvider = {
-        companyName: 'ICBT',
-        serviceType:'Clerk',
+        companyName: 'Central srvice',
+        serviceType:'',
         location:'Kandy',
         contactNumber:'0766974709',
     }

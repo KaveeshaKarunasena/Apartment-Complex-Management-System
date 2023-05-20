@@ -17,8 +17,8 @@ describe('customer',() => {
 
     it('testLogin',async() => {
         const login = {
-            apartmentNo:'A02',
-            password:'123456789',
+            apartmentNo:'',
+            password:'Dinusha123',
         }
         const res = await request(app).post('/customer/login').send(login)
         expect(res.statusCode).toEqual(200)
@@ -47,12 +47,13 @@ describe('customer',() => {
 
     it('testResetPassword',async() => {
 
+        const email = 'dinushaweerasekara312@gmail.com'
         const reset = {
             password: 'dinusha1234',
-            email : 'kaveeshalankeshwara2001@gmail.com'
+            
            
         }
-        const res = await request(app).put(`/customer/recoverypassword`).send(reset)
+        const res = await request(app).put(`/customer/recoverypassword/${email}`).send(reset)
         expect(res.statusCode).toEqual(200)
     })
 
