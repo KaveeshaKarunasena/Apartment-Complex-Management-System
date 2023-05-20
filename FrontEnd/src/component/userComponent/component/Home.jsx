@@ -15,6 +15,7 @@ function HomePage() {
   const [customer, setCustomer] = useState([]);
  const [currentDateTime, setCurrentDateTime] = useState('');
  const [greeting, setGreeting] = useState('');
+ 
 
 const styles = `
 
