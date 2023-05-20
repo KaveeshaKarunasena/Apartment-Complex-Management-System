@@ -17,7 +17,8 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
-
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 const useStyles = makeStyles()(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles()(theme => ({
     marginTop: '30px',
   },
   formControl: {
-    marginTop: '10px',
+    marginTop: '20px',
   },
   submitBtn: {
     marginTop: '15px',
@@ -97,7 +98,9 @@ function AddEmployees() {
           return (
             <>
               <Typography variant="h3">Add Employee</Typography>
-              <FormControl className={classes.formControl} variant="outlined">
+              <FormControl className={classes.formControl} variant="outlined" 
+              
+              >
                 <TextField
                   value={values.name}
                   onChange={handleChange}
@@ -158,35 +161,49 @@ function AddEmployees() {
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
-                  value={values.jobTitle}
-                  onChange={handleChange}
-                  name="jobTitle"
-                  label="Job Title"
-                  type="text"
-                  size="small"
-                  error={
-                    errors.jobTitle && errors.jobTitle?.length ? true : false
-                  }
-                />
+              <Typography>Job Title</Typography>
+                <FormControl fullWidth>
+                      <Select
+                        name="jobTitle"
+                        value={values.jobTitle}
+                        onChange={handleChange}
+                        displayEmpty
+                        variant="outlined"
+                        label="job Title"
+                      >
+                        <MenuItem value="">
+                          
+                        </MenuItem>
+                        <MenuItem value="Manager">Manager</MenuItem>
+                        <MenuItem value="Executive Grade 1">Executive Grade 1</MenuItem>
+                        <MenuItem value="Executive Grade 2">Executive Grade 2</MenuItem>
+                        <MenuItem value="Junior">Junior</MenuItem>
+                      </Select>
+                    </FormControl>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.jobTitle}
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
-                <TextField
-                  value={values.department}
-                  onChange={handleChange}
-                  name="department"
-                  label="Department"
-                  type="text"
-                  size="small"
-                  error={
-                    errors.department && errors.department?.length
-                      ? true
-                      : false
-                  }
-                />
+              <Typography>Department</Typography>
+                <FormControl fullWidth>
+                      <Select
+                        name="department"
+                        label="Department"
+                        value={values.department}
+                        onChange={handleChange}
+                        displayEmpty
+                        variant="outlined"
+                      >
+                        <MenuItem value="">
+                          
+                        </MenuItem>
+                        <MenuItem value="Security">Secuitry</MenuItem>
+                        <MenuItem value="Management">Management</MenuItem>
+                        <MenuItem value="Maintaince">Maintaince</MenuItem>
+                        <MenuItem value="Others">Others</MenuItem>
+                      </Select>
+                    </FormControl>
                 <FormHelperText stylr={{ color: 'red' }}>
                   {errors.department}
                 </FormHelperText>

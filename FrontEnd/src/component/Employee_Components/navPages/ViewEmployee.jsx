@@ -61,7 +61,7 @@ function ViewEmployee() {
     };
 
     fetchDetails();
-  }, [display]);
+  }, [display,employee]);
 
   const deleteDetails = id => {
     setDeleteId(id);
