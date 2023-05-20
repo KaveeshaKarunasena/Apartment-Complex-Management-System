@@ -297,7 +297,7 @@ const EditEmployee = props => {
                   }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
-                  {errors.allowancee}
+                  {errors.basicSalary}
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">
@@ -313,7 +313,7 @@ const EditEmployee = props => {
                   }
                 />
                 <FormHelperText stylr={{ color: 'red' }}>
-                  {errors.allowancee}
+                  {errors.allowance}
                 </FormHelperText>
               </FormControl>
               <FormControl className={classes.formControl} variant="outlined">

@@ -136,7 +136,6 @@ function AddEmployees() {
                   value={values.dob}
                   onChange={handleChange}
                   name="dob"
-                  type="date"
                   size="small"
                   error={errors.dob && errors.dob?.length ?   true : false}
                 />

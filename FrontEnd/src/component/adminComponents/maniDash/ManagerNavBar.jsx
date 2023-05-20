@@ -261,7 +261,7 @@ export default function PrimarySearchAppBar() {
           </NavLink>
 
           <NavLink
-            to="/manager/repo"
+            to="/manager/repo/employee"
             style={({ isActive, isPending }) => {
               return {
                 fontWeight: isActive ? 'bold' : '',
