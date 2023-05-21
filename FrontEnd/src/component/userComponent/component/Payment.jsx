@@ -139,7 +139,7 @@ export default function Payment() {
                         name="apartmentNo"
                         label="Apartment No"
                         type="text"
-                        value={values.apartmentNo}
+                        value={values.apartmentNo = apartmentNo}
                         className={classes.apartmentNo}
                         placeholder="Enter apartment No"
                         error={errors['apartmentNo'] ? true : false}
