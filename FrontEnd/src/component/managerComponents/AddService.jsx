@@ -210,6 +210,9 @@ const AddService = props => {
                     <MenuItem value={'Electrician'}>Electrician</MenuItem>
                     <MenuItem value={'Plumber'}>Plumber</MenuItem>
                     <MenuItem value={'Clerk'}>Clerk</MenuItem>
+                    <MenuItem value={'Cable Connections'}>Cable Connections</MenuItem>
+                    <MenuItem value={'Gas supplier'}>Gas Supplier</MenuItem>
+                    <MenuItem value={'Carpenter'}>Carpenter</MenuItem>
                   </Select>
                   <FormHelperText stylr={{ color: 'red' }}>
                     {errors.serviceType}

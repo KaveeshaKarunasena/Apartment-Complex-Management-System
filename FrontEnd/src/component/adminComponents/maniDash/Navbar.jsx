@@ -239,7 +239,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: 'none', sm: 'block',color:'white' } }}
           >
             WESCCOT
           </Typography>
@@ -299,15 +299,16 @@ export default function PrimarySearchAppBar() {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={4} color="error" style={{color:'white'}}>
                 <MailIcon />
               </Badge>
             </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              color="inherit"
+              color="white"
               onClick={showAppointment}
+              style={{color:'white'}}
             >
               <Badge badgeContent={DUMMY_DATA.length} color="error">
                 <NotificationsIcon />
@@ -320,7 +321,7 @@ export default function PrimarySearchAppBar() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              style={{color:'white'}}
             >
               <AccountCircle />
             </IconButton>
